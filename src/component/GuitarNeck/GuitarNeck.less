@@ -1,0 +1,85 @@
+svg.guitar-neck {
+    overflow: visible;
+    margin: 10px 10px 10px 10px;
+    box-shadow: 0 0 7px rgba(0,0,0,0.8);
+    user-select: none;
+    -moz-user-select: none;
+
+    & > rect.neck {
+        //fill: #80442a;
+        fill: #8e4b2e;
+        stroke: #eee;
+        stroke-width: 3px;
+    }
+
+    & > rect.nut {
+        fill: #eee;
+    }
+
+    & > circle.dot {
+        fill: #f5f5f5;
+
+    }
+
+    & > g.string {
+        & > line {
+            stroke: #bbb;
+        }
+
+        & > g.note {
+            cursor: pointer;
+
+            &.black {
+                rect.bk {
+                    fill: #22222280;
+                }
+                /*rect.noteArea {
+                    fill: #22222280;
+                }*/
+                text {
+                    fill: #eee;
+                }
+            }
+            
+            rect.noteArea {
+                opacity: 0;
+                //fill: #ffffff00;
+                //fill: #ffffffB0;
+                fill: #80ff80B0;
+            }
+
+            &.pushed {
+                rect.noteArea {
+                    opacity: 1;
+                }
+            }
+
+            /*&:active {
+                rect.noteArea {
+                    opacity: 1;
+                }
+            }*/
+            
+            rect.bk {
+                fill: #ffffff70;
+            }
+            text {
+                fill: #333;
+                font-size: 10px;
+                text-anchor: middle;
+                alignment-baseline: middle;
+            }
+        } 
+    }
+
+    & > g.fret {
+        & > line {
+            stroke: #f0eefb;
+        }
+        & > text {
+            text-anchor: middle;
+            fill: #555;
+            font-size: 12px;
+        }
+    }
+}

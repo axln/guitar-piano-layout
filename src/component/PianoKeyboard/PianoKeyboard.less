@@ -1,0 +1,63 @@
+svg.piano-keyboard {
+    overflow: visible;
+    margin: 20px 10px 0 0;
+    user-select: none;
+    -moz-user-select: none;
+
+    & > g.octave > {
+        & > g.WhiteKey {
+            cursor: pointer;
+
+            &:hover > rect {
+                fill: #eee;
+            }
+
+            & > rect {
+                fill: #ffffff;    
+                stroke: #000000ff;
+                stroke-width: 1px;
+            }
+
+            & > text {
+                fill: #888;
+                font-size: 14px;
+                font-weight: bold;
+                text-anchor: middle;
+            }
+
+            /*&.pushed {
+                & > rect {
+                    fill: #80ff80;
+                }
+            }*/
+        }
+
+        & > g.BlackKey {
+            cursor: pointer;
+
+
+            &:hover > rect {
+                fill: #555;
+            }
+            & > rect {
+                fill: #000000;
+                stroke: #000000;
+                stroke-width: 1px;
+                cursor: pointer;
+            }
+
+            & > text {
+                fill: #bbb;
+                font-size: 12px;
+                font-weight: bold;
+                text-anchor: middle;
+            }
+
+            /*&.pushed {
+                & > rect {
+                    fill: #80ff80;
+                }
+            }*/
+        }
+    }
+}
