@@ -70,7 +70,7 @@ class App extends React.Component {
                     Press any piano key or tap a guitar string on any fret and you will see the corresponding key/fret on another instrument.
                 </p>
                 <p>For guitar/bass it also shows where the same note on other strings is located.</p>
-                <p>Click/tap once to hightlight the note and click/tap it again to turn off. The same notes have the same color but notes in lower ocataves have higher saturation.</p>
+                <p>Click/tap once to hightlight the note and click/tap it again to turn off. The same notes have the same color but notes in lower octaves have higher saturation.</p>
 
                 <h2>Piano</h2>
                 <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
