@@ -82,9 +82,6 @@ class App extends React.Component {
                 <div>
                     <GuitarNeck strings={this.state.guitarTuning} onPitch={this.onPitch} activePitches={this.state.pitches} />
                 </div>
-                <div>
-                    <GuitarNeck strings='B4,E4,A3,D3,G2,C2' onPitch={this.onPitch} activePitches={this.state.pitches} />
-                </div>
                 <h2>Bass Guitar (standard tuning)</h2>
                 <p>Your bass may have less than 24 frets but this doesn't affect the other notes. Click the nut to hightlight a note of the corresponding open string.</p>
                 <div>
@@ -92,7 +89,6 @@ class App extends React.Component {
                 </div>
                 <h2>About</h2>
                 <p>This app is open-source, made by axln. For more info, please visit <a href="https://github.com/axln/guitar-piano-layout" target="_blank">the app's page at GitHub</a>.</p>
-                <div>v{pkg.version}</div>
             </>
         );
     }

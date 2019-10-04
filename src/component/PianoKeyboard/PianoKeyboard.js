@@ -29,6 +29,10 @@ class PianoKey extends React.Component {
         this.handleMouseUp    = this.handleMouseUp.bind(this);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return this.props.pushed !== nextProps.pushed;
+    }
+
     getNoteNumber() {}
 
     /*handleMouseLeave() {

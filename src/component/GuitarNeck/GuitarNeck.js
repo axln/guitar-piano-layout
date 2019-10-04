@@ -10,7 +10,7 @@ const NECK_HEIGHT = 150;
 const SIDE_MARGIN = 10;
 const A4_PITCH_OFFSET = 57;
 
-function noteToPitch(fullNote) {
+/*function noteToPitch(fullNote) {
     let note, octave;
     if (fullNote.length == 2) {
         [note, octave] = fullNote;
@@ -28,7 +28,7 @@ function pitchToNote(pitch) {
     let octave = Math.floor(absolutePitch / 12);
     let note = CHROMATIC_SCALE[absolutePitch % 12];
     return note + octave;
-}
+}*/
 
 class StringNote extends React.Component {
     constructor(props) {
@@ -39,6 +39,10 @@ class StringNote extends React.Component {
         this.handleMouseDown  = this.handleMouseDown.bind(this);
         this.handleMouseUp    = this.handleMouseUp.bind(this);
     }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.pushed !== nextProps.pushed;
+    } 
 
     handleMouseDown() {
         this.props.onPitch(this.props.pitch, 'down');
@@ -72,10 +76,10 @@ class StringNote extends React.Component {
     }
 
     render() {
-        let note = pitchToNote(this.props.pitch);
+        let note = Helper.pitchToNote(this.props.pitch);
         let className = note.length == 2 ? 'note' : 'note black'; 
         let style = {}
-        if (this.props.activePitches.indexOf(this.props.pitch) >=0) {
+        if (this.props.pushed) {
             className += ' pushed';
             style.fill = Helper.getPitchColor(this.props.pitch) + 'B0';
         }
@@ -152,16 +156,17 @@ class GuitarString extends React.Component {
 
     renderNotes() {
         let notes = [];
-        let openPitch = noteToPitch(this.props.openNote);
+        let openPitch = Helper.noteToPitch(this.props.openNote);
         for (let i = 0; i <= 24; ++i) {
+            let pitch = openPitch + i;
             notes.push(
                 <StringNote
                     number={this.props.number}
                     stringCount={this.props.stringCount}
                     index={i}
                     onPitch={this.props.onPitch}
-                    activePitches={this.props.activePitches}
-                    pitch={openPitch + i}
+                    pushed={this.props.activePitches.indexOf(pitch) >=0}
+                    pitch={pitch}
                     key ={'n' + this.props.number + 'f' + i}
                 />
             );
