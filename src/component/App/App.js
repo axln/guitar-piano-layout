@@ -77,7 +77,7 @@ class App extends React.Component {
                 <div>
                     <PianoKeyboard range='A0-C8' onPitch={this.onPitch} activePitches={this.state.pitches} />
                 </div>
-                <h2>Acoustic/Electric Guitar</h2>
+                <h2>Acoustic/Electric Guitar (standard tuning)</h2>
                 <p>Your guitar may have less than 24 frets but this doesn't affect the other notes. Click the nut to hightlight a note of the corresponding open string.</p>
                 <div>
                     <GuitarNeck strings={this.state.guitarTuning} onPitch={this.onPitch} activePitches={this.state.pitches} />
