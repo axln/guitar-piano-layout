@@ -9,10 +9,12 @@ class App extends React.Component {
         super(props);
         this.state = {
             pitches: [],
+            playSound: true,
             guitarTuning: 'E4,B3,G3,D3,A2,E2',
             bassTuning: 'G2,D2,A1,E1'
         };
-        this.onPitch = this.onPitch.bind(this);
+        this.onPitch     = this.onPitch.bind(this);
+        this.toggleSound = this.toggleSound.bind(this);
     }
 
     onPitch(pitch, state) {
@@ -48,12 +50,18 @@ class App extends React.Component {
             //console.log(`note ${note}: ${freq.toFixed(2)} Hz (pitch: ${pitch}), ${state}`);
             console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
         }
-        if (state == 'down') {
+        if (state == 'down' && this.state.playSound) {
             Helper.playNote(freq);
-        } else if (state == 'up') {
+        } else if (state == 'up'  && this.state.playSound) {
             Helper.stopNote(freq);
         }
     }
+
+    toggleSound(e) {
+        this.setState({playSound: e.target.checked});
+    }
+    
+
 
     render() {
         // <div><GuitarNeck strings='G2,D2,A1,E1' /></div> bass guitar
@@ -72,6 +80,11 @@ class App extends React.Component {
                 <p>For guitar/bass it also shows where the same note on other strings is located.</p>
                 <p>Click/tap once to hightlight the note and click/tap it again to turn off. The same notes have the same color but notes in higher octaves have higher lightness.</p>
 
+                <h2>Settings</h2>
+                <p>
+                <input id="playSound" type='checkbox' checked={this.state.playSound} onChange={this.toggleSound} /><label htmlFor="playSound">Play notes on click</label> 
+                </p>    
+                
                 <h2>Piano</h2>
                 <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
                 <div>

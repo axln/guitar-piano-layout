@@ -137,7 +137,11 @@ Helper.getOctSize = function (octInfo) {
 
 Helper.playNote = function (freq) {
     //console.log('start note:', freq);
-    this.oscillators[freq] = this.context.createOscillator();
+    if (this.context === null) {
+        this.context = new AudioContext();
+    }
+
+    this.oscillators[freq] = this.context.createOscillator(); 
     this.oscillators[freq].frequency.value = freq;
     this.oscillators[freq].connect(this.context.destination);
     this.oscillators[freq].start(this.context.currentTime);
@@ -162,11 +166,5 @@ Helper.decodePitch = pitch => {
     let offset = pitch % 12;
     return [octave, offset];
 }
-
-window.onload = () => {
-    Helper.context = new AudioContext();
-};
-
-
 
 export default Helper;
