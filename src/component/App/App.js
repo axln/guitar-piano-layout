@@ -62,18 +62,11 @@ class App extends React.Component {
         // <div><PianoKeyboard range='C2-C7' /></div> 61 key synth
         // <div><PianoKeyboard range='E2-E6' /></div> guitar range
         // <div><PianoKeyboard range='C2-B6' onPitch={this.onPitch} activePitches={this.state.pitches} /></div>
-        let guitarTuningSelect = (
-            <select style={{verticalAlign: 'middle'}}>
-                <option>Standard (E4,B3,G3,D3,A2,E2)</option>
-                <option>Open A</option>
-                <option>Drop A</option>
-            </select>
-        );
         return (
             <>
                 <h1>Piano and Guitar Layout</h1>
                 <p>
-                    This simple app helps you learn layout of the piano keyboard and guitar fretboard and how they relate to each other.
+                    This simple app helps you learn layout of the piano keyboard and guitar/bass fretboard and how they relate to each other.
                     Press any piano key or tap a guitar string on any fret and you will see the corresponding key/fret on another instrument.
                 </p>
                 <p>For guitar/bass it also shows where the same note on other strings is located.</p>
@@ -85,7 +78,6 @@ class App extends React.Component {
                     <PianoKeyboard range='A0-C8' onPitch={this.onPitch} activePitches={this.state.pitches} />
                 </div>
                 <h2>Acoustic/Electric Guitar</h2>
-                <p>Tuning: {guitarTuningSelect}</p>
                 <p>Your guitar may have less than 24 frets but this doesn't affect the other notes. Click the nut to hightlight a note of the corresponding open string.</p>
                 <div>
                     <GuitarNeck strings={this.state.guitarTuning} onPitch={this.onPitch} activePitches={this.state.pitches} />
