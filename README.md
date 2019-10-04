@@ -1,2 +1,2 @@
-# note-layout
-piano-guitar-layout
+# Piano and Guitar Layout
+
