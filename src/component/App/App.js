@@ -66,11 +66,11 @@ class App extends React.Component {
             <>
                 <h1>Piano and Guitar Layout</h1>
                 <p>
-                    This simple app helps you learn layout of the piano keyboard and guitar/bass fretboard and how they relate to each other.
+                    This simple app helps you learn the layout of the piano keyboard and guitar/bass fretboard and how they relate to each other.
                     Press any piano key or tap a guitar string on any fret and you will see the corresponding key/fret on another instrument.
                 </p>
                 <p>For guitar/bass it also shows where the same note on other strings is located.</p>
-                <p>Click/tap once to hightlight the note and click/tap it again to turn off. The same notes have the same color but notes in lower octaves have higher saturation.</p>
+                <p>Click/tap once to hightlight the note and click/tap it again to turn off. The same notes have the same color but notes in higher octaves have higher lightness.</p>
 
                 <h2>Piano</h2>
                 <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
