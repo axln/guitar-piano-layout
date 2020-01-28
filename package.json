@@ -24,6 +24,7 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
   },
+  "repository": "git@github.com:axln/guitar-piano-layout.git",
   "author": "Alexey Nesterenko <alexei.ne@gmail.com>",
   "license": "MIT"
 }
