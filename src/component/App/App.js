@@ -34,7 +34,7 @@ class App extends React.Component {
             this.setState({pitches: pitches});
         }*/
 
-        if (state == 'down') {
+        if (state === 'down') {
             const idx = this.state.pitches.indexOf(pitch);
             const pitches = this.state.pitches.slice();
             if (idx >= 0) {
@@ -46,13 +46,13 @@ class App extends React.Component {
         }
 
         let note = Helper.pitchToNote(pitch);
-        if (state == 'down') {
+        if (state === 'down') {
             //console.log(`note ${note}: ${freq.toFixed(2)} Hz (pitch: ${pitch}), ${state}`);
             console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
         }
-        if (state == 'down' && this.state.playSound) {
+        if (state === 'down' && this.state.playSound) {
             Helper.playNote(freq);
-        } else if (state == 'up'  && this.state.playSound) {
+        } else if (state === 'up'  && this.state.playSound) {
             Helper.stopNote(freq);
         }
     }
@@ -60,8 +60,6 @@ class App extends React.Component {
     toggleSound(e) {
         this.setState({playSound: e.target.checked});
     }
-    
-
 
     render() {
         // <div><GuitarNeck strings='G2,D2,A1,E1' /></div> bass guitar
@@ -82,9 +80,9 @@ class App extends React.Component {
 
                 <h2>Settings</h2>
                 <p>
-                <input id="playSound" type='checkbox' checked={this.state.playSound} onChange={this.toggleSound} /><label htmlFor="playSound">Play notes on click</label> 
-                </p>    
-                
+                    <input id="playSound" type='checkbox' checked={this.state.playSound} onChange={this.toggleSound} /><label htmlFor="playSound">Play notes on click</label>
+                </p>
+
                 <h2>Piano</h2>
                 <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
                 <div>

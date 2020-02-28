@@ -42,7 +42,7 @@ class StringNote extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    } 
+    }
 
     handleMouseDown() {
         this.props.onPitch(this.props.pitch, 'down');
@@ -77,18 +77,18 @@ class StringNote extends React.Component {
 
     render() {
         let note = Helper.pitchToNote(this.props.pitch);
-        let className = note.length == 2 ? 'note' : 'note black'; 
-        let style = {}
+        let className = note.length === 2 ? 'note' : 'note black';
+        let style = {};
         if (this.props.pushed) {
             className += ' pushed';
             style.fill = Helper.getPitchColor(this.props.pitch) + 'B0';
         }
-        2
+
         let fretX;
-        if (this.props.index == 0) {
-            fretX = 0; 
+        if (this.props.index === 0) {
+            fretX = 0;
         } else  if (this.props.index <= 16) {
-            fretX = Fret.getOffset(this.props.index) - 20; 
+            fretX = Fret.getOffset(this.props.index) - 20;
         } else {
             fretX = (Fret.getOffset(this.props.index) +  Fret.getOffset(this.props.index - 1)) / 2;
         }
@@ -136,7 +136,7 @@ class GuitarString extends React.Component {
     }
 
     getStringTickness(number) {
-        let baseFix = this.props.stringCount == 4 ? 2 : 0;
+        let baseFix = this.props.stringCount === 4 ? 2 : 0;
 
         switch(number) {
             case 1:
@@ -314,7 +314,7 @@ class GuitarNeck extends React.Component {
     render() {
         const viewBox = `0 0 ${NECK_WIDTH} ${NECK_HEIGHT}`;
         /*
-                
+
         */
        /*
                 <GuitarString number={1} openNote='G2' />
