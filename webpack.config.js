@@ -2,7 +2,7 @@ const path              = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
@@ -10,8 +10,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
+                resolve: {
+                    extensions: [".js", ".jsx"]
+                },
                 use: ["babel-loader"]
             },
             {
@@ -29,7 +32,7 @@ module.exports = {
     ],
     devServer: {
         compress: true,
-        host: '0.0.0.0',
+        //host: '0.0.0.0',
         port: 8080
       }
 };
