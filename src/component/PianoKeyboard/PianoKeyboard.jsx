@@ -20,22 +20,22 @@ export const altNoteNames = {
 
 export class PianoKeyboard extends React.Component {
     renderOctaves(parsedRange) {
-        let nextOffset = 0;
-        let octaves = [];
-
-        for (let octInfo of parsedRange) {
-            octaves.push(
+        return parsedRange.reduce((acc, octInfo) => {
+            acc.octaves.push(
                 <Octave
                     {...octInfo}
                     key = {'oct' + octInfo.number}
                     activePitches = {this.props.activePitches}
                     onPitch = {this.props.onPitch}
-                    baseKey = {nextOffset}
+                    baseKey = {acc.nextOffset}
                 />
             );
-            nextOffset += getOctSize(octInfo);
-        }
-        return octaves;
+            acc.nextOffset += getOctSize(octInfo);
+            return acc;
+        }, {
+            octaves: [],
+            nextOffset: 0
+        }).octaves;
     };
 
     render() {
@@ -52,7 +52,7 @@ export class PianoKeyboard extends React.Component {
             >
                 <defs>
                     <filter id='shadow'>
-                        <feGaussianBlur stdDeviation='2 2" result="shadow'/>
+                        <feGaussianBlur stdDeviation='2 2' result='shadow'/>
                         <feOffset dx='0' dy='0'/>
                     </filter>
                 </defs>
