@@ -1,6 +1,6 @@
 import React  from 'react';
 import { GuitarString } from './GuitarString';
-import { Fret } from './Fret'
+import { Fret, getOffset } from './Fret'
 import './GuitarNeck.less';
 
 export const NECK_WIDTH  = 1400;
@@ -42,7 +42,7 @@ export class GuitarNeck extends React.Component {
                 continue;
             }
             let fret = dotFrets[index];
-            let dotX = Math.round((Fret.getOffset(i) + Fret.getOffset(i+1)) / 2 - 1);
+            let dotX = Math.round((getOffset(i) + getOffset(i+1)) / 2 - 1);
             let dotRadius = 6;
             if (fret % 12 === 0) {
                 let dot1Pos = Math.round((GuitarString.getStringPos(1, this.stringCount) + GuitarString.getStringPos(2, this.stringCount)) / 2);

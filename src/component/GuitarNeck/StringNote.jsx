@@ -1,7 +1,7 @@
 import React  from 'react';
 import Helper from "../Helper";
 import { NECK_HEIGHT } from './GuitarNeck';
-import { Fret } from './Fret';
+import { Fret, getOffset } from './Fret';
 import { GuitarString } from './GuitarString';
 
 export class StringNote extends React.Component {
@@ -23,11 +23,11 @@ export class StringNote extends React.Component {
         }
     };
 
-    getPadCoord() {
+    getPadRect() {
         let fretPad = {};
 
-        fretPad.x = Fret.getOffset(this.props.index - 1);
-        fretPad.width = Fret.getOffset(this.props.index) - Fret.getOffset(this.props.index - 1);
+        fretPad.x = getOffset(this.props.index - 1);
+        fretPad.width = getOffset(this.props.index) - getOffset(this.props.index - 1);
 
         if (this.props.number === 1) {
             fretPad.y = 0;
@@ -55,32 +55,32 @@ export class StringNote extends React.Component {
         if (this.props.index === 0) {
             fretX = 0;
         } else  if (this.props.index <= 16) {
-            fretX = Fret.getOffset(this.props.index) - 20;
+            fretX = getOffset(this.props.index) - 20;
         } else {
-            fretX = (Fret.getOffset(this.props.index) +  Fret.getOffset(this.props.index - 1)) / 2;
+            fretX = (getOffset(this.props.index) +  getOffset(this.props.index - 1)) / 2;
         }
 
         let noteHeight = 13;
         let noteWidth = 21;
 
-        return(
+        return (
             <g
-                className={className}
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
-                onMouseLeave={this.handleMouseUp}
+                className = {className}
+                onMouseDown = {this.handleMouseDown}
+                onMouseUp = {this.handleMouseUp}
+                onMouseLeave = {this.handleMouseUp}
             >
                 <rect
-                    style={style}
-                    className='noteArea'
-                    {...this.getPadCoord(this.props.index)}
+                    style = {style}
+                    className = 'noteArea'
+                    {...this.getPadRect(this.props.index)}
                 />
                 <rect
-                    className='bk'
-                    x={Math.round(fretX - noteWidth / 2)}
-                    y={Math.round(GuitarString.getStringPos(this.props.number, this.props.stringCount) - noteHeight / 2)}
-                    width={noteWidth}
-                    height={noteHeight}
+                    className = 'bk'
+                    x = {Math.round(fretX - noteWidth / 2)}
+                    y = {Math.round(GuitarString.getStringPos(this.props.number, this.props.stringCount) - noteHeight / 2)}
+                    width = {noteWidth}
+                    height = {noteHeight}
                 />
                 <text
                     x={Math.round(fretX)}
