@@ -2,7 +2,7 @@
   "name": "piano-guitar-layout",
   "version": "0.1.1-dev",
   "description": "Learn piano keyboard and guitar fretboard.",
-  "main": "src/app.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack --mode production",
     "debug": "webpack-dev-server --mode development --hot"
