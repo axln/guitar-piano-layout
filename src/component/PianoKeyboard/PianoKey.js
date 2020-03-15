@@ -24,6 +24,4 @@ export class PianoKey extends React.Component {
             this.pushed = false;
         }
     };
-
-    render() {}
 }

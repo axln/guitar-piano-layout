@@ -41,7 +41,6 @@ export class PianoKeyboard extends React.Component {
     render() {
         let parsedOctaves = parseRange(this.props.range);
         let whiteKeysCount = parsedOctaves.reduce((acc, value) => {return acc + getOctSize(value)}, 0);
-        //console.log('white keys:', whiteKeysCount);
         const keyboardWidth = WHITE_WIDTH * whiteKeysCount;
         const viewBox = `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`;
         return (
