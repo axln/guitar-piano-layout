@@ -1,7 +1,7 @@
 import React  from 'react';
 import { NECK_HEIGHT, NECK_WIDTH, SIDE_MARGIN } from './GuitarNeck';
 
-export function getOffset(number) {
+export function getFretOffset(number) {
     if (number === 0) {
         return SIDE_MARGIN;
     } else if (number < 0) {
@@ -13,7 +13,7 @@ export function getOffset(number) {
 }
 
 export function Fret(props) {
-    const fretX = Math.round(getOffset(props.number));
+    const fretX = Math.round(getFretOffset(props.number));
 
     return (
         <g className='fret'>
