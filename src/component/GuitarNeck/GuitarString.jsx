@@ -1,7 +1,7 @@
 import React  from 'react';
-import { noteToPitch } from '../Helper';
+import { noteToPitch, seq } from '../Helper';
 import { StringNote } from './StringNote';
-import { NECK_WIDTH, NECK_HEIGHT, SIDE_MARGIN } from "./GuitarNeck";
+import { NECK_WIDTH, NECK_HEIGHT, SIDE_MARGIN } from './GuitarNeck';
 
 export function getStringPos(number, stringCount) {
     const stringSpace = Math.round((NECK_HEIGHT - SIDE_MARGIN * 2) / (stringCount - 1));
@@ -15,8 +15,6 @@ export function getBetweenStringPos(number1, number2, stringCount) {
 }
 
 export class GuitarString extends React.Component {
-
-
     getStringThickness(number) {
         let baseFix = this.props.stringCount === 4 ? 2 : 0;
 
@@ -37,23 +35,21 @@ export class GuitarString extends React.Component {
     }
 
     renderNotes() {
-        let notes = [];
         let openPitch = noteToPitch(this.props.openNote);
-        for (let i = 0; i <= 24; ++i) {
-            let pitch = openPitch + i;
-            notes.push(
+        return seq(0, 24).map(fret => {
+            let pitch = openPitch + fret;
+            return (
                 <StringNote
-                    number={this.props.number}
-                    stringCount={this.props.stringCount}
-                    index={i}
-                    onPitch={this.props.onPitch}
-                    pushed={this.props.activePitches.indexOf(pitch) >= 0}
+                    number = {this.props.number}
+                    stringCount = {this.props.stringCount}
+                    index = {fret}
+                    onPitch = {this.props.onPitch}
+                    pushed = {this.props.activePitches.indexOf(pitch) >= 0}
                     pitch = {pitch}
-                    key = {'n' + this.props.number + 'f' + i}
+                    key = {'n' + this.props.number + 'f' + fret}
                 />
             );
-        }
-        return notes;
+        });
     }
 
     render() {
@@ -61,7 +57,7 @@ export class GuitarString extends React.Component {
         return (
             <g className='string'>
                 <line
-                    className='string'
+                    className = 'string'
                     x1 = {-0.5}
                     y1 = {Math.round(getStringPos(this.props.number, this.props.stringCount)) + fix}
                     x2 = {NECK_WIDTH + 1.5}

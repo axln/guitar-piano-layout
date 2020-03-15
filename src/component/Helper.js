@@ -167,4 +167,14 @@ Helper.decodePitch = pitch => {
     return [octave, offset];
 };
 
+function* segGenerator(from, to) {
+    for (let i = from; i <= to; ++i) {
+        yield i;
+    }
+}
+
+export function seq(from, to) {
+    return Array.from(segGenerator(from, to))
+}
+
 export default Helper;

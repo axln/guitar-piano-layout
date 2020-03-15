@@ -26,5 +26,8 @@
   },
   "repository": "git@github.com:axln/guitar-piano-layout.git",
   "author": "Alexey Nesterenko <alexei.ne@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.8.3"
+  }
 }
