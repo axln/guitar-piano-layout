@@ -1,5 +1,5 @@
-import React  from "react";
-import Helper from '../Helper';
+import React  from 'react';
+import Helper, { parseRange, getOctSize } from '../Helper';
 import './PianoKeyboard.less';
 
 const WHITE_WIDTH  = 30;
@@ -20,14 +20,6 @@ const altNoteNames = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class PianoKey extends React.Component {
     pushed = false;
-    constructor(props) {
-        super(props);
-
-        //this.pushed = false;
-
-        this.handleMouseDown  = this.handleMouseDown.bind(this);
-        this.handleMouseUp    = this.handleMouseUp.bind(this);
-    }
 
     shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
@@ -39,22 +31,17 @@ class PianoKey extends React.Component {
         this.handleMouseUp();
     }*/
 
-    handleMouseDown() {
+    handleMouseDown = () => {
         this.props.onPitch(this.props.pitch, 'down');
         this.pushed = true;
-    }
+    };
 
-    handleMouseUp() {
+    handleMouseUp = () => {
         if (this.pushed) {
-            this.props.onPitch(this.props.pitch, 'up')
+            this.props.onPitch(this.props.pitch, 'up');
             this.pushed = false;
         }
-    }
-
-    getClass() {
-        let className = this.constructor.name;
-        return className;
-    }
+    };
 
     render() {}
 }
@@ -86,24 +73,40 @@ class WhiteKey extends PianoKey {
         if (this.props.pushed) {
             style.fill = Helper.getPitchColor(this.props.pitch) + 'A0';
         }
-//
+
         return (
             <g
-                className='WhiteKey'
-                onMouseLeave={this.handleMouseUp}
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
+                className = 'WhiteKey'
+                onMouseLeave = {this.handleMouseUp}
+                onMouseDown = {this.handleMouseDown}
+                onMouseUp = {this.handleMouseUp}
             >
                 <rect
-                    x={xPos + 0.5}
-                    y={0.5}
-                    style={style}
-                    width={WHITE_WIDTH}
-                    height={WHITE_HEIGHT}
+                    x = {xPos + 0.5}
+                    y = {0.5}
+                    style = {style}
+                    width = {WHITE_WIDTH}
+                    height = {WHITE_HEIGHT}
                 />
-                <text x={Math.round(xPos + WHITE_WIDTH / 2)} y={WHITE_HEIGHT - 50}>{this.getNoteNumber(this.props.index)}</text>
-                <text x={Math.round(xPos + WHITE_WIDTH / 2)} y={WHITE_HEIGHT - 30}>{Helper.pitchToNote(this.props.pitch)}</text>
-                <text style={{backgroundColor: 'white'}} x={Math.round(xPos + WHITE_WIDTH / 2)} y={WHITE_HEIGHT - 10}>{this.getAltName()}</text>
+                <text
+                    x = {Math.round(xPos + WHITE_WIDTH / 2)}
+                    y = {WHITE_HEIGHT - 50}
+                >
+                    {this.getNoteNumber(this.props.index)}
+                </text>
+                <text
+                    x = {Math.round(xPos + WHITE_WIDTH / 2)}
+                    y = {WHITE_HEIGHT - 30}
+                >
+                    {Helper.pitchToNote(this.props.pitch)}
+                </text>
+                <text
+                    style = {{backgroundColor: 'white'}}
+                    x = {Math.round(xPos + WHITE_WIDTH / 2)}
+                    y = {WHITE_HEIGHT - 10}
+                >
+                    {this.getAltName()}
+                </text>
             </g>
         );
     }
@@ -247,20 +250,20 @@ class Octave extends React.Component {
             }
         }
 
-        let blackKeys = Helper.BLACK_NOTES.split('').map((note, index) => {
+        const blackKeys = Array.from(Helper.BLACK_NOTES).map((note, index) => {
             if (index >= startBlackIndex && index <= stopBlackIndex) {
                 let keyPitch = Helper.octNoteToPitch(this.props.number, Helper.getBlackIterval(index));
                 return (
                     <BlackKey
-                        key={'b' + index}
-                        baseKey={this.props.baseKey !== undefined  ? this.props.baseKey : this.props.number * 7}
-                        keyOffset={this.getKeyOffset()}
-                        pushed={this.props.activePitches.indexOf(keyPitch) >=0}
-                        pitch={keyPitch}
-                        octave={this.props.number}
-                        index={index}
-                        note={note + '#'}
-                        onPitch={this.props.onPitch}
+                        key = {'b' + index}
+                        baseKey = {this.props.baseKey !== undefined  ? this.props.baseKey : this.props.number * 7}
+                        keyOffset = {this.getKeyOffset()}
+                        pushed = {this.props.activePitches.indexOf(keyPitch) >=0}
+                        pitch = {keyPitch}
+                        octave = {this.props.number}
+                        index = {index}
+                        note = {note + '#'}
+                        onPitch = {this.props.onPitch}
                     />
                 );
             } else {
@@ -271,7 +274,11 @@ class Octave extends React.Component {
     }
 
     render() {
-        let textX = (this.props.baseKey !== undefined  ? this.props.baseKey * WHITE_WIDTH : this.props.number * 7 * WHITE_WIDTH);
+        let textX = (
+            this.props.baseKey !== undefined
+                ? this.props.baseKey * WHITE_WIDTH
+                : this.props.number * 7 * WHITE_WIDTH
+        );
         return (
             <g className="octave" id={'oct' + this.props.number}>
                 {this.renderWhiteKeys()}
@@ -283,34 +290,39 @@ class Octave extends React.Component {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class PianoKeyboard extends React.Component {
+export class PianoKeyboard extends React.Component {
     renderOctaves(parsedRange) {
         let nextOffset = 0;
         let octaves = [];
 
-        for(let octInfo of parsedRange) {
+        for (let octInfo of parsedRange) {
             octaves.push(
                 <Octave
                     {...octInfo}
-                    key={'oct' + octInfo.number}
-                    activePitches={this.props.activePitches}
-                    onPitch={this.props.onPitch}
-                    baseKey={nextOffset}
+                    key = {'oct' + octInfo.number}
+                    activePitches = {this.props.activePitches}
+                    onPitch = {this.props.onPitch}
+                    baseKey = {nextOffset}
                 />
             );
-            nextOffset += Helper.getOctSize(octInfo);
+            nextOffset += getOctSize(octInfo);
         }
         return octaves;
     };
 
     render() {
-        let parsedOctaves = Helper.parseRange(this.props.range);
-        let whiteKeysCount = parsedOctaves.reduce((acc, value) => {return acc + Helper.getOctSize(value)}, 0);
+        let parsedOctaves = parseRange(this.props.range);
+        let whiteKeysCount = parsedOctaves.reduce((acc, value) => {return acc + getOctSize(value)}, 0);
         //console.log('white keys:', whiteKeysCount);
         const keyboardWidth = WHITE_WIDTH * whiteKeysCount;
         const viewBox = `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`;
         return (
-            <svg className='piano-keyboard' width={keyboardWidth} height={WHITE_HEIGHT} viewBox={viewBox}>
+            <svg
+                className='piano-keyboard'
+                width={keyboardWidth}
+                height={WHITE_HEIGHT}
+                viewBox={viewBox}
+            >
                 <defs>
                     <filter id="shadow">
                         <feGaussianBlur stdDeviation="2 2" result="shadow"/>
@@ -322,5 +334,3 @@ class PianoKeyboard extends React.Component {
         );
     }
 }
-
-export {PianoKeyboard};

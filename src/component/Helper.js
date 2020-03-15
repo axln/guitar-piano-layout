@@ -1,6 +1,6 @@
 const Helper = {
     oscillators: [],
-    context    : null    
+    context    : null
 };
 
 Helper.CHROMATIC_SCALE = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -9,9 +9,9 @@ Helper.WHITE_NOTES = 'CDEFGAB';
 Helper.BLACK_NOTES = 'CDFGA';
 Helper.BLACK_NOTES_FLAT = 'DEGAB';
 
-Helper.noteToPitch = function (fullNote) {
+export function noteToPitch(fullNote) {
     let note, octave;
-    if (fullNote.length == 2) {
+    if (fullNote.length === 2) {
         [note, octave] = fullNote;
     } else {
         let sharp;
@@ -37,19 +37,19 @@ Helper.getPitchColor = pitch => {
     let l = Math.min(45 + absPitch / 2, 96);
     //console.log(`pitch: ${absPitch} octave: ${octave}, offset: ${offset}, hue: ${hue}, l: ${l}`);
     return Helper.HSLtoRGB(hue,95, l);
-}
+};
 
 Helper.HSLtoRGB = (h,s,l) => {
     s /= 100;
     l /= 100;
-  
+
     let c = (1 - Math.abs(2 * l - 1)) * s,
         x = c * (1 - Math.abs((h / 60) % 2 - 1)),
         m = l - c/2,
         r = 0,
         g = 0,
         b = 0;
-  
+
     if (0 <= h && h < 60) {
       r = c; g = x; b = 0;
     } else if (60 <= h && h < 120) {
@@ -67,7 +67,7 @@ Helper.HSLtoRGB = (h,s,l) => {
     r = Math.round((r + m) * 255).toString(16);
     g = Math.round((g + m) * 255).toString(16);
     b = Math.round((b + m) * 255).toString(16);
-  
+
     // Prepend 0s, if necessary
     if (r.length == 1)
       r = "0" + r;
@@ -75,9 +75,9 @@ Helper.HSLtoRGB = (h,s,l) => {
       g = "0" + g;
     if (b.length == 1)
       b = "0" + b;
-  
+
     return "#" + r + g + b;
-}
+};
 
 Helper.getWhiteInterval = function (keyIndex) {
     if (keyIndex < 3) {
@@ -102,9 +102,9 @@ Helper.pitchToNote = function (pitch) {
     return note + octave;
 };
 
-Helper.parseRange = function (range) {
+export function parseRange(range) {
     let [start, end] = range.split('-');
-    let [startPitch, stopPitch] = [Helper.noteToPitch(start) + Helper.A4_PITCH_OFFSET, Helper.noteToPitch(end) + Helper.A4_PITCH_OFFSET];
+    let [startPitch, stopPitch] = [noteToPitch(start) + Helper.A4_PITCH_OFFSET, noteToPitch(end) + Helper.A4_PITCH_OFFSET];
     let [startOctave, startNote] = Helper.decodePitch(startPitch);
     let [endOctave, endNote] = Helper.decodePitch(stopPitch);
     let octaves = [];
@@ -124,7 +124,7 @@ Helper.parseRange = function (range) {
     return octaves;
 }
 
-Helper.getOctSize = function (octInfo) {
+ export function getOctSize(octInfo) {
     let size = 7;
     if (octInfo.startFrom !== undefined) {
         size -= Helper.WHITE_NOTES.indexOf(octInfo.startFrom);
@@ -141,30 +141,30 @@ Helper.playNote = function (freq) {
         this.context = new AudioContext();
     }
 
-    this.oscillators[freq] = this.context.createOscillator(); 
+    this.oscillators[freq] = this.context.createOscillator();
     this.oscillators[freq].frequency.value = freq;
     this.oscillators[freq].connect(this.context.destination);
     this.oscillators[freq].start(this.context.currentTime);
-}
- 
+};
+
 Helper.stopNote = function (freq) {
     //console.log('stop note:', freq);
     this.oscillators[freq].stop(this.context.currentTime);
     this.oscillators[freq].disconnect();
-}
+};
 
 Helper.midiNoteToFrequency = note => {
     return Math.pow(2, ((note - 69) / 12)) * 440;
-}
+};
 
 Helper.noteToFrequency = note => {
     return 440 * Math.pow(2, note / 12);
-}
+};
 
 Helper.decodePitch = pitch => {
     let octave = Math.floor(pitch / 12);
     let offset = pitch % 12;
     return [octave, offset];
-}
+};
 
 export default Helper;
