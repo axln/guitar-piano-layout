@@ -18,7 +18,7 @@ export function App({playSound, setPlaySound}) {
                     <input
                         type = 'checkbox'
                         checked = {playSound}
-                        onChange = {e => setPlaySound(e.target.value)}
+                        onChange = {e => setPlaySound(e.target.checked)}
                     />
                     Play notes on click
                 </label>
