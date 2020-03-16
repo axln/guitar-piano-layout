@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { App } from '../component/App/App';
-import { setPlaySound } from '../store/action';
+import { setPlaySound, setBaseBassTuning, setBassTuning } from '../store/action';
 
 const wrappedApp = connect(
     ({
@@ -12,7 +12,7 @@ const wrappedApp = connect(
         guitarTuning,
         bassTuning
     }),
-    { setPlaySound }
+    { setPlaySound, setBaseBassTuning, setBassTuning }
 )(App);
 
 export { wrappedApp as App };

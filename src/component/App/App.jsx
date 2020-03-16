@@ -3,9 +3,12 @@ import { PianoKeyboard } from '../Piano/PianoKeyboard';
 import { GuitarNeck } from '../Guitar/GuitarNeck';
 import { GuitarTuner } from '../../container/GuitarTuner';
 import { BassTuner } from '../../container/BassTuner';
-import './App.less';
+import { BASS_TUNING, BASS_TUNING_5_STRING } from '../../store/reducer';
 
-export function App({playSound, setPlaySound, guitarTuning, bassTuning}) {
+import './App.less';
+import {setBaseBassTuning, setBassTuning} from "../../store/action";
+
+export function App({playSound, setPlaySound, guitarTuning, bassTuning, setBaseBassTuning, setBassTuning}) {
     // <div><Piano range='C2-B5' /></div>
     // <div><Piano range='C2-C7'/></div> 61 key synth
     // <div><Piano range='E2-E6'/></div> guitar range
@@ -44,7 +47,17 @@ export function App({playSound, setPlaySound, guitarTuning, bassTuning}) {
                 <GuitarNeck strings={guitarTuning}/>
             </div>
 
-            <h2>Bass Guitar</h2>
+            <h2>
+                Bass Guitar&nbsp;
+                <select onChange={e => {
+                    setBaseBassTuning(e.target.value);
+                    setBassTuning(e.target.value);
+
+                }}>
+                    <option value={BASS_TUNING}>4 strings</option>
+                    <option value={BASS_TUNING_5_STRING}>5 strings</option>
+                </select>
+            </h2>
             <div>
                 Tuning:&nbsp;<BassTuner/>
             </div>
