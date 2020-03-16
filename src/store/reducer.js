@@ -15,7 +15,7 @@ export function pitches(pitches = [], action) {
 
             let note = pitchToNote(pitch);
             let freq = pitchToFrequency(pitch);
-            console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
+            //console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
         }
         return newPitches;
     } else {

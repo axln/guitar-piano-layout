@@ -12,7 +12,8 @@ export function playNote(pitch) {
     if (!store.getState().playSound) {
         return;
     }
-    console.log('play note:', freq);
+
+    //console.log('play note:', freq);
 
     if (!context) {
         context = new AudioContext();

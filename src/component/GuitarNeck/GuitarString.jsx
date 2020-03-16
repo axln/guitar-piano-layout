@@ -14,29 +14,27 @@ export function getBetweenStringPos(number1, number2, stringCount) {
     return (str1pos + str2pos) / 2;
 }
 
-export class GuitarString extends React.Component {
-    getStringThickness(number) {
-        const { stringCount } = this.props;
-        let baseFix = stringCount === 4 ? 2 : 0;
+function getStringThickness(number, stringCount) {
+    let baseFix = stringCount === 4 ? 2 : 0;
 
-        switch(number) {
-            case 1:
-                return [1 + baseFix, 0.5];
-            case 2:
-                return [1.5 + baseFix, 0.5];
-            case 3:
-                return [2 + baseFix, 0];
-            case 4:
-                return [2.5 + baseFix,0];
-            case 5:
-                return [3 + baseFix, 0.5];
-            case 6:
-                return [3.5 + baseFix, 0];
-        }
+    switch(number) {
+        case 1:
+            return [1 + baseFix, 0.5];
+        case 2:
+            return [1.5 + baseFix, 0.5];
+        case 3:
+            return [2 + baseFix, 0];
+        case 4:
+            return [2.5 + baseFix,0];
+        case 5:
+            return [3 + baseFix, 0.5];
+        case 6:
+            return [3.5 + baseFix, 0];
     }
+}
 
-    renderNotes() {
-        const { openNote, stringCount, number, pitches } = this.props;
+export function GuitarString({ openNote, stringCount, number, pitches }) {
+    function renderNotes() {
         let openPitch = noteToPitch(openNote);
         return seq(0, 24).map(fretNumber => (
             <StringNote
@@ -50,21 +48,19 @@ export class GuitarString extends React.Component {
         ));
     }
 
-    render() {
-        const { number, stringCount } = this.props;
-        const [thickness, fix] = this.getStringThickness(number);
-        return (
-            <g className='string'>
-                <line
-                    className = 'string'
-                    x1 = {-0.5}
-                    y1 = {Math.round(getStringPos(number, stringCount)) + fix}
-                    x2 = {NECK_WIDTH + 1.5}
-                    y2 = {Math.round(getStringPos(number, stringCount)) + fix}
-                    strokeWidth = {thickness}
-                />
-                {this.renderNotes()}
-            </g>
-        );
-    }
+    const [thickness, fix] = getStringThickness(number, stringCount);
+
+    return (
+        <g className='string'>
+            <line
+                className = 'string'
+                x1 = {-0.5}
+                y1 = {Math.round(getStringPos(number, stringCount)) + fix}
+                x2 = {NECK_WIDTH + 1.5}
+                y2 = {Math.round(getStringPos(number, stringCount)) + fix}
+                strokeWidth = {thickness}
+            />
+            {renderNotes()}
+        </g>
+    );
 }

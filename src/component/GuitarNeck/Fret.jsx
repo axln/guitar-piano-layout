@@ -12,8 +12,8 @@ export function getFretOffset(number) {
     }
 }
 
-export function Fret(props) {
-    const fretX = Math.round(getFretOffset(props.number));
+export function Fret({ number }) {
+    const fretX = Math.round(getFretOffset(number));
 
     return (
         <g className='fret'>
@@ -28,7 +28,7 @@ export function Fret(props) {
                 x = {fretX - 15}
                 y={NECK_HEIGHT + 15}
             >
-                {props.number}
+                {number}
             </text>
         </g>
     );

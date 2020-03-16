@@ -21,7 +21,6 @@ export function Dot({ fret, stringCount }) {
                 <circle {...props} cy = {dot2Pos}/>
             </>
         );
-
     } else {
         return (
             <circle {...props} cy = {NECK_HEIGHT / 2}/>

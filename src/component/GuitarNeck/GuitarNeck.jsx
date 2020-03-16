@@ -2,7 +2,7 @@ import React from 'react';
 import { GuitarString } from '../../container/GuitarString';
 import { Fret } from './Fret'
 import { Dot } from './Dot';
-import { seq } from "../../lib/Helper";
+import { seq } from '../../lib/Helper';
 import './GuitarNeck.less';
 
 export const NECK_WIDTH  = 1400;
@@ -11,10 +11,7 @@ export const SIDE_MARGIN = 10;
 
 function renderFrets() {
     return seq(1,24).map(fret => (
-        <Fret
-            key = {'f'+ (fret)}
-            number = {fret}
-        />
+        <Fret key = {'f'+ (fret)} number = {fret}/>
     ));
 }
 

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    BLACK_NOTES,
-    BLACK_NOTES_FLAT,
-    getPitchColor,
-    pitchToNote,
-    getBlackInterval
-} from "../../lib/Helper";
+import { BLACK_NOTES, BLACK_NOTES_FLAT, getPitchColor, getBlackInterval } from '../../lib/Helper';
 import { PianoKey } from './PianoKey';
 import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from './PianoKeyboard';
 
@@ -30,7 +24,6 @@ export class BlackKey extends PianoKey {
     }
 
     getAltName() {
-        let note = pitchToNote(this.props.pitch);
         return BLACK_NOTES_FLAT[this.props.index] + '\u266D'
     }
 
@@ -40,7 +33,6 @@ export class BlackKey extends PianoKey {
         let style = {
             ...(pushed ? {fill: getPitchColor(pitch)} : {})
         };
-
 
         let xPos = this.getXPos();
 

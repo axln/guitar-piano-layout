@@ -26,7 +26,6 @@ export function getPitchColor(pitch) {
     let absPitch = pitch + A4_PITCH_OFFSET;
     let [_, offset] = decodePitch(absPitch);
 
-    //absPitch %= 88;
     const maxHue = 290;
     let hue = Math.round(offset / 12 * maxHue);
     hue %= maxHue;
