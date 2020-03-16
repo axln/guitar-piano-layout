@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { WhiteKey } from '../component/PianoKeyboard/WhiteKey';
+import { WhiteKey } from '../component/Piano/WhiteKey';
 import { togglePitch } from '../store/action';
 
 const wrappedWhiteKey = connect(

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { StringNote } from '../component/GuitarNeck/StringNote';
+import { StringNote } from '../component/Guitar/StringNote';
 import { togglePitch } from '../store/action';
 
 const wrappedStringNote = connect(

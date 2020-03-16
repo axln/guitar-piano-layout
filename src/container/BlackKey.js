@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { BlackKey } from '../component/PianoKeyboard/BlackKey';
+import { BlackKey } from '../component/Piano/BlackKey';
 import { togglePitch } from '../store/action';
 
 const wrappedBlackKey = connect(

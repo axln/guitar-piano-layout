@@ -6,9 +6,9 @@ import { getStringPos, getBetweenStringPos } from './GuitarString';
 import { stopNote } from '../../lib/SoundGenerator';
 
 export class StringNote extends React.Component {
-    shouldComponentUpdate(nextProps) {
+    /*shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    }
+    }*/
 
     handleMouseDown = () => {
         const { togglePitch, pitch } = this.props;

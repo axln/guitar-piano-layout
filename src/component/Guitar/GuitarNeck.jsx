@@ -26,11 +26,12 @@ function renderDots(stringCount) {
 }
 
 export function GuitarNeck({ strings }) {
-    const stringCount = strings.split(',').length;
+    const stringNotes = strings.split(' ').reverse();
+    const stringCount = stringNotes.length;
     const viewBox = `0 0 ${NECK_WIDTH} ${NECK_HEIGHT}`;
 
     function renderStrings() {
-        return strings.split(',').map((note, index) => {
+        return stringNotes.map((note, index) => {
             let number = index + 1;
             return (<GuitarString
                 key = {'s' + number}

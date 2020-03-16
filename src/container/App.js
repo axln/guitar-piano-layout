@@ -3,7 +3,15 @@ import { App } from '../component/App/App';
 import { setPlaySound } from '../store/action';
 
 const wrappedApp = connect(
-    ({ playSound }) => ({ playSound }),
+    ({
+         playSound,
+         guitarTuning,
+         bassTuning
+    }) => ({
+        playSound,
+        guitarTuning,
+        bassTuning
+    }),
     { setPlaySound }
 )(App);
 

@@ -137,7 +137,11 @@ function decodePitch(pitch) {
 }
 
 function* segGenerator(from, to) {
-    for (let i = from; i <= to; ++i) {
+    for (
+        let i = from;
+        to > from ? i <= to : i >= to;
+        i += to > from ? 1 : -1)
+    {
         yield i;
     }
 }
