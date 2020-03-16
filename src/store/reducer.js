@@ -2,6 +2,10 @@ import {TOGGLE_PITCH, SET_PLAY_SOUND, SET_GUITAR_TUNING, SET_BASS_TUNING} from '
 import { pitchToNote } from '../lib/Helper';
 import { pitchToFrequency } from '../lib/SoundGenerator';
 
+const GUITAR_TUNING = 'E2 A2 D3 G3 B3 E4';
+const BASS_TUNING = 'E1 A1 D2 G2';
+const BASS_TUNING_5_STRING = 'B0 E1 A1 D2 G2';
+
 export function pitches(pitches = [], action) {
     if (action.type === TOGGLE_PITCH) {
         const { payload: pitch } = action;
@@ -31,11 +35,11 @@ export function playSound(enabled = false, action) {
     }
 }
 
-export function baseGuitarTuning(state = 'E2 A2 D3 G3 B3 E4', action) {
+export function baseGuitarTuning(state = GUITAR_TUNING, action) {
     return state;
 }
 
-export function guitarTuning(state = 'E2 A2 D3 G3 B3 E4', action) {
+export function guitarTuning(state = GUITAR_TUNING, action) {
     if (action.type === SET_GUITAR_TUNING) {
         return action.payload;
     } else {
@@ -43,12 +47,11 @@ export function guitarTuning(state = 'E2 A2 D3 G3 B3 E4', action) {
     }
 }
 
-export function baseBassTuning(state = 'E1 A1 D2 G2', action) {
+export function baseBassTuning(state = BASS_TUNING, action) {
     return state;
 }
 
-
-export function bassTuning(state = 'E1 A1 D2 G2', action) {
+export function bassTuning(state = BASS_TUNING, action) {
     if (action.type === SET_BASS_TUNING) {
         return action.payload;
     } else {
