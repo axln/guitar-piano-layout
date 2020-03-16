@@ -1,5 +1,11 @@
 import React from 'react';
-import Helper from '../Helper';
+import {
+    WHITE_NOTES,
+    BLACK_NOTES,
+    octNoteToPitch,
+    getWhiteInterval,
+    getBlackInterval
+} from '../../lib/Helper';
 import { WHITE_WIDTH } from './PianoKeyboard';
 import { WhiteKey } from '../../container/WhiteKey'
 import { BlackKey } from '../../container/BlackKey';
@@ -7,26 +13,27 @@ import { BlackKey } from '../../container/BlackKey';
 function getKeyOffset(startFrom) {
     let offset = 0;
     if (startFrom) {
-        offset -= Helper.WHITE_NOTES.indexOf(startFrom);
+        offset -= WHITE_NOTES.indexOf(startFrom);
     }
     return offset;
 }
 
 export class Octave extends React.Component {
     renderWhiteKeys() {
-        const { startFrom, endAt, number, baseKey } = this.props;
+        const { startFrom, endAt, number, baseKey, pitches } = this.props;
 
-        let startWhiteIndex = startFrom ? Helper.WHITE_NOTES.indexOf(startFrom) : 0;
-        let stopWhiteIndex = endAt ? Helper.WHITE_NOTES.indexOf(endAt) : 6;
+        let startWhiteIndex = startFrom ? WHITE_NOTES.indexOf(startFrom) : 0;
+        let stopWhiteIndex = endAt ? WHITE_NOTES.indexOf(endAt) : 6;
 
-        return Array.from(Helper.WHITE_NOTES).map((note, index) => {
+        return Array.from(WHITE_NOTES).map((note, index) => {
             if (index >= startWhiteIndex && index <= stopWhiteIndex) {
-                let keyPitch = Helper.octNoteToPitch(number, Helper.getWhiteInterval(index));
+                let keyPitch = octNoteToPitch(number, getWhiteInterval(index));
                 return (
                     <WhiteKey
                         key = {'w' + index}
                         index = {index}
                         pitch = {keyPitch}
+                        pushed = { pitches.includes(keyPitch) }
                         baseKey = {baseKey !== undefined  ? baseKey : number * 7}
                         keyOffset = {getKeyOffset(startFrom)}
                     />
@@ -38,7 +45,7 @@ export class Octave extends React.Component {
     }
 
     renderBlackKeys() {
-        const { startFrom, endAt, number, baseKey } = this.props;
+        const { startFrom, endAt, number, baseKey, pitches } = this.props;
         let startBlackIndex = 0;
         if (startFrom) {
             switch(startFrom) {
@@ -86,15 +93,16 @@ export class Octave extends React.Component {
             }
         }
 
-        return Array.from(Helper.BLACK_NOTES).map((note, index) => {
+        return Array.from(BLACK_NOTES).map((note, index) => {
             if (index >= startBlackIndex && index <= stopBlackIndex) {
-                let keyPitch = Helper.octNoteToPitch(number, Helper.getBlackIterval(index));
+                let keyPitch = octNoteToPitch(number, getBlackInterval(index));
                 return (
                     <BlackKey
                         key = {'b' + index}
                         baseKey = {baseKey !== undefined  ? baseKey : number * 7}
                         keyOffset = {getKeyOffset(startFrom)}
                         pitch = {keyPitch}
+                        pushed = {pitches.includes(keyPitch)}
                         octave = {number}
                         index = {index}
                         note = {note + '#'}

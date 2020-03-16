@@ -1,25 +1,19 @@
 import React from 'react';
+import { stopNote, playNote } from '../../lib/SoundGenerator';
 
 export class PianoKey extends React.Component {
-    pushed = false;
-
-    /*shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    }*/
-
-    /*handleMouseLeave() {
-        this.handleMouseUp();
-    }*/
+    }
 
     handleMouseDown = () => {
-        this.props.onPitch(this.props.pitch, 'down');
-        this.pushed = true;
+        const { togglePitch, pitch } = this.props;
+        togglePitch(pitch);
+        playNote(pitch);
     };
 
     handleMouseUp = () => {
-        if (this.pushed) {
-            this.props.onPitch(this.props.pitch, 'up');
-            this.pushed = false;
-        }
+        const { pitch } = this.props;
+        stopNote(pitch);
     };
 }

@@ -1,5 +1,5 @@
 import React  from 'react';
-import { noteToPitch, seq } from '../Helper';
+import { noteToPitch, seq } from '../../lib/Helper';
 import { StringNote } from '../../container/StringNote'
 import { NECK_WIDTH, NECK_HEIGHT, SIDE_MARGIN } from './GuitarNeck';
 
@@ -36,15 +36,16 @@ export class GuitarString extends React.Component {
     }
 
     renderNotes() {
-        const { openNote, stringCount, number } = this.props;
+        const { openNote, stringCount, number, pitches } = this.props;
         let openPitch = noteToPitch(openNote);
         return seq(0, 24).map(fretNumber => (
             <StringNote
                 key = {`s${number}f${fretNumber}`}
-                number = { number }
+                number = {number}
                 stringCount = { stringCount }
-                index = { fretNumber }
-                pitch = { openPitch + fretNumber }
+                pushed = {pitches.includes(openPitch + fretNumber)}
+                index = {fretNumber}
+                pitch = {openPitch + fretNumber}
             />
         ));
     }

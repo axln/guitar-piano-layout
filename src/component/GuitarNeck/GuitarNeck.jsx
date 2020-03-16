@@ -1,8 +1,8 @@
 import React from 'react';
-import { GuitarString } from './GuitarString';
+import { GuitarString } from '../../container/GuitarString';
 import { Fret } from './Fret'
 import { Dot } from './Dot';
-import { seq } from "../Helper";
+import { seq } from "../../lib/Helper";
 import './GuitarNeck.less';
 
 export const NECK_WIDTH  = 1400;

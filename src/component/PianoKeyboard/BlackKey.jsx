@@ -1,5 +1,11 @@
 import React from 'react';
-import Helper from "../Helper";
+import {
+    BLACK_NOTES,
+    BLACK_NOTES_FLAT,
+    getPitchColor,
+    pitchToNote,
+    getBlackInterval
+} from "../../lib/Helper";
 import { PianoKey } from './PianoKey';
 import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from './PianoKeyboard';
 
@@ -15,7 +21,7 @@ export class BlackKey extends PianoKey {
     }
 
     getNoteNumber(keyNumber) {
-        return Helper.getBlackIterval(keyNumber);
+        return getBlackInterval(keyNumber);
     }
 
     getXPos() {
@@ -24,18 +30,19 @@ export class BlackKey extends PianoKey {
     }
 
     getAltName() {
-        let note = Helper.pitchToNote(this.props.pitch);
-        return Helper.BLACK_NOTES_FLAT[this.props.index] + '\u266D'
+        let note = pitchToNote(this.props.pitch);
+        return BLACK_NOTES_FLAT[this.props.index] + '\u266D'
     }
 
     render() {
+        const { pushed, pitch } = this.props;
+
+        let style = {
+            ...(pushed ? {fill: getPitchColor(pitch)} : {})
+        };
+
+
         let xPos = this.getXPos();
-
-        let style = {};
-
-        if (this.props.pitches.includes(this.props.pitch)) {
-            style.fill = Helper.getPitchColor(this.props.pitch);
-        }
 
         return (
             <g
@@ -52,7 +59,7 @@ export class BlackKey extends PianoKey {
                     height={BLACK_HEIGHT}
                 />
                 <text x={Math.round(xPos + BLACK_WIDTH / 2)} y={BLACK_HEIGHT - 50}>{this.getNoteNumber(this.props.index)}</text>
-                <text x={Math.round(xPos + BLACK_WIDTH / 2)} y={BLACK_HEIGHT - 30}>{Helper.BLACK_NOTES[this.props.index] + '\u266F'}</text>
+                <text x={Math.round(xPos + BLACK_WIDTH / 2)} y={BLACK_HEIGHT - 30}>{BLACK_NOTES[this.props.index] + '\u266F'}</text>
                 <text x={Math.round(xPos + BLACK_WIDTH / 2)} y={BLACK_HEIGHT - 10}>{this.getAltName()}</text>
             </g>
         );

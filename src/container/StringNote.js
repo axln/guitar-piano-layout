@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { StringNote } from '../component/GuitarNeck/StringNote';
-import { onPitch, setPitch, unsetPitch } from '../store/action';
+import { togglePitch } from '../store/action';
 
 const wrappedStringNote = connect(
-    ({ pitches }) => ({ pitches }),
-    { onPitch, setPitch, unsetPitch }
+    ({ }) => ({ }),
+    { togglePitch }
 )(StringNote);
 
 export { wrappedStringNote as StringNote };

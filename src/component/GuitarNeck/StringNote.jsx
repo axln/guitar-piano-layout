@@ -1,31 +1,22 @@
 import React from 'react';
-import Helper from '../Helper';
+import { pitchToNote, getPitchColor} from '../../lib/Helper';
 import { NECK_HEIGHT } from './GuitarNeck';
 import { getFretOffset } from './Fret';
 import { getStringPos, getBetweenStringPos } from './GuitarString';
+import { stopNote } from '../../lib/SoundGenerator';
 
 export class StringNote extends React.Component {
-    pushed = false;
-
-    /*shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    }*/
+    }
 
     handleMouseDown = () => {
-        const { pitch, pitches, setPitch, unsetPitch } = this.props;
-        if (pitches.includes(pitch)) {
-            unsetPitch(pitch)
-        } else {
-            setPitch(pitch);
-        }
-        this.pushed = true;
+        const { togglePitch, pitch } = this.props;
+        togglePitch(pitch);
     };
 
     handleMouseUp = () => {
-        if (this.pushed) {
-            this.props.onPitch(this.props.pitch, 'up');
-            this.pushed = false;
-        }
+        stopNote(this.props.pitch);
     };
 
     getPadRect() {
@@ -50,13 +41,13 @@ export class StringNote extends React.Component {
     }
 
     render() {
-        const { pitch, pitches, index, stringCount, number } = this.props;
-        let note = Helper.pitchToNote(pitch);
+        const { pitch, pushed, index, stringCount, number } = this.props;
+        let note = pitchToNote(pitch);
         let className = note.length === 2 ? 'note' : 'note black';
         let style = {};
-        if (pitches.includes(pitch)) {
+        if (pushed) {
             className += ' pushed';
-            style.fill = Helper.getPitchColor(pitch) + 'B0';
+            style.fill = getPitchColor(pitch) + 'B0';
         }
 
         let fretX;

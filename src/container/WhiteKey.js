@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { WhiteKey } from '../component/PianoKeyboard/WhiteKey';
-import { onPitch } from '../store/action';
+import { togglePitch } from '../store/action';
 
 const wrappedWhiteKey = connect(
-    ({ pitches }) => ({ pitches }),
-    { onPitch}
+    ({}) => ({}),
+    { togglePitch }
 )(WhiteKey);
 
 export { wrappedWhiteKey as WhiteKey };

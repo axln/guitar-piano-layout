@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { BlackKey } from '../component/PianoKeyboard/BlackKey';
-import { onPitch } from '../store/action';
+import { togglePitch } from '../store/action';
 
 const wrappedBlackKey = connect(
-    ({ pitches }) => ({ pitches }),
-    { onPitch }
+    ({}) => ({}),
+    { togglePitch }
 )(BlackKey);
 
 export { wrappedBlackKey as BlackKey };

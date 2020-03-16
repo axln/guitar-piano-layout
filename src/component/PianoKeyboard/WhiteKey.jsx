@@ -1,11 +1,11 @@
 import React from 'react';
 import { PianoKey } from './PianoKey';
-import Helper from '../Helper';
+import { getPitchColor, pitchToNote, getWhiteInterval } from '../../lib/Helper';
 import { WHITE_HEIGHT, WHITE_WIDTH, altNoteNames } from './PianoKeyboard';
 
 export class WhiteKey extends PianoKey {
     getNoteNumber(keyIndex) {
-        return Helper.getWhiteInterval(keyIndex);
+        return getWhiteInterval(keyIndex);
     }
 
     getXPos() {
@@ -14,21 +14,22 @@ export class WhiteKey extends PianoKey {
     }
 
     getAltName() {
-        let note = Helper.pitchToNote(this.props.pitch);
+        let note = pitchToNote(this.props.pitch);
         return altNoteNames[note[0]];
     }
 
     render() {
+        const { pushed, pitch, index } = this.props;
         /*let style = {
             'strokeDasharray': `${width},${this.props.height},${this.props.height + width}`
         };*/
 
+
+        let style = {
+            ...(pushed ? {fill: getPitchColor(pitch) + 'A0'} : {} )
+        };
+
         let xPos = this.getXPos();
-        let style = {};
-        const pushed = this.props.pitches.includes(this.props.pitch);
-        if (pushed) {
-            style.fill = Helper.getPitchColor(this.props.pitch) + 'A0';
-        }
 
         return (
             <g
@@ -48,13 +49,13 @@ export class WhiteKey extends PianoKey {
                     x = {Math.round(xPos + WHITE_WIDTH / 2)}
                     y = {WHITE_HEIGHT - 50}
                 >
-                    {this.getNoteNumber(this.props.index)}
+                    {this.getNoteNumber(index)}
                 </text>
                 <text
                     x = {Math.round(xPos + WHITE_WIDTH / 2)}
                     y = {WHITE_HEIGHT - 30}
                 >
-                    {Helper.pitchToNote(this.props.pitch)}
+                    {pitchToNote(pitch)}
                 </text>
                 <text
                     style = {{backgroundColor: 'white'}}

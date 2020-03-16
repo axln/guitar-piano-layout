@@ -1,6 +1,6 @@
 import React  from 'react';
-import { parseRange, getOctSize } from '../Helper';
-import { Octave } from './Octave';
+import { parseRange, getOctSize } from '../../lib/Helper';
+import { Octave } from '../../container/Octave';
 import './PianoKeyboard.less';
 
 export const WHITE_WIDTH  = 30;
