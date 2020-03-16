@@ -17,7 +17,7 @@ export function getBetweenStringPos(number1, number2, stringCount) {
 function getStringThickness(number, stringCount) {
     let baseFix = stringCount === 4 ? 2 : 0;
 
-    switch(number) {
+    switch (number) {
         case 1:
             return [1 + baseFix, 0.5];
         case 2:
@@ -30,6 +30,10 @@ function getStringThickness(number, stringCount) {
             return [3 + baseFix, 0.5];
         case 6:
             return [3.5 + baseFix, 0];
+        case 7:
+            return [3.5 + baseFix, 0.5];
+        case 8:
+            return [4.0 + baseFix, 0];
     }
 }
 

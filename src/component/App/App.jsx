@@ -3,12 +3,14 @@ import { PianoKeyboard } from '../Piano/PianoKeyboard';
 import { GuitarNeck } from '../Guitar/GuitarNeck';
 import { GuitarTuner } from '../../container/GuitarTuner';
 import { BassTuner } from '../../container/BassTuner';
-import { BASS_TUNING, BASS_TUNING_5_STRING } from '../../store/reducer';
-
+import {BASS_TUNING, BASS_TUNING_5_STRING, GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING} from '../../store/reducer';
 import './App.less';
-import {setBaseBassTuning, setBassTuning} from "../../store/action";
 
-export function App({playSound, setPlaySound, guitarTuning, bassTuning, setBaseBassTuning, setBassTuning}) {
+export function App(
+    {
+        playSound,
+        setPlaySound,
+        guitarTuning, bassTuning, setBaseBassTuning, setBassTuning, setBaseGuitarTuning, setGuitarTuning }) {
     // <div><Piano range='C2-B5' /></div>
     // <div><Piano range='C2-C7'/></div> 61 key synth
     // <div><Piano range='E2-E6'/></div> guitar range
@@ -33,7 +35,17 @@ export function App({playSound, setPlaySound, guitarTuning, bassTuning, setBaseB
                 <PianoKeyboard range='A0-C8'/>
             </div>
 
-            <h2>Acoustic/Electric Guitar</h2>
+            <h2>
+                Acoustic/Electric Guitar&nbsp;
+                <select onChange={e => {
+                    setBaseGuitarTuning(e.target.value);
+                    setGuitarTuning(e.target.value);
+                }}>
+                    <option value={GUITAR_TUNING}>6 strings</option>
+                    <option value={GUITAR_TUNING_7_STRING}>7 strings</option>
+                    <option value={GUITAR_TUNING_8_STRING}>8 strings</option>
+                </select>
+            </h2>
             <div>
                 Tuning:&nbsp;<GuitarTuner/>
             </div>
@@ -52,7 +64,6 @@ export function App({playSound, setPlaySound, guitarTuning, bassTuning, setBaseB
                 <select onChange={e => {
                     setBaseBassTuning(e.target.value);
                     setBassTuning(e.target.value);
-
                 }}>
                     <option value={BASS_TUNING}>4 strings</option>
                     <option value={BASS_TUNING_5_STRING}>5 strings</option>
