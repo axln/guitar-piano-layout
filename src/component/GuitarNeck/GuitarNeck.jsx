@@ -28,7 +28,7 @@ function renderDots(stringCount) {
     ));
 }
 
-export function GuitarNeck({ strings, activePitches, onPitch }) {
+export function GuitarNeck({ strings }) {
     const stringCount = strings.split(',').length;
     const viewBox = `0 0 ${NECK_WIDTH} ${NECK_HEIGHT}`;
 
@@ -37,10 +37,8 @@ export function GuitarNeck({ strings, activePitches, onPitch }) {
             let number = index + 1;
             return (<GuitarString
                 key = {'s' + number}
-                activePitches = {activePitches}
                 number = {number}
                 openNote = {note.toUpperCase().trim()}
-                onPitch = {onPitch}
                 stringCount = {stringCount}
             />)
         });

@@ -1,5 +1,5 @@
-import React  from 'react';
-import Helper from "../Helper";
+import React from 'react';
+import Helper from '../Helper';
 import { NECK_HEIGHT } from './GuitarNeck';
 import { getFretOffset } from './Fret';
 import { getStringPos, getBetweenStringPos } from './GuitarString';
@@ -7,12 +7,17 @@ import { getStringPos, getBetweenStringPos } from './GuitarString';
 export class StringNote extends React.Component {
     pushed = false;
 
-    shouldComponentUpdate(nextProps) {
+    /*shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    }
+    }*/
 
     handleMouseDown = () => {
-        this.props.onPitch(this.props.pitch, 'down');
+        const { pitch, pitches, setPitch, unsetPitch } = this.props;
+        if (pitches.includes(pitch)) {
+            unsetPitch(pitch)
+        } else {
+            setPitch(pitch);
+        }
         this.pushed = true;
     };
 
@@ -26,38 +31,41 @@ export class StringNote extends React.Component {
     getPadRect() {
         let fretPad = {};
 
-        fretPad.x = getFretOffset(this.props.index - 1);
-        fretPad.width = getFretOffset(this.props.index) - getFretOffset(this.props.index - 1);
+        const { index, stringCount, number } = this.props;
 
-        if (this.props.number === 1) {
+        fretPad.x = getFretOffset(index - 1);
+        fretPad.width = getFretOffset(index) - getFretOffset(index - 1);
+
+        if (number === 1) {
             fretPad.y = 0;
-            fretPad.height = (getStringPos(1, this.props.stringCount) + getStringPos(2, this.props.stringCount)) / 2;
-        } else if (this.props.number === this.props.stringCount) {
-            fretPad.y = getBetweenStringPos(this.props.number - 1, this.props.number, this.props.stringCount);
+            fretPad.height = (getStringPos(1, stringCount) + getStringPos(2, stringCount)) / 2;
+        } else if (number === stringCount) {
+            fretPad.y = getBetweenStringPos(number - 1, number, stringCount);
             fretPad.height = NECK_HEIGHT - fretPad.y;
         } else {
-            fretPad.y = getBetweenStringPos(this.props.number - 1, this.props.number, this.props.stringCount);
-            fretPad.height = getBetweenStringPos(this.props.number, this.props.number + 1, this.props.stringCount) - fretPad.y;
+            fretPad.y = getBetweenStringPos(number - 1, number, stringCount);
+            fretPad.height = getBetweenStringPos(number, number + 1, stringCount) - fretPad.y;
         }
         return fretPad;
     }
 
     render() {
-        let note = Helper.pitchToNote(this.props.pitch);
+        const { pitch, pitches, index, stringCount, number } = this.props;
+        let note = Helper.pitchToNote(pitch);
         let className = note.length === 2 ? 'note' : 'note black';
         let style = {};
-        if (this.props.pushed) {
+        if (pitches.includes(pitch)) {
             className += ' pushed';
-            style.fill = Helper.getPitchColor(this.props.pitch) + 'B0';
+            style.fill = Helper.getPitchColor(pitch) + 'B0';
         }
 
         let fretX;
-        if (this.props.index === 0) {
+        if (index === 0) {
             fretX = 0;
-        } else  if (this.props.index <= 16) {
-            fretX = getFretOffset(this.props.index) - 20;
+        } else  if (index <= 16) {
+            fretX = getFretOffset(index) - 20;
         } else {
-            fretX = (getFretOffset(this.props.index) +  getFretOffset(this.props.index - 1)) / 2;
+            fretX = (getFretOffset(index) +  getFretOffset(index - 1)) / 2;
         }
 
         let noteHeight = 13;
@@ -73,18 +81,18 @@ export class StringNote extends React.Component {
                 <rect
                     style = {style}
                     className = 'noteArea'
-                    {...this.getPadRect(this.props.index)}
+                    {...this.getPadRect(index)}
                 />
                 <rect
                     className = 'bk'
                     x = {Math.round(fretX - noteWidth / 2)}
-                    y = {Math.round(getStringPos(this.props.number, this.props.stringCount) - noteHeight / 2)}
+                    y = {Math.round(getStringPos(number, stringCount) - noteHeight / 2)}
                     width = {noteWidth}
                     height = {noteHeight}
                 />
                 <text
                     x={Math.round(fretX)}
-                    y={Math.round(getStringPos(this.props.number, this.props.stringCount)) + 1}
+                    y={Math.round(getStringPos(number, stringCount)) + 1}
                 >{note}</text>
             </g>
         );

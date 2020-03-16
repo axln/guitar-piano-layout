@@ -25,7 +25,8 @@ export class WhiteKey extends PianoKey {
 
         let xPos = this.getXPos();
         let style = {};
-        if (this.props.pushed) {
+        const pushed = this.props.pitches.includes(this.props.pitch);
+        if (pushed) {
             style.fill = Helper.getPitchColor(this.props.pitch) + 'A0';
         }
 

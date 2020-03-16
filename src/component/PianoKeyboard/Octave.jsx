@@ -1,46 +1,47 @@
-import React  from 'react';
+import React from 'react';
 import Helper from '../Helper';
 import { WHITE_WIDTH } from './PianoKeyboard';
-import { WhiteKey } from './WhiteKey'
-import { BlackKey } from './BlackKey';
+import { WhiteKey } from '../../container/WhiteKey'
+import { BlackKey } from '../../container/BlackKey';
+
+function getKeyOffset(startFrom) {
+    let offset = 0;
+    if (startFrom) {
+        offset -= Helper.WHITE_NOTES.indexOf(startFrom);
+    }
+    return offset;
+}
 
 export class Octave extends React.Component {
-    getKeyOffset() {
-        let offset = 0;
-        if (this.props.startFrom) {
-            offset -= Helper.WHITE_NOTES.indexOf(this.props.startFrom);
-        }
-        return offset;
-    }
-
     renderWhiteKeys() {
-        let startWhiteIndex = this.props.startFrom ? Helper.WHITE_NOTES.indexOf(this.props.startFrom) : 0;
-        let stopWhiteIndex = this.props.endAt ? Helper.WHITE_NOTES.indexOf(this.props.endAt) : 6;
-        let whiteKeys = Helper.WHITE_NOTES.split('').map((note, index) => {
+        const { startFrom, endAt, number, baseKey } = this.props;
+
+        let startWhiteIndex = startFrom ? Helper.WHITE_NOTES.indexOf(startFrom) : 0;
+        let stopWhiteIndex = endAt ? Helper.WHITE_NOTES.indexOf(endAt) : 6;
+
+        return Array.from(Helper.WHITE_NOTES).map((note, index) => {
             if (index >= startWhiteIndex && index <= stopWhiteIndex) {
-                let keyPitch = Helper.octNoteToPitch(this.props.number, Helper.getWhiteInterval(index));
+                let keyPitch = Helper.octNoteToPitch(number, Helper.getWhiteInterval(index));
                 return (
                     <WhiteKey
-                        key={'w' + index}
-                        index={index}
-                        pitch={keyPitch}
-                        pushed={this.props.activePitches.indexOf(keyPitch) >= 0}
-                        onPitch={this.props.onPitch}
-                        baseKey={this.props.baseKey !== undefined  ? this.props.baseKey : this.props.number * 7}
-                        keyOffset={this.getKeyOffset()}
+                        key = {'w' + index}
+                        index = {index}
+                        pitch = {keyPitch}
+                        baseKey = {baseKey !== undefined  ? baseKey : number * 7}
+                        keyOffset = {getKeyOffset(startFrom)}
                     />
                 );
             } else {
                 return null;
             }
         });
-        return whiteKeys;
     }
 
     renderBlackKeys() {
+        const { startFrom, endAt, number, baseKey } = this.props;
         let startBlackIndex = 0;
-        if (this.props.startFrom) {
-            switch(this.props.startFrom) {
+        if (startFrom) {
+            switch(startFrom) {
                 case 'D':
                     startBlackIndex = 1;
                     break;
@@ -61,8 +62,8 @@ export class Octave extends React.Component {
         }
 
         let stopBlackIndex = 4;
-        if (this.props.endAt) {
-            switch(this.props.endAt) {
+        if (endAt) {
+            switch(endAt) {
                 case 'C':
                     stopBlackIndex = -1;
                     break;
@@ -85,40 +86,37 @@ export class Octave extends React.Component {
             }
         }
 
-        const blackKeys = Array.from(Helper.BLACK_NOTES).map((note, index) => {
+        return Array.from(Helper.BLACK_NOTES).map((note, index) => {
             if (index >= startBlackIndex && index <= stopBlackIndex) {
-                let keyPitch = Helper.octNoteToPitch(this.props.number, Helper.getBlackIterval(index));
+                let keyPitch = Helper.octNoteToPitch(number, Helper.getBlackIterval(index));
                 return (
                     <BlackKey
                         key = {'b' + index}
-                        baseKey = {this.props.baseKey !== undefined  ? this.props.baseKey : this.props.number * 7}
-                        keyOffset = {this.getKeyOffset()}
-                        pushed = {this.props.activePitches.indexOf(keyPitch) >=0}
+                        baseKey = {baseKey !== undefined  ? baseKey : number * 7}
+                        keyOffset = {getKeyOffset(startFrom)}
                         pitch = {keyPitch}
-                        octave = {this.props.number}
+                        octave = {number}
                         index = {index}
                         note = {note + '#'}
-                        onPitch = {this.props.onPitch}
                     />
                 );
             } else {
                 return null;
             }
         });
-        return blackKeys;
     }
 
     render() {
-        let textX = (
-            this.props.baseKey !== undefined
-                ? this.props.baseKey * WHITE_WIDTH
-                : this.props.number * 7 * WHITE_WIDTH
-        );
+        const { baseKey, number } = this.props;
+        let textX = baseKey !== undefined
+            ? baseKey * WHITE_WIDTH
+            : number * 7 * WHITE_WIDTH;
+
         return (
-            <g className = 'octave' id={'oct' + this.props.number}>
+            <g className = 'octave' id = {'oct' + number}>
                 {this.renderWhiteKeys()}
                 {this.renderBlackKeys()}
-                <text x={textX} y={-8}>{this.props.number}</text>
+                <text x = {textX} y = {-8}>{number}</text>
             </g>
         );
     }

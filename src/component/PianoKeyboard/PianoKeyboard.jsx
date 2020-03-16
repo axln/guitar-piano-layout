@@ -18,46 +18,43 @@ export const altNoteNames = {
     B: 'si'
 };
 
-export class PianoKeyboard extends React.Component {
-    renderOctaves(parsedRange) {
-        return parsedRange.reduce((acc, octInfo) => {
-            acc.octaves.push(
-                <Octave
-                    {...octInfo}
-                    key = {'oct' + octInfo.number}
-                    activePitches = {this.props.activePitches}
-                    onPitch = {this.props.onPitch}
-                    baseKey = {acc.nextOffset}
-                />
-            );
-            acc.nextOffset += getOctSize(octInfo);
-            return acc;
-        }, {
-            octaves: [],
-            nextOffset: 0
-        }).octaves;
-    };
-
-    render() {
-        let parsedOctaves = parseRange(this.props.range);
-        let whiteKeysCount = parsedOctaves.reduce((acc, value) => {return acc + getOctSize(value)}, 0);
-        const keyboardWidth = WHITE_WIDTH * whiteKeysCount;
-        const viewBox = `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`;
-        return (
-            <svg
-                className = 'piano-keyboard'
-                width = {keyboardWidth}
-                height = {WHITE_HEIGHT}
-                viewBox = {viewBox}
-            >
-                <defs>
-                    <filter id='shadow'>
-                        <feGaussianBlur stdDeviation='2 2' result='shadow'/>
-                        <feOffset dx='0' dy='0'/>
-                    </filter>
-                </defs>
-                {this.renderOctaves(parsedOctaves)}
-            </svg>
+function renderOctaves(parsedRange) {
+    return parsedRange.reduce((acc, octInfo) => {
+        acc.octaves.push(
+            <Octave
+                {...octInfo}
+                key = {'oct' + octInfo.number}
+                baseKey = {acc.nextOffset}
+            />
         );
-    }
+        acc.nextOffset += getOctSize(octInfo);
+        return acc;
+    }, {
+        octaves: [],
+        nextOffset: 0
+    }).octaves;
+}
+
+export function PianoKeyboard({ range }) {
+    let parsedOctaves = parseRange(range);
+    let whiteKeysCount = parsedOctaves.reduce((acc, value) => {return acc + getOctSize(value)}, 0);
+    const keyboardWidth = WHITE_WIDTH * whiteKeysCount;
+    const viewBox = `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`;
+
+    return (
+        <svg
+            className = 'piano-keyboard'
+            width = {keyboardWidth}
+            height = {WHITE_HEIGHT}
+            viewBox = {viewBox}
+        >
+            <defs>
+                <filter id='shadow'>
+                    <feGaussianBlur stdDeviation='2 2' result='shadow'/>
+                    <feOffset dx='0' dy='0'/>
+                </filter>
+            </defs>
+            {renderOctaves(parsedOctaves)}
+        </svg>
+    );
 }

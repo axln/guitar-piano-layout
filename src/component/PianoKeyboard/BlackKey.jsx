@@ -1,7 +1,7 @@
 import React from 'react';
 import Helper from "../Helper";
 import { PianoKey } from './PianoKey';
-import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from "./PianoKeyboard";
+import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from './PianoKeyboard';
 
 export class BlackKey extends PianoKey {
     getKeyPos(number) {
@@ -25,7 +25,6 @@ export class BlackKey extends PianoKey {
 
     getAltName() {
         let note = Helper.pitchToNote(this.props.pitch);
-        //return altNoteNames[note[0]] + '#';
         return Helper.BLACK_NOTES_FLAT[this.props.index] + '\u266D'
     }
 
@@ -33,7 +32,8 @@ export class BlackKey extends PianoKey {
         let xPos = this.getXPos();
 
         let style = {};
-        if (this.props.pushed) {
+
+        if (this.props.pitches.includes(this.props.pitch)) {
             style.fill = Helper.getPitchColor(this.props.pitch);
         }
 
@@ -45,9 +45,9 @@ export class BlackKey extends PianoKey {
                 onMouseLeave={this.handleMouseUp}
             >
                 <rect
-                    style={style}
-                    x={xPos + 0.5}
-                    y={0.5}
+                    style = {style}
+                    x = {xPos + 0.5}
+                    y = {0.5}
                     width={Math.round(BLACK_WIDTH)}
                     height={BLACK_HEIGHT}
                 />

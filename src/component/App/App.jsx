@@ -4,30 +4,14 @@ import { GuitarNeck } from '../GuitarNeck/GuitarNeck';
 import Helper  from '../Helper';
 import './App.less';
 
-class App extends React.Component {
+export class App extends React.Component {
     state = {
-        pitches: [],
         playSound: false,
-        guitarTuning: 'E4,B3,G3,D3,A2,E2',
-        bassTuning: 'G2,D2,A1,E1'
     };
 
     onPitch = (pitch, pushState) => {
+        console.log('onpitch:', pitch, pushState);
         let freq = Helper.noteToFrequency(pitch);
-        /*if (state == 'down') {
-            if (this.state.pitches.indexOf(pitch) < 0) {
-                const pitches = this.state.pitches.slice();
-                pitches.push(pitch);
-                this.setState({pitches: pitches});
-            }
-        } else if (state == 'up') {
-            const idx = this.state.pitches.indexOf(pitch);
-            const pitches = this.state.pitches.slice();
-            if (idx >= 0) {
-                pitches.splice(idx, 1);
-            }
-            this.setState({pitches: pitches});
-        }*/
 
         if (pushState === 'down') {
             const idx = this.state.pitches.indexOf(pitch);
@@ -53,18 +37,18 @@ class App extends React.Component {
     };
 
     toggleSound = (e) => {
-        this.setState({
-            playSound: e.target.checked
-        });
+        const { setPlaySound } = this.props;
+        setPlaySound(e.target.checked);
     };
 
     render() {
+        const { playSound } = this.props;
         // <div><GuitarNeck strings='G2,D2,A1,E1' /></div> bass guitar
         //<div><PianoKeyboard range='C2-B5' /></div>
         // <div><PianoKeyboard range='A0-C8' /></div> piano 88
         // <div><PianoKeyboard range='C2-C7' /></div> 61 key synth
         // <div><PianoKeyboard range='E2-E6' /></div> guitar range
-        // <div><PianoKeyboard range='C2-B6' onPitch={this.onPitch} activePitches={this.state.pitches} /></div>
+        // <div><PianoKeyboard range='C2-B6' /></div>
         return (
             <>
                 <h1>Piano and Guitar Layout</h1>
@@ -84,9 +68,9 @@ class App extends React.Component {
                 <p>
                     <label>
                         <input
-                            type='checkbox'
-                            checked={this.state.playSound}
-                            onChange={this.toggleSound}
+                            type = 'checkbox'
+                            checked = {playSound}
+                            onChange = {this.toggleSound}
                         />
                         Play notes on click
                     </label>
@@ -95,11 +79,7 @@ class App extends React.Component {
                 <h2>Piano</h2>
                 <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
                 <div>
-                    <PianoKeyboard
-                        range = 'A0-C8'
-                        onPitch = {this.onPitch}
-                        activePitches = {this.state.pitches}
-                    />
+                    <PianoKeyboard range = 'A0-C8'/>
                 </div>
 
                 <h2>Acoustic/Electric Guitar (standard tuning)</h2>
@@ -108,11 +88,7 @@ class App extends React.Component {
                     Click the nut to highlight a note of the corresponding open string.
                 </p>
                 <div>
-                    <GuitarNeck
-                        strings={this.state.guitarTuning}
-                        onPitch={this.onPitch}
-                        activePitches={this.state.pitches}
-                    />
+                    <GuitarNeck strings = 'E4,B3,G3,D3,A2,E2'/>
                 </div>
 
                 <h2>Bass Guitar (standard tuning)</h2>
@@ -121,21 +97,15 @@ class App extends React.Component {
                     Click the nut to highlight a note of the corresponding open string.
                 </p>
                 <div>
-                    <GuitarNeck
-                        strings={this.state.bassTuning}
-                        onPitch={this.onPitch}
-                        activePitches={this.state.pitches}
-                    />
+                    <GuitarNeck strings = 'G2,D2,A1,E1'/>
                 </div>
 
                 <h2>About</h2>
                 <p>
                     This app is open-source, made by axln. For more info, please visit
-                    <a href="https://github.com/axln/guitar-piano-layout" target="_blank">the app's page at GitHub</a>.
+                    <a href='https://github.com/axln/guitar-piano-layout' target='_blank'>the app's page at GitHub</a>.
                 </p>
             </>
         );
     }
 }
-
-export default App;

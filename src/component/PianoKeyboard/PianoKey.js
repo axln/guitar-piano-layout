@@ -3,11 +3,9 @@ import React from 'react';
 export class PianoKey extends React.Component {
     pushed = false;
 
-    shouldComponentUpdate(nextProps) {
+    /*shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
-    }
-
-    getNoteNumber() {}
+    }*/
 
     /*handleMouseLeave() {
         this.handleMouseUp();
