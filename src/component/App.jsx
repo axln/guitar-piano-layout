@@ -46,7 +46,7 @@ export function App(
             </p>
 
             <h2>
-                Piano&nbsp;
+                Piano/Synth&nbsp;
                 <select onChange={e => {
                     setKeyboardRange(e.target.value);
                 }}>
@@ -56,8 +56,6 @@ export function App(
                     <option value={SYNTH_49_RANGE}>49 key synth</option>
                     <option value={SYNTH_44_RANGE}>44 key synth</option>
                     <option value={SYNTH_37_RANGE}>37 key synth</option>
-
-
                 </select>
             </h2>
             <p>Numbers at the top are octaves' numbers.</p>
