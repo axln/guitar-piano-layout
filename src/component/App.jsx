@@ -17,8 +17,8 @@ import {
     SYNTH_37_RANGE
 } from '../lib/const';
 
-export function App(
-    {
+export function App(props) {
+    const {
         playSound,
         setPlaySound,
         guitarTuning,
@@ -29,7 +29,7 @@ export function App(
         setGuitarTuning,
         keyboardRange,
         setKeyboardRange
-    }) {
+    } = props;
 
     return (
         <>
