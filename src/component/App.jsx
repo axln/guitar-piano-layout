@@ -1,20 +1,36 @@
 import React from 'react';
-import { PianoKeyboard } from '../Piano/PianoKeyboard';
-import { GuitarNeck } from '../Guitar/GuitarNeck';
-import { GuitarTuner } from '../../container/GuitarTuner';
-import { BassTuner } from '../../container/BassTuner';
-import {BASS_TUNING, BASS_TUNING_5_STRING, GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING} from '../../store/reducer';
-import './App.less';
+import { PianoKeyboard } from './Piano/PianoKeyboard';
+import { GuitarNeck } from './Guitar/GuitarNeck';
+import { GuitarTuner } from '../container/GuitarTuner';
+import { BassTuner } from '../container/BassTuner';
+import {
+    BASS_TUNING,
+    BASS_TUNING_5_STRING,
+    GUITAR_TUNING,
+    GUITAR_TUNING_7_STRING,
+    GUITAR_TUNING_8_STRING,
+    PIANO_RANGE,
+    SYNTH_61_RANGE,
+    SYNTH_49_RANGE,
+    SYNTH_76_RANGE,
+    SYNTH_44_RANGE,
+    SYNTH_37_RANGE
+} from '../lib/const';
 
 export function App(
     {
         playSound,
         setPlaySound,
-        guitarTuning, bassTuning, setBaseBassTuning, setBassTuning, setBaseGuitarTuning, setGuitarTuning }) {
-    // <div><Piano range='C2-B5' /></div>
-    // <div><Piano range='C2-C7'/></div> 61 key synth
-    // <div><Piano range='E2-E6'/></div> guitar range
-    // <div><Piano range='C2-B6'/></div>
+        guitarTuning,
+        bassTuning,
+        setBaseBassTuning,
+        setBassTuning,
+        setBaseGuitarTuning,
+        setGuitarTuning,
+        keyboardRange,
+        setKeyboardRange
+    }) {
+
     return (
         <>
             <h2>Settings</h2>
@@ -29,10 +45,24 @@ export function App(
                 </label>
             </p>
 
-            <h2>Piano</h2>
-            <p>This 88-keys layout is used in piano and grand piano. Numbers at the top are octaves' numbers.</p>
+            <h2>
+                Piano&nbsp;
+                <select onChange={e => {
+                    setKeyboardRange(e.target.value);
+                }}>
+                    <option value={PIANO_RANGE}>88 key piano/grand piano</option>
+                    <option value={SYNTH_76_RANGE}>76 key synth</option>
+                    <option value={SYNTH_61_RANGE}>61 key synth</option>
+                    <option value={SYNTH_49_RANGE}>49 key synth</option>
+                    <option value={SYNTH_44_RANGE}>44 key synth</option>
+                    <option value={SYNTH_37_RANGE}>37 key synth</option>
+
+
+                </select>
+            </h2>
+            <p>Numbers at the top are octaves' numbers.</p>
             <div>
-                <PianoKeyboard range='A0-C8'/>
+                <PianoKeyboard range={keyboardRange}/>
             </div>
 
             <h2>

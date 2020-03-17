@@ -4,17 +4,15 @@ import {
     SET_GUITAR_TUNING,
     SET_BASS_TUNING,
     SET_BASE_BASS_TUNING,
-    SET_BASE_GUITAR_TUNING
+    SET_BASE_GUITAR_TUNING, SET_KEYBOARD_RANGE
 } from './action';
 import { pitchToNote } from '../lib/Helper';
 import { pitchToFrequency } from '../lib/SoundGenerator';
-
-export const GUITAR_TUNING = 'E2 A2 D3 G3 B3 E4';
-export const GUITAR_TUNING_7_STRING = 'B1 E2 A2 D3 G3 B3 E4';
-export const GUITAR_TUNING_8_STRING = 'F#1 B1 E2 A2 D3 G3 B3 E4';
-
-export const BASS_TUNING = 'E1 A1 D2 G2';
-export const BASS_TUNING_5_STRING = 'B0 E1 A1 D2 G2';
+import {
+    GUITAR_TUNING,
+    BASS_TUNING,
+    PIANO_RANGE
+} from '../lib/const';
 
 export function pitches(pitches = [], action) {
     if (action.type === TOGGLE_PITCH) {
@@ -71,6 +69,14 @@ export function baseBassTuning(state = BASS_TUNING, action) {
 
 export function bassTuning(state = BASS_TUNING, action) {
     if (action.type === SET_BASS_TUNING) {
+        return action.payload;
+    } else {
+        return state;
+    }
+}
+
+export function keyboardRange(state = PIANO_RANGE, action) {
+    if (action.type === SET_KEYBOARD_RANGE) {
         return action.payload;
     } else {
         return state;

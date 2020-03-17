@@ -1,29 +1,33 @@
 import { connect } from 'react-redux';
-import { App } from '../component/App/App';
+import { App } from '../component/App';
 import {
     setPlaySound,
     setBaseGuitarTuning,
     setGuitarTuning,
     setBaseBassTuning,
-    setBassTuning
+    setBassTuning,
+    setKeyboardRange
 } from '../store/action';
 
 const wrappedApp = connect(
     ({
          playSound,
          guitarTuning,
-         bassTuning
+         bassTuning,
+         keyboardRange
     }) => ({
         playSound,
         guitarTuning,
-        bassTuning
+        bassTuning,
+        keyboardRange
     }),
     {
         setPlaySound,
         setBaseBassTuning,
         setBassTuning,
         setBaseGuitarTuning,
-        setGuitarTuning
+        setGuitarTuning,
+        setKeyboardRange
     }
 )(App);
 
