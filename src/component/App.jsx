@@ -119,7 +119,7 @@ export function App(props) {
 
             <h2>Russian Balalaika</h2>
             <div>
-                <GuitarNeck strings='E4 E4 A4' neckWidth={100} />
+                <GuitarNeck strings='E4 E4 A4' neckLength={1035} neckWidth={100}  fretCount={18}/>
             </div>
         </>
     );
