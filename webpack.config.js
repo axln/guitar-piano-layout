@@ -17,12 +17,16 @@ module.exports = (env, argv) => {
             rules: [
                 {
                     test: /\.jsx?$/,
-                    exclude: /node_modules/,
                     resolve: {
-                        extensions: [".js", ".jsx"]
+                        extensions: [".js", ".jsx"],
+                        alias: {
+                            "react": "preact/compat",
+                            "react-dom": "preact/compat"
+                        }
                     },
                     loader: "babel-loader",
                     options: {
+                        sourceType: "unambiguous",
                         "presets": [
                             //"@babel/preset-react",
                             ["@babel/preset-env", {
@@ -53,7 +57,6 @@ module.exports = (env, argv) => {
         ],
         devServer: {
             compress: true,
-            //host: '0.0.0.0',
             port: 8080
         }
     }
