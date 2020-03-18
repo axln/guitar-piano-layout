@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "preact": "^10.3.4",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "unistore": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",

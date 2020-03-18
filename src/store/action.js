@@ -1,73 +1,48 @@
-export const TOGGLE_PITCH = 'TOGGLE_PITCH';
-export const SET_PLAY_SOUND = 'SET_PLAY_SOUND';
-export const SET_GUITAR_TUNING = 'SET_GUITAR_TUNING';
-export const SET_BASE_GUITAR_TUNING = 'SET_BASE_GUITAR_TUNING';
-export const SET_BASS_TUNING = 'SET_BASS_TUNING';
-export const SET_UKULELE_TUNING = 'SET_UKULELE_TUNING';
-export const SET_BASE_BASS_TUNING = 'SET_BASE_BASS_TUNING';
-export const SET_KEYBOARD_RANGE = 'SET_KEYBOARD_RANGE';
-export const SET_BALALAIKA_TUNING = 'SET_BALALAIKA_TUNING';
+import { pitchToNote } from '../lib/Helper';
+import { pitchToFrequency } from '../lib/SoundGenerator';
 
+export function togglePitch({ pitches }, pitch) {
+    const idx = pitches.indexOf(pitch);
+    const newPitches = [...pitches];
+    if (idx >= 0) {
+        newPitches.splice(idx, 1);
+    } else {
+        newPitches.push(pitch);
 
-export function togglePitch(pitch) {
-    return {
-        type: TOGGLE_PITCH,
-        payload: pitch
-    };
-}
-
-export function setPlaySound(enabled) {
-    return {
-        type: SET_PLAY_SOUND,
-        payload: enabled
-    };
-}
-
-export function setGuitarTuning(tuning) {
-    return {
-        type: SET_GUITAR_TUNING,
-        payload: tuning
+        // let note = pitchToNote(pitch);
+        // let freq = pitchToFrequency(pitch);
+        // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
     }
+    return { pitches: newPitches };
 }
 
-export function setBaseGuitarTuning(tuning) {
-    return {
-        type: SET_BASE_GUITAR_TUNING,
-        payload: tuning
-    }
+export function setPlaySound(_, playSound) {
+    return { playSound };
 }
 
-export function setBassTuning(tuning) {
-    return {
-        type: SET_BASS_TUNING,
-        payload: tuning
-    }
+export function setGuitarTuning(_, guitarTuning) {
+    return { guitarTuning };
+}
+export function setBaseGuitarTuning(_, baseGuitarTuning) {
+    return { baseGuitarTuning };
 }
 
-export function setBaseBassTuning(tuning) {
-    return {
-        type: SET_BASE_BASS_TUNING,
-        payload: tuning
-    }
+export function setBassTuning(_, bassTuning) {
+    return { bassTuning };
 }
 
-export function setKeyboardRange(range) {
-    return {
-        type: SET_KEYBOARD_RANGE,
-        payload: range
-    }
+export function setBaseBassTuning(_, baseBassTuning) {
+    return { baseBassTuning };
 }
 
-export function setUkuleleTuning(tuning) {
-    return {
-        type: SET_UKULELE_TUNING,
-        payload: tuning
-    }
+export function setKeyboardRange(_, keyboardRange) {
+    return { keyboardRange };
 }
 
-export function setBalalaikaTuning(tuning) {
-    return {
-        type: SET_BALALAIKA_TUNING,
-        payload: tuning
-    }
+export function setUkuleleTuning(_, ukuleleTuning) {
+    return { ukuleleTuning };
+}
+
+export function setBalalaikaTuning(_, balalaikaTuning) {
+    return { balalaikaTuning };
 }

@@ -1,4 +1,4 @@
-import { connect } from 'unistore/preact';
+import { connect } from 'react-redux';
 import { Octave } from '../component/Piano/Octave';
 
 const wrappedOctave = connect(

@@ -1,4 +1,4 @@
-import { connect } from 'unistore/preact';
+import { connect } from 'react-redux';
 import { WhiteKey } from '../component/Piano/WhiteKey';
 import { togglePitch } from '../store/action';
 

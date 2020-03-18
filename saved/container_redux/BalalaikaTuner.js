@@ -1,6 +1,6 @@
-import { connect } from 'unistore/preact';
+import { connect } from 'react-redux';
 import { Tuner } from '../component/Guitar/Tuner';
-import { setBalalaikaTuning } from '../store/action';
+import {setBalalaikaTuning } from '../store/action';
 
 const wrappedTuner = connect(
     ({ baseBalalaikaTuning, balalaikaTuning }) => ({

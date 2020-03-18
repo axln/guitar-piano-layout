@@ -1,6 +1,23 @@
-import { createStore, combineReducers } from 'redux';
-import * as reducers from './reducer';
+import createStore from 'unistore';
+import { BALALAIKA_TUNING,
+    BASS_TUNING,
+    GUITAR_TUNING,
+    PIANO_RANGE,
+    UKULELE_TUNING
+} from '../lib/const';
 
-export const store = createStore(combineReducers(reducers)
-    //, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const initialState = {
+    pitches: [],
+    playSound: false,
+    baseGuitarTuning: GUITAR_TUNING,
+    guitarTuning: GUITAR_TUNING,
+    baseUkuleleTuning: UKULELE_TUNING,
+    ukuleleTuning: UKULELE_TUNING,
+    baseBalalaikaTuning: BALALAIKA_TUNING,
+    balalaikaTuning: BALALAIKA_TUNING,
+    baseBassTuning: BASS_TUNING,
+    bassTuning: BASS_TUNING,
+    keyboardRange: PIANO_RANGE
+};
+
+export const store = createStore(initialState);

@@ -2,8 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env, argv) => {
-    //console.log('env:', env, argv);
-
     return {
         entry: './src/index.jsx',
         output: {
@@ -28,7 +26,6 @@ module.exports = (env, argv) => {
                     options: {
                         sourceType: "unambiguous",
                         "presets": [
-                            //"@babel/preset-react",
                             ["@babel/preset-env", {
                                 "targets": {
                                     "browsers": ["last 2 versions"]
@@ -36,7 +33,10 @@ module.exports = (env, argv) => {
                             }]
                         ],
                         "plugins": [
-                            ["@babel/plugin-transform-react-jsx"],
+                            ["@babel/plugin-transform-react-jsx", {
+                                //"pragma": "h",
+                                //"pragmaFrag": "Fragment",
+                            }],
                             ["@babel/plugin-proposal-class-properties"],
                             ["@babel/plugin-transform-runtime"]
                         ]

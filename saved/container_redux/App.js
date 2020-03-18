@@ -1,4 +1,4 @@
-import { connect } from 'unistore/preact';
+import { connect } from 'react-redux';
 import { App } from '../component/App';
 import {
     setPlaySound,
@@ -35,4 +35,4 @@ const wrappedApp = connect(
     }
 )(App);
 
-export { wrappedApp as App };
+export {wrappedApp as App};
