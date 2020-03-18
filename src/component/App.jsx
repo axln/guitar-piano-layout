@@ -116,6 +116,11 @@ export function App(props) {
             <div>
                 <GuitarNeck strings={ukuleleTuning} neckLength={1035} neckWidth={110} fretCount={18}/>
             </div>
+
+            <h2>Russian Balalaika</h2>
+            <div>
+                <GuitarNeck strings='E4 E4 A4' neckWidth={100} />
+            </div>
         </>
     );
 }
