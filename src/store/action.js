@@ -6,6 +6,7 @@ export const SET_BASS_TUNING = 'SET_BASS_TUNING';
 export const SET_UKULELE_TUNING = 'SET_UKULELE_TUNING';
 export const SET_BASE_BASS_TUNING = 'SET_BASE_BASS_TUNING';
 export const SET_KEYBOARD_RANGE = 'SET_KEYBOARD_RANGE';
+export const SET_BALALAIKA_TUNING = 'SET_BALALAIKA_TUNING';
 
 
 export function togglePitch(pitch) {
@@ -60,6 +61,13 @@ export function setKeyboardRange(range) {
 export function setUkuleleTuning(tuning) {
     return {
         type: SET_UKULELE_TUNING,
+        payload: tuning
+    }
+}
+
+export function setBalalaikaTuning(tuning) {
+    return {
+        type: SET_BALALAIKA_TUNING,
         payload: tuning
     }
 }

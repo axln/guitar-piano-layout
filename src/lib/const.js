@@ -12,6 +12,7 @@ export const GUITAR_TUNING_8_STRING = 'F#1 B1 E2 A2 D3 G3 B3 E4';
 export const BASS_TUNING = 'E1 A1 D2 G2';
 export const BASS_TUNING_5_STRING = 'B0 E1 A1 D2 G2';
 export const UKULELE_TUNING = 'G4 C4 E4 A4';
+export const BALALAIKA_TUNING = 'E4 E4 A4';
 
 export const DEFAULT_NECK_LENGTH  = 1400;
 export const DEFAULT_NECK_WIDTH = 150;

@@ -1,12 +1,12 @@
-import { connect } from 'react-redux';
-import { App } from '../component/App';
+import {connect} from 'react-redux';
+import {App} from '../component/App';
 import {
     setPlaySound,
     setBaseGuitarTuning,
     setGuitarTuning,
     setBaseBassTuning,
     setBassTuning,
-    setKeyboardRange
+    setKeyboardRange,
 } from '../store/action';
 
 const wrappedApp = connect(
@@ -15,13 +15,15 @@ const wrappedApp = connect(
          guitarTuning,
          bassTuning,
          ukuleleTuning,
-         keyboardRange
-    }) => ({
+         keyboardRange,
+         balalaikaTuning
+     }) => ({
         playSound,
         guitarTuning,
         bassTuning,
         ukuleleTuning,
-        keyboardRange
+        keyboardRange,
+        balalaikaTuning
     }),
     {
         setPlaySound,
@@ -29,8 +31,8 @@ const wrappedApp = connect(
         setBassTuning,
         setBaseGuitarTuning,
         setGuitarTuning,
-        setKeyboardRange
+        setKeyboardRange,
     }
 )(App);
 
-export { wrappedApp as App };
+export {wrappedApp as App};

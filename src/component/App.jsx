@@ -3,7 +3,8 @@ import { PianoKeyboard } from './Piano/PianoKeyboard';
 import { GuitarNeck } from './Guitar/GuitarNeck';
 import { GuitarTuner } from '../container/GuitarTuner';
 import { BassTuner } from '../container/BassTuner';
-import { UkuleleTuner } from "../container/UkuleleTuner";
+import { UkuleleTuner } from '../container/UkuleleTuner';
+import { BalalaikaTuner } from '../container/BalalaikaTuner';
 import {
     GUITAR_TUNING,
     GUITAR_TUNING_7_STRING,
@@ -25,6 +26,7 @@ export function App(props) {
         guitarTuning,
         bassTuning,
         ukuleleTuning,
+        balalaikaTuning,
         setBaseBassTuning,
         setBassTuning,
         setBaseGuitarTuning,
@@ -119,7 +121,10 @@ export function App(props) {
 
             <h2>Russian Balalaika</h2>
             <div>
-                <GuitarNeck strings='E4 E4 A4' neckLength={1035} neckWidth={100}  fretCount={18}/>
+                Tuning:&nbsp;<BalalaikaTuner/>
+            </div>
+            <div>
+                <GuitarNeck strings={balalaikaTuning} neckLength={1035} neckWidth={100}  fretCount={18}/>
             </div>
         </>
     );
