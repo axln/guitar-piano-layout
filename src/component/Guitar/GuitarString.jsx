@@ -1,4 +1,4 @@
-import React  from 'react';
+import { h } from 'preact';
 import { noteToPitch, noteToBasePitch, seq } from '../../lib/Helper';
 import { StringNote } from '../../container/StringNote'
 import { SIDE_MARGIN } from './GuitarNeck';

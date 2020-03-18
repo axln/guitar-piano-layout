@@ -1,4 +1,4 @@
-import React from 'react';
+import { h, Fragment } from 'preact';
 import { PianoKeyboard } from './Piano/PianoKeyboard';
 import { GuitarNeck } from './Guitar/GuitarNeck';
 import { GuitarTuner } from '../container/GuitarTuner';

@@ -1,4 +1,4 @@
-import React  from 'react';
+import { h } from 'preact';
 import { parseRange, getOctSize } from '../../lib/Helper';
 import { Octave } from '../../container/Octave';
 import './PianoKeyboard.less';

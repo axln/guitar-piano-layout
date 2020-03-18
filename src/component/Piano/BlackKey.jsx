@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { BLACK_NOTES, BLACK_NOTES_FLAT, getPitchColor, getBlackInterval } from '../../lib/Helper';
 import { PianoKey } from './PianoKey';
 import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from './PianoKeyboard';

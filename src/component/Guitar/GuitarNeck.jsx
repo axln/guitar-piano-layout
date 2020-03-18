@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { GuitarString } from '../../container/GuitarString';
 import { Fret } from './Fret'
 import { Dot } from './Dot';

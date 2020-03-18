@@ -18,8 +18,8 @@ module.exports = (env, argv) => {
                     resolve: {
                         extensions: [".js", ".jsx"],
                         alias: {
-                            "react": "preact/compat",
-                            "react-dom": "preact/compat"
+                            //"react": "preact/compat",
+                            //"react-dom": "preact/compat"
                         }
                     },
                     loader: "babel-loader",
@@ -34,8 +34,8 @@ module.exports = (env, argv) => {
                         ],
                         "plugins": [
                             ["@babel/plugin-transform-react-jsx", {
-                                //"pragma": "h",
-                                //"pragmaFrag": "Fragment",
+                                "pragma": "h",
+                                "pragmaFrag": "Fragment",
                             }],
                             ["@babel/plugin-proposal-class-properties"],
                             ["@babel/plugin-transform-runtime"]

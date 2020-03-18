@@ -1,4 +1,4 @@
-import React  from 'react';
+import { h, Fragment } from 'preact';
 import { getFretOffset } from './Fret';
 import { getStringPos } from './GuitarString';
 

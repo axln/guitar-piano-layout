@@ -1,7 +1,7 @@
-import React from 'react';
+import { h, Component, Fragment } from 'preact';
 import { noteToPitch, pitchToNote } from '../../lib/Helper';
 
-export class Tuner extends React.Component {
+export class Tuner extends Component {
     handleChange = (index, note) => {
         const tuning = this.props.tuning.split(' ');
         tuning[index] = note;

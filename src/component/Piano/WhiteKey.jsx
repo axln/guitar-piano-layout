@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { PianoKey } from './PianoKey';
 import { getPitchColor, pitchToNote, getWhiteInterval } from '../../lib/Helper';
 import { WHITE_HEIGHT, WHITE_WIDTH, altNoteNames } from './PianoKeyboard';

@@ -1,7 +1,7 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import { stopNote, playNote } from '../../lib/SoundGenerator';
 
-export class PianoKey extends React.Component {
+export class PianoKey extends Component {
     /*shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
     }*/

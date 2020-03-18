@@ -1,10 +1,10 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import { pitchToNote, getPitchColor} from '../../lib/Helper';
 import { getFretOffset } from './Fret';
 import { getStringPos, getBetweenStringPos } from './GuitarString';
 import { stopNote } from '../../lib/SoundGenerator';
 
-export class StringNote extends React.Component {
+export class StringNote extends Component {
     /*shouldComponentUpdate(nextProps) {
         return this.props.pushed !== nextProps.pushed;
     }*/

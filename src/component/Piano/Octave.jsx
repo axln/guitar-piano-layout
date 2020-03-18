@@ -1,4 +1,4 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import {
     WHITE_NOTES,
     BLACK_NOTES,
@@ -18,7 +18,7 @@ function getKeyOffset(startFrom) {
     return offset;
 }
 
-export class Octave extends React.Component {
+export class Octave extends Component {
     renderWhiteKeys() {
         const { startFrom, endAt, number, baseKey, pitches } = this.props;
 
