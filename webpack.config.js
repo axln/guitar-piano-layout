@@ -21,7 +21,22 @@ module.exports = (env, argv) => {
                     resolve: {
                         extensions: [".js", ".jsx"]
                     },
-                    use: ["babel-loader"]
+                    loader: "babel-loader",
+                    options: {
+                        "presets": [
+                            //"@babel/preset-react",
+                            ["@babel/preset-env", {
+                                "targets": {
+                                    "browsers": ["last 2 versions"]
+                                }
+                            }]
+                        ],
+                        "plugins": [
+                            ["@babel/plugin-transform-react-jsx"],
+                            ["@babel/plugin-proposal-class-properties"],
+                            ["@babel/plugin-transform-runtime"]
+                        ]
+                    }
                 },
                 {
                     test: /\.css$/,

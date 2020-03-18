@@ -1,5 +1,5 @@
-import {connect} from 'react-redux';
-import {App} from '../component/App';
+import { connect } from 'react-redux';
+import { App } from '../component/App';
 import {
     setPlaySound,
     setBaseGuitarTuning,
