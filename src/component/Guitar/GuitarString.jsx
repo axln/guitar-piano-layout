@@ -1,50 +1,35 @@
 import React  from 'react';
-import { noteToPitch, seq } from '../../lib/Helper';
+import { noteToPitch, noteToBasePitch, seq } from '../../lib/Helper';
 import { StringNote } from '../../container/StringNote'
-import { NECK_WIDTH, NECK_HEIGHT, SIDE_MARGIN } from './GuitarNeck';
+import { SIDE_MARGIN } from './GuitarNeck';
 
-export function getStringPos(number, stringCount) {
-    const stringSpace = Math.round((NECK_HEIGHT - SIDE_MARGIN * 2) / (stringCount - 1));
+export function getStringPos(number, stringCount, neckWidth) {
+    const stringSpace = Math.round((neckWidth - SIDE_MARGIN * 2) / (stringCount - 1));
     return SIDE_MARGIN + stringSpace * (number - 1);
 }
 
-export function getBetweenStringPos(number1, number2, stringCount) {
-    let str1pos = getStringPos(number1, stringCount);
-    let str2pos = getStringPos(number2, stringCount);
+export function getBetweenStringPos(number1, number2, stringCount, neckWidth) {
+    let str1pos = getStringPos(number1, stringCount, neckWidth);
+    let str2pos = getStringPos(number2, stringCount, neckWidth);
     return (str1pos + str2pos) / 2;
 }
 
-function getStringThickness(number, stringCount) {
-    let baseFix = stringCount === 4 ? 2 : 0;
-
-    switch (number) {
-        case 1:
-            return [1 + baseFix, 0.5];
-        case 2:
-            return [1.5 + baseFix, 0.5];
-        case 3:
-            return [2 + baseFix, 0];
-        case 4:
-            return [2.5 + baseFix,0];
-        case 5:
-            return [3 + baseFix, 0.5];
-        case 6:
-            return [3.5 + baseFix, 0];
-        case 7:
-            return [3.5 + baseFix, 0.5];
-        default:
-            return [4.0 + baseFix, 0];
-    }
+function getStringThickness(pitch) {
+    // just tuned to get corresponding string thickness based on pitch
+    return 0.5 + Math.round((3 - pitch / 20) * 4) / 2;
 }
 
-export function GuitarString({ openNote, stringCount, number, pitches }) {
+export function GuitarString({ openNote, stringCount, number, pitches, fretCount, neckLength, neckWidth }) {
     function renderNotes() {
         let openPitch = noteToPitch(openNote);
-        return seq(0, 24).map(fretNumber => (
+        return seq(0, fretCount).map(fretNumber => (
             <StringNote
                 key = {`s${number}f${fretNumber}`}
                 number = {number}
-                stringCount = { stringCount }
+                stringCount={ stringCount }
+                fretCount={fretCount}
+                neckLength={neckLength}
+                neckWidth={neckWidth}
                 pushed = {pitches.includes(openPitch + fretNumber)}
                 index = {fretNumber}
                 pitch = {openPitch + fretNumber}
@@ -52,16 +37,19 @@ export function GuitarString({ openNote, stringCount, number, pitches }) {
         ));
     }
 
-    const [thickness, fix] = getStringThickness(number, stringCount);
+    const thickness = getStringThickness(noteToBasePitch(openNote));
+    const fix = 0.5;
+
+    //console.log(`${number}: ${noteToBasePitch(openNote)} => ${thickness}, ${thick2}`);
 
     return (
         <g className='string'>
             <line
                 className = 'string'
                 x1 = {-0.5}
-                y1 = {Math.round(getStringPos(number, stringCount)) + fix}
-                x2 = {NECK_WIDTH + 1.5}
-                y2 = {Math.round(getStringPos(number, stringCount)) + fix}
+                y1 = {Math.round(getStringPos(number, stringCount, neckWidth)) + fix}
+                x2 = {neckLength + 1.5}
+                y2 = {Math.round(getStringPos(number, stringCount, neckWidth)) + fix}
                 strokeWidth = {thickness}
             />
             {renderNotes()}

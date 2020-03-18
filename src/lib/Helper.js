@@ -6,6 +6,10 @@ const CHROMATIC_SCALE = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const A4_PITCH_OFFSET = 57;
 
 export function noteToPitch(fullNote) {
+    return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;
+}
+
+export function noteToBasePitch(fullNote) {
     let note, octave;
     if (fullNote.length === 2) {
         [note, octave] = fullNote;
@@ -15,7 +19,7 @@ export function noteToPitch(fullNote) {
         note = note + sharp;
     }
     octave = parseInt(octave);
-    return octave * 12 + CHROMATIC_SCALE.indexOf(note) - A4_PITCH_OFFSET;
+    return octave * 12 + CHROMATIC_SCALE.indexOf(note);
 }
 
 export function octNoteToPitch(octave, interval) {

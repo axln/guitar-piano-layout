@@ -4,14 +4,14 @@ import {
     SET_GUITAR_TUNING,
     SET_BASS_TUNING,
     SET_BASE_BASS_TUNING,
-    SET_BASE_GUITAR_TUNING, SET_KEYBOARD_RANGE
+    SET_BASE_GUITAR_TUNING, SET_KEYBOARD_RANGE, SET_UKULELE_TUNING
 } from './action';
 import { pitchToNote } from '../lib/Helper';
 import { pitchToFrequency } from '../lib/SoundGenerator';
 import {
     GUITAR_TUNING,
     BASS_TUNING,
-    PIANO_RANGE
+    PIANO_RANGE, UKULELE_TUNING
 } from '../lib/const';
 
 export function pitches(pitches = [], action) {
@@ -53,6 +53,18 @@ export function baseGuitarTuning(state = GUITAR_TUNING, action) {
 
 export function guitarTuning(state = GUITAR_TUNING, action) {
     if (action.type === SET_GUITAR_TUNING) {
+        return action.payload;
+    } else {
+        return state;
+    }
+}
+
+export function baseUkuleleTuning(state = UKULELE_TUNING, action) {
+    return state;
+}
+
+export function ukuleleTuning(state = UKULELE_TUNING, action) {
+    if (action.type === SET_UKULELE_TUNING) {
         return action.payload;
     } else {
         return state;

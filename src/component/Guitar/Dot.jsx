@@ -1,10 +1,9 @@
 import React  from 'react';
 import { getFretOffset } from './Fret';
 import { getStringPos } from './GuitarString';
-import { NECK_HEIGHT } from './GuitarNeck';
 
-export function Dot({ fret, stringCount }) {
-    let dotX = Math.round((getFretOffset(fret - 1) + getFretOffset(fret)) / 2 - 1);
+export function Dot({ fret, stringCount, neckLength, fretCount, neckWidth }) {
+    let dotX = Math.round((getFretOffset(fret - 1, neckLength, fretCount) + getFretOffset(fret, neckLength, fretCount)) / 2 - 1);
     const props = {
         className: 'dot',
         cx: dotX + 0.5,
@@ -12,8 +11,8 @@ export function Dot({ fret, stringCount }) {
     };
 
     if (fret % 12 === 0) {
-        const dot1Pos = Math.round((getStringPos(1, stringCount) + getStringPos(2, stringCount)) / 2);
-        const dot2Pos = Math.round((getStringPos(stringCount - 1, stringCount) + getStringPos(stringCount, stringCount)) / 2);
+        const dot1Pos = Math.round((getStringPos(1, stringCount, neckWidth) + getStringPos(2, stringCount, neckWidth)) / 2);
+        const dot2Pos = Math.round((getStringPos(stringCount - 1, stringCount, neckWidth) + getStringPos(stringCount, stringCount, neckWidth)) / 2);
 
         return (
             <>
@@ -23,7 +22,7 @@ export function Dot({ fret, stringCount }) {
         );
     } else {
         return (
-            <circle {...props} cy = {NECK_HEIGHT / 2}/>
+            <circle {...props} cy = {neckWidth / 2}/>
         );
     }
 }

@@ -3,12 +3,13 @@ import { PianoKeyboard } from './Piano/PianoKeyboard';
 import { GuitarNeck } from './Guitar/GuitarNeck';
 import { GuitarTuner } from '../container/GuitarTuner';
 import { BassTuner } from '../container/BassTuner';
+import { UkuleleTuner } from "../container/UkuleleTuner";
 import {
-    BASS_TUNING,
-    BASS_TUNING_5_STRING,
     GUITAR_TUNING,
     GUITAR_TUNING_7_STRING,
     GUITAR_TUNING_8_STRING,
+    BASS_TUNING,
+    BASS_TUNING_5_STRING,
     PIANO_RANGE,
     SYNTH_61_RANGE,
     SYNTH_49_RANGE,
@@ -23,6 +24,7 @@ export function App(props) {
         setPlaySound,
         guitarTuning,
         bassTuning,
+        ukuleleTuning,
         setBaseBassTuning,
         setBassTuning,
         setBaseGuitarTuning,
@@ -105,7 +107,14 @@ export function App(props) {
                 Click the nut to highlight a note of the corresponding open string.
             </p>
             <div>
-                <GuitarNeck strings={bassTuning}/>
+                <GuitarNeck strings={bassTuning}  neckWidth={130}/>
+            </div>
+            <h2>Ukulele</h2>
+            <div>
+                Tuning:&nbsp;<UkuleleTuner/>
+            </div>
+            <div>
+                <GuitarNeck strings={ukuleleTuning} neckLength={1035} neckWidth={110} fretCount={18}/>
             </div>
         </>
     );

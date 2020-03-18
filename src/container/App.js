@@ -14,11 +14,13 @@ const wrappedApp = connect(
          playSound,
          guitarTuning,
          bassTuning,
+         ukuleleTuning,
          keyboardRange
     }) => ({
         playSound,
         guitarTuning,
         bassTuning,
+        ukuleleTuning,
         keyboardRange
     }),
     {
