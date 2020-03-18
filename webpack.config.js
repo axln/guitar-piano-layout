@@ -52,9 +52,12 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        /*plugins: [
-            new HtmlWebpackPlugin({template: "./src/index.html"})
-        ],*/
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                inject: 'head'
+            })
+        ],
         devServer: {
             contentBase: path.join(__dirname, 'build'),
             compress: true,
