@@ -2,17 +2,14 @@ import { pitchToNote } from '../lib/Helper';
 import { pitchToFrequency } from '../lib/SoundGenerator';
 
 export function togglePitch({ pitches }, pitch) {
-    const idx = pitches.indexOf(pitch);
-    const newPitches = [...pitches];
-    if (idx >= 0) {
-        newPitches.splice(idx, 1);
-    } else {
-        newPitches.push(pitch);
+    const newPitches = pitches.includes(pitch)
+        ? pitches.filter(p => p !== pitch)
+        : [...pitches, pitch];
 
-        // let note = pitchToNote(pitch);
-        // let freq = pitchToFrequency(pitch);
-        // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
-    }
+    const note = pitchToNote(pitch);
+    const freq = pitchToFrequency(pitch);
+    console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
+
     return { pitches: newPitches };
 }
 
@@ -23,6 +20,7 @@ export function setPlaySound(_, playSound) {
 export function setGuitarTuning(_, guitarTuning) {
     return { guitarTuning };
 }
+
 export function setBaseGuitarTuning(_, baseGuitarTuning) {
     return { baseGuitarTuning };
 }
