@@ -6,9 +6,9 @@ export function togglePitch({ pitches }, pitch) {
         ? pitches.filter(p => p !== pitch)
         : [...pitches, pitch];
 
-    const note = pitchToNote(pitch);
-    const freq = pitchToFrequency(pitch);
-    console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
+    // const note = pitchToNote(pitch);
+    // const freq = pitchToFrequency(pitch);
+    // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
 
     return { pitches: newPitches };
 }
