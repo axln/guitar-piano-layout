@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
     return {
@@ -16,39 +16,26 @@ module.exports = (env, argv) => {
                 {
                     test: /\.jsx?$/,
                     resolve: {
-                        extensions: [".js", ".jsx"],
-                        alias: {
-                            //"react": "preact/compat",
-                            //"react-dom": "preact/compat"
-                        }
+                        extensions: ['.js', '.jsx']
                     },
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
                     options: {
-                        sourceType: "unambiguous",
-                        "presets": [
-                            ["@babel/preset-env", {
-                                "targets": {
-                                    "browsers": ["last 2 versions"]
-                                }
-                            }]
-                        ],
-                        "plugins": [
-                            ["@babel/plugin-transform-react-jsx", {
-                                "pragma": "h",
-                                "pragmaFrag": "Fragment",
+                        plugins: [
+                            ['@babel/plugin-transform-react-jsx', {
+                                'pragma': 'h',
+                                'pragmaFrag': 'Fragment',
                             }],
-                            ["@babel/plugin-proposal-class-properties"],
-                            ["@babel/plugin-transform-runtime"]
+                            ['@babel/plugin-proposal-class-properties']
                         ]
                     }
                 },
                 {
                     test: /\.css$/,
-                    use: ["style-loader", "css-loader"]
+                    use: ['style-loader', 'css-loader']
                 },
                 {
                     test: /\.less$/,
-                    use: ["style-loader", "css-loader", "less-loader"]
+                    use: ['style-loader', 'css-loader', 'less-loader']
                 }
             ]
         },
