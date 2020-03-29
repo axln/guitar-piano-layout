@@ -58,7 +58,6 @@ export class WhiteKey extends PianoKey {
                     {pitchToNote(pitch)}
                 </text>
                 <text
-                    style = {{backgroundColor: 'white'}}
                     x = {Math.round(xPos + WHITE_WIDTH / 2)}
                     y = {WHITE_HEIGHT - 10}
                 >
