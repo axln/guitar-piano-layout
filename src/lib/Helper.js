@@ -1,5 +1,3 @@
-import { altNoteNames } from '../component/Piano/PianoKeyboard';
-
 export const WHITE_NOTES = 'CDEFGAB';
 export const BLACK_NOTES = 'CDFGA';
 export const BLACK_NOTES_FLAT = 'DEGAB';
@@ -7,6 +5,16 @@ export const BLACK_NOTES_FLAT = 'DEGAB';
 const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 const A4_PITCH_OFFSET = 57;
+
+export const altNoteNames = {
+  C: 'do',
+  D: 're',
+  E: 'mi',
+  F: 'fa',
+  G: 'sol',
+  A: 'la',
+  B: 'si'
+};
 
 export function noteToPitch(fullNote) {
   return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;

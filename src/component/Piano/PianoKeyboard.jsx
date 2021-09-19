@@ -9,16 +9,6 @@ export const WHITE_HEIGHT = Math.round((145 / 23) * WHITE_WIDTH);
 export const BLACK_WIDTH = (WHITE_WIDTH * 7) / 12;
 export const BLACK_HEIGHT = Math.round(WHITE_HEIGHT * 0.65);
 
-export const altNoteNames = {
-  C: 'do',
-  D: 're',
-  E: 'mi',
-  F: 'fa',
-  G: 'sol',
-  A: 'la',
-  B: 'si'
-};
-
 const Octaves = React.memo(({ octaves }) => {
   let nextOffset = 0;
   return octaves.map((octInfo) => {

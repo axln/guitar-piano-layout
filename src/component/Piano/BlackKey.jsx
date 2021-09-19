@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { BLACK_NOTES, BLACK_NOTES_FLAT, getPitchColor, getBlackNoteNumber } from '~/lib/Helper';
@@ -24,7 +25,7 @@ function getAltName(index) {
   return BLACK_NOTES_FLAT[index] + '\u266D';
 }
 
-export const BlackKey = observer(({ pitch, keyOffset, pushed, index, baseKey }) => {
+export const BlackKey = React.memo(({ pitch, keyOffset, pushed, index, baseKey }) => {
   const handleMouseDown = useCallback(() => {
     store.togglePitch(pitch);
     playNote(pitch);

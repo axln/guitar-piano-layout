@@ -1,3 +1,4 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   WHITE_NOTES,
@@ -19,7 +20,7 @@ function getKeyOffset(startFrom) {
   return offset;
 }
 
-const WhiteKeys = ({ startFrom, pitches, baseKey, endAt, number }) => {
+const WhiteKeys = observer(({ startFrom, baseKey, endAt, number }) => {
   let startWhiteIndex = startFrom ? WHITE_NOTES.indexOf(startFrom) : 0;
   let stopWhiteIndex = endAt ? WHITE_NOTES.indexOf(endAt) : 6;
 
@@ -31,7 +32,7 @@ const WhiteKeys = ({ startFrom, pitches, baseKey, endAt, number }) => {
           key={'w' + index}
           index={index}
           pitch={keyPitch}
-          pushed={pitches.includes(keyPitch)}
+          pushed={store.pitches.includes(keyPitch)}
           baseKey={baseKey !== undefined ? baseKey : number * 7}
           keyOffset={getKeyOffset(startFrom)}
         />
@@ -40,9 +41,9 @@ const WhiteKeys = ({ startFrom, pitches, baseKey, endAt, number }) => {
       return null;
     }
   });
-};
+});
 
-const BlackKeys = ({ startFrom, endAt, baseKey, number, pitches }) => {
+const BlackKeys = observer(({ startFrom, endAt, baseKey, number }) => {
   let startBlackIndex = 0;
   if (startFrom) {
     switch (startFrom) {
@@ -99,7 +100,7 @@ const BlackKeys = ({ startFrom, endAt, baseKey, number, pitches }) => {
           baseKey={baseKey !== undefined ? baseKey : number * 7}
           keyOffset={getKeyOffset(startFrom)}
           pitch={keyPitch}
-          pushed={pitches.includes(keyPitch)}
+          pushed={store.pitches.includes(keyPitch)}
           octave={number}
           index={index}
           note={note + '#'}
@@ -109,9 +110,9 @@ const BlackKeys = ({ startFrom, endAt, baseKey, number, pitches }) => {
       return null;
     }
   });
-};
+});
 
-export const Octave = observer(({ baseKey, number, startFrom, endAt }) => {
+export const Octave = React.memo(({ baseKey, number, startFrom, endAt }) => {
   const textProps = {
     x: baseKey !== undefined ? baseKey * WHITE_WIDTH : number * 7 * WHITE_WIDTH,
     y: -8
@@ -119,20 +120,8 @@ export const Octave = observer(({ baseKey, number, startFrom, endAt }) => {
 
   return (
     <g className="octave" id={'oct' + number}>
-      <WhiteKeys
-        pitches={store.pitches}
-        baseKey={baseKey}
-        startFrom={startFrom}
-        endAt={endAt}
-        number={number}
-      />
-      <BlackKeys
-        pitches={store.pitches}
-        baseKey={baseKey}
-        startFrom={startFrom}
-        endAt={endAt}
-        number={number}
-      />
+      <WhiteKeys baseKey={baseKey} startFrom={startFrom} endAt={endAt} number={number} />
+      <BlackKeys baseKey={baseKey} startFrom={startFrom} endAt={endAt} number={number} />
       <text {...textProps}>{number}</text>
     </g>
   );

@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useCallback } from 'react';
 import { getPitchColor, pitchToNote, getWhiteNoteNumber, getAltName } from '~/lib/Helper';
 import { WHITE_HEIGHT, WHITE_WIDTH } from './PianoKeyboard';
 import { stopNote } from '~/lib/SoundGenerator';
+import { playNote } from '~/lib/SoundGenerator';
 import { store } from '~/store/store';
 
 function getXPos(keyOffset, baseKey, index) {
@@ -10,7 +10,7 @@ function getXPos(keyOffset, baseKey, index) {
   return baseKey * WHITE_WIDTH + index * WHITE_WIDTH + offset;
 }
 
-export const WhiteKey = observer(({ pushed, pitch, index, keyOffset, baseKey }) => {
+export const WhiteKey = React.memo(({ pushed, pitch, index, keyOffset, baseKey }) => {
   let style = {
     ...(pushed ? { fill: getPitchColor(pitch) + 'A0' } : {})
   };
