@@ -1,4 +1,4 @@
-import { makeAutoObservable, makeObservable, observable, action } from 'mobx';
+import { makeObservable, observable, action } from 'mobx';
 import { GUITAR_TUNING, BASS_TUNING, UKULELE_TUNING, BALALAIKA_TUNING } from '~/lib/const';
 
 class Store {
@@ -48,6 +48,15 @@ class Store {
     this.pitches = this.pitches.includes(pitch)
       ? this.pitches.filter((p) => p !== pitch)
       : [...this.pitches, pitch];
+    /*
+    // doesn't work, we need to reassign property to trigger mobx
+    const index = this.pitches.indexOf(pitch);
+    if (index >= 0) {
+      this.pitches.splice(index, 1);
+    } else {
+      this.pitches.push(pitch);
+    }
+    */
 
     // const note = pitchToNote(pitch);
     // const freq = pitchToFrequency(pitch);
