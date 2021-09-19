@@ -1,3 +1,4 @@
+import React from 'react';
 import { SIDE_MARGIN } from './GuitarNeck';
 
 export const getFretOffset = (number, neckLength, fretCount = 24) => {
@@ -14,12 +15,12 @@ export const getFretOffset = (number, neckLength, fretCount = 24) => {
         ((neckLength - SIDE_MARGIN) / getFretOffset(fretCount, neckLength)) * neckLength;
       stringLength = ((newNeckLength - SIDE_MARGIN) * 4) / 3;
     }
-    return (1 - 1 / Math.pow(2, number / 12)) * stringLength;
+    return Math.round((1 - 1 / Math.pow(2, number / 12)) * stringLength);
   }
 };
 
-export const Fret = ({ number, fretCount, neckLength, neckWidth }) => {
-  const fretX = Math.round(getFretOffset(number, neckLength, fretCount));
+export const Fret = React.memo(({ number, fretCount, neckLength, neckWidth }) => {
+  const fretX = getFretOffset(number, neckLength, fretCount);
 
   return (
     <g className="fret">
@@ -29,4 +30,4 @@ export const Fret = ({ number, fretCount, neckLength, neckWidth }) => {
       </text>
     </g>
   );
-};
+});

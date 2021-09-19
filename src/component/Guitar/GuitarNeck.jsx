@@ -1,15 +1,14 @@
-import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { GuitarString } from '~/component/Guitar/GuitarString';
 import { Fret } from './Fret';
 import { Dot } from './Dot';
 import { seq } from '~/lib/Helper';
 import { DEFAULT_NECK_LENGTH, DEFAULT_NECK_WIDTH, DOT_FRETS } from '~/lib/const';
-import { store } from '~/store/store';
 import './GuitarNeck.less';
 
 export const SIDE_MARGIN = 10;
 
-export const GuitarNeck = observer(
+export const GuitarNeck = React.memo(
   ({
     strings,
     fretCount = 24,
@@ -33,7 +32,6 @@ export const GuitarNeck = observer(
         />
         <Strings
           stringNotes={stringNotes}
-          pitches={store.pitches}
           fretCount={fretCount}
           neckWidth={neckWidth}
           neckLength={neckLength}
@@ -43,7 +41,7 @@ export const GuitarNeck = observer(
   }
 );
 
-const Frets = ({ fretCount, neckLength, neckWidth }) =>
+const Frets = React.memo(({ fretCount, neckLength, neckWidth }) =>
   seq(1, fretCount).map((fret) => (
     <Fret
       key={'f' + fret}
@@ -52,9 +50,10 @@ const Frets = ({ fretCount, neckLength, neckWidth }) =>
       neckWidth={neckWidth}
       fretCount={fretCount}
     />
-  ));
+  ))
+);
 
-const Strings = ({ stringNotes, pitches, fretCount, neckWidth, neckLength }) =>
+const Strings = React.memo(({ stringNotes, fretCount, neckWidth, neckLength }) =>
   stringNotes.map((note, index) => (
     <GuitarString
       key={'s' + index + 1}
@@ -62,13 +61,13 @@ const Strings = ({ stringNotes, pitches, fretCount, neckWidth, neckLength }) =>
       openNote={note.toUpperCase().trim()}
       fretCount={fretCount}
       neckWidth={neckWidth}
-      pitches={pitches}
       neckLength={neckLength}
       stringCount={stringNotes.length}
     />
-  ));
+  ))
+);
 
-const NeckDots = ({ stringCount, fretCount, neckLength, neckWidth }) => (
+const NeckDots = React.memo(({ stringCount, fretCount, neckLength, neckWidth }) => (
   <>
     {DOT_FRETS.filter((i) => i <= fretCount).map((fretNumber) => (
       <Dot
@@ -81,4 +80,4 @@ const NeckDots = ({ stringCount, fretCount, neckLength, neckWidth }) => (
       />
     ))}
   </>
-);
+));

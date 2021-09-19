@@ -1,7 +1,8 @@
+import React from 'react';
 import { getFretOffset } from './Fret';
 import { getStringPos } from './GuitarString';
 
-export const Dot = ({ fret, stringCount, neckLength, fretCount, neckWidth }) => {
+export const Dot = React.memo(({ fret, stringCount, neckLength, fretCount, neckWidth }) => {
   let dotX = Math.round(
     (getFretOffset(fret - 1, neckLength, fretCount) + getFretOffset(fret, neckLength, fretCount)) /
       2 -
@@ -32,4 +33,4 @@ export const Dot = ({ fret, stringCount, neckLength, fretCount, neckWidth }) => 
   } else {
     return <circle {...props} cy={neckWidth / 2} />;
   }
-};
+});

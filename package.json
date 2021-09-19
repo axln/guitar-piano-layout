@@ -10,6 +10,7 @@
   "dependencies": {
     "mobx": "^6.3.3",
     "mobx-react-lite": "^3.2.1",
+    "preact": "^10.5.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "unistore": "^3.5.2"

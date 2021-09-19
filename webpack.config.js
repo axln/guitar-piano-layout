@@ -11,10 +11,10 @@ module.exports = (env, argv) => {
     },
     devtool: argv.mode === 'development' ? 'cheap-module-source-map' : false,
     resolve: {
-      /*alias: {
+      alias: {
         react: 'preact/compat',
         'react-dom': 'preact/compat'
-      }*/
+      }
     },
     module: {
       rules: [
