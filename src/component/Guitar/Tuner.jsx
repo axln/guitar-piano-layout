@@ -1,8 +1,9 @@
+import React from 'react';
 import { useCallback } from 'react';
-import { noteToPitch, pitchToNote } from '~/lib/Helper';
+import { noteToPitch, pitchToNote, seq } from '~/lib/Helper';
 
-export const Tuner = ({ baseTuning, setTuning, tuning }) => {
-  const handleChange = useCallback(
+export const Tuner = React.memo(({ baseTuning, setTuning, tuning }) => {
+  const tuningHandler = useCallback(
     (index, note) => {
       const tuningItems = tuning.split(' ');
       tuningItems[index] = note;
@@ -11,7 +12,7 @@ export const Tuner = ({ baseTuning, setTuning, tuning }) => {
     [tuning]
   );
 
-  const clickHandler = useCallback(() => {
+  const resetHandler = useCallback(() => {
     setTuning(baseTuning);
   }, [setTuning, baseTuning]);
 
@@ -23,32 +24,44 @@ export const Tuner = ({ baseTuning, setTuning, tuning }) => {
       {baseStrings.map((note, index) => {
         const stringNumber = baseStrings.length - index;
         return (
-          <select
-            key={`s${stringNumber}`}
-            onChange={(e) => {
-              handleChange(index, e.target.value);
+          <StringTuner
+            key={index}
+            stringIndex={index}
+            note={note}
+            stringNumber={stringNumber}
+            tunedStrings={tunedStrings}
+            onChange={(index, note) => {
+              tuningHandler(index, note);
             }}
-            value={tunedStrings[index]}>
-            {renderOptions(noteToPitch(note), stringNumber)}
-          </select>
+          />
         );
       })}
       &nbsp;
-      <button onClick={clickHandler}>Reset to Standard</button>
+      <button onClick={resetHandler}>Reset to Standard</button>
     </>
   );
-};
+});
 
-function renderOptions(basePitch, stringNumber) {
-  const options = [];
-  const tuningRange = 4; // semitones
-  for (let i = -tuningRange; i <= tuningRange; ++i) {
-    const value = pitchToNote(basePitch + i);
-    options.push(
+const StringTuner = React.memo(({ stringNumber, tunedStrings, stringIndex, note, onChange }) => {
+  const changeHandler = (e) => {
+    if (onChange) {
+      onChange(stringIndex, e.target.value);
+    }
+  };
+  return (
+    <select key={`s${stringNumber}`} value={tunedStrings[stringIndex]} onChange={changeHandler}>
+      <TuneOptions basePitch={noteToPitch(note)} stringNumber={stringNumber} />
+    </select>
+  );
+});
+
+const TuneOptions = React.memo(({ basePitch, stringNumber }) =>
+  seq(-4, 4).map((semitoneDiff) => {
+    const value = pitchToNote(basePitch + semitoneDiff);
+    return (
       <option key={value} value={value}>
         {stringNumber}: {value}
       </option>
     );
-  }
-  return options;
-}
+  })
+);

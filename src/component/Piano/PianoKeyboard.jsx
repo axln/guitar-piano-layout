@@ -1,7 +1,7 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { parseRange, getOctSize } from '~/lib/Helper';
 import { Octave } from '~/component/Piano/Octave';
-import { store } from '~/store/store';
+import { parseRange, getOctSize } from '~/lib/Helper';
 import './PianoKeyboard.less';
 
 export const WHITE_WIDTH = 30;
@@ -19,44 +19,35 @@ export const altNoteNames = {
   B: 'si'
 };
 
-function renderOctaves(parsedRange) {
-  return parsedRange.reduce(
-    (acc, octInfo) => {
-      acc.octaves.push(
-        <Octave
-          {...octInfo}
-          key={'oct' + octInfo.number}
-          baseKey={acc.nextOffset}
-          pitches={store.pitches}
-        />
-      );
-      acc.nextOffset += getOctSize(octInfo);
-      return acc;
-    },
-    {
-      octaves: [],
-      nextOffset: 0
-    }
-  ).octaves;
-}
+const Octaves = React.memo(({ octaves }) => {
+  let nextOffset = 0;
+  return octaves.map((octInfo) => {
+    const octSize = getOctSize(octInfo);
+    nextOffset += octSize;
+    return <Octave key={'oct' + octInfo.number} {...octInfo} baseKey={nextOffset - octSize} />;
+  });
+});
 
 export const PianoKeyboard = observer(({ range }) => {
   let parsedOctaves = parseRange(range);
-  let whiteKeysCount = parsedOctaves.reduce((acc, value) => {
-    return acc + getOctSize(value);
-  }, 0);
+  let whiteKeysCount = parsedOctaves.reduce((acc, value) => acc + getOctSize(value), 0);
   const keyboardWidth = WHITE_WIDTH * whiteKeysCount;
-  const viewBox = `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`;
+
+  const svgProps = {
+    width: keyboardWidth,
+    height: WHITE_HEIGHT,
+    viewBox: `0 0 ${keyboardWidth} ${WHITE_HEIGHT}`
+  };
 
   return (
-    <svg className="piano-keyboard" width={keyboardWidth} height={WHITE_HEIGHT} viewBox={viewBox}>
+    <svg className="piano-keyboard" {...svgProps}>
       <defs>
         <filter id="shadow">
           <feGaussianBlur stdDeviation="2 2" result="shadow" />
           <feOffset dx="0" dy="0" />
         </filter>
       </defs>
-      {renderOctaves(parsedOctaves)}
+      <Octaves octaves={parsedOctaves} />
     </svg>
   );
 });

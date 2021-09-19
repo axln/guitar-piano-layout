@@ -1,23 +1,27 @@
 import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
-import { store } from '~/store/store';
 import { GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING } from '~/lib/const';
+import { ComboBox } from './ComboBox';
+import { store } from '~/store/store';
 
 export const GuitarGroup = observer(() => {
+  const guitarTypes = {
+    '6 strings': GUITAR_TUNING,
+    '7 strings': GUITAR_TUNING_7_STRING,
+    '8 strings': GUITAR_TUNING_8_STRING
+  };
   return (
     <>
       <h2>
         Acoustic/Electric Guitar&nbsp;
-        <select
-          onChange={(e) => {
-            store.setBaseGuitarTuning(e.target.value);
-            store.setGuitarTuning(e.target.value);
-          }}>
-          <option value={GUITAR_TUNING}>6 strings</option>
-          <option value={GUITAR_TUNING_7_STRING}>7 strings</option>
-          <option value={GUITAR_TUNING_8_STRING}>8 strings</option>
-        </select>
+        <ComboBox
+          values={guitarTypes}
+          onChange={(value) => {
+            store.setBaseGuitarTuning(value);
+            store.setGuitarTuning(value);
+          }}
+        />
       </h2>
       <div>
         Tuning:&nbsp;

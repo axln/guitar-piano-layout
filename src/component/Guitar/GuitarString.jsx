@@ -27,23 +27,6 @@ export const GuitarString = ({
   neckLength,
   neckWidth
 }) => {
-  function renderNotes() {
-    let openPitch = noteToPitch(openNote);
-    return seq(0, fretCount).map((fretNumber) => (
-      <StringNote
-        key={`s${number}f${fretNumber}`}
-        number={number}
-        stringCount={stringCount}
-        fretCount={fretCount}
-        neckLength={neckLength}
-        neckWidth={neckWidth}
-        pushed={pitches.includes(openPitch + fretNumber)}
-        index={fretNumber}
-        pitch={openPitch + fretNumber}
-      />
-    ));
-  }
-
   const thickness = getStringThickness(noteToBasePitch(openNote));
   const fix = 0.5;
 
@@ -59,7 +42,32 @@ export const GuitarString = ({
         y2={Math.round(getStringPos(number, stringCount, neckWidth)) + fix}
         strokeWidth={thickness}
       />
-      {renderNotes()}
+      <Notes
+        openNote={openNote}
+        stringCount={stringCount}
+        number={number}
+        fretCount={fretCount}
+        neckLength={neckLength}
+        neckWidth={neckWidth}
+        pitches={pitches}
+      />
     </g>
   );
+};
+
+const Notes = ({ openNote, stringCount, number, fretCount, neckLength, neckWidth, pitches }) => {
+  let openPitch = noteToPitch(openNote);
+  return seq(0, fretCount).map((fretNumber) => (
+    <StringNote
+      key={`s${number}f${fretNumber}`}
+      number={number}
+      stringCount={stringCount}
+      fretCount={fretCount}
+      neckLength={neckLength}
+      neckWidth={neckWidth}
+      pushed={pitches.includes(openPitch + fretNumber)}
+      index={fretNumber}
+      pitch={openPitch + fretNumber}
+    />
+  ));
 };

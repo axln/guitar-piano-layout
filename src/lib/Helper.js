@@ -1,21 +1,10 @@
-export const WHITE_NOTES = "CDEFGAB";
-export const BLACK_NOTES = "CDFGA";
-export const BLACK_NOTES_FLAT = "DEGAB";
+import { altNoteNames } from '../component/Piano/PianoKeyboard';
 
-const CHROMATIC_SCALE = [
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-  "A",
-  "A#",
-  "B",
-];
+export const WHITE_NOTES = 'CDEFGAB';
+export const BLACK_NOTES = 'CDFGA';
+export const BLACK_NOTES_FLAT = 'DEGAB';
+
+const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 const A4_PITCH_OFFSET = 57;
 
@@ -94,9 +83,9 @@ function HSLtoRGB(h, s, l) {
   b = Math.round((b + m) * 255).toString(16);
 
   // Prepend 0s, if necessary
-  if (r.length === 1) r = "0" + r;
-  if (g.length === 1) g = "0" + g;
-  if (b.length === 1) b = "0" + b;
+  if (r.length === 1) r = '0' + r;
+  if (g.length === 1) g = '0' + g;
+  if (b.length === 1) b = '0' + b;
 
   return `#${r}${g}${b}`;
 }
@@ -125,10 +114,10 @@ export function pitchToNote(pitch) {
 }
 
 export function parseRange(range) {
-  let [start, end] = range.split("-");
+  let [start, end] = range.split('-');
   let [startPitch, stopPitch] = [
     noteToPitch(start) + A4_PITCH_OFFSET,
-    noteToPitch(end) + A4_PITCH_OFFSET,
+    noteToPitch(end) + A4_PITCH_OFFSET
   ];
   let [startOctave, startNote] = decodePitch(startPitch);
   let [endOctave, endNote] = decodePitch(stopPitch);
@@ -174,4 +163,17 @@ function* segGenerator(from, to) {
 
 export function seq(from, to) {
   return Array.from(segGenerator(from, to));
+}
+
+export function getAltName(pitch) {
+  let note = pitchToNote(pitch);
+  return altNoteNames[note[0]];
+}
+
+export function getWhiteNoteNumber(keyIndex) {
+  return getWhiteInterval(keyIndex);
+}
+
+export function getBlackNoteNumber(keyNumber) {
+  return getBlackInterval(keyNumber);
 }

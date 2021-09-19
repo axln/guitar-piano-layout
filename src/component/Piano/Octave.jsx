@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import {
   WHITE_NOTES,
   BLACK_NOTES,
@@ -8,6 +9,7 @@ import {
 import { WHITE_WIDTH } from './PianoKeyboard';
 import { WhiteKey } from '~/component/Piano/WhiteKey';
 import { BlackKey } from '~/component/Piano/BlackKey';
+import { store } from '~/store/store';
 
 function getKeyOffset(startFrom) {
   let offset = 0;
@@ -17,7 +19,7 @@ function getKeyOffset(startFrom) {
   return offset;
 }
 
-function renderWhiteKeys(startFrom, pitches, baseKey, endAt, number) {
+const WhiteKeys = ({ startFrom, pitches, baseKey, endAt, number }) => {
   let startWhiteIndex = startFrom ? WHITE_NOTES.indexOf(startFrom) : 0;
   let stopWhiteIndex = endAt ? WHITE_NOTES.indexOf(endAt) : 6;
 
@@ -38,9 +40,9 @@ function renderWhiteKeys(startFrom, pitches, baseKey, endAt, number) {
       return null;
     }
   });
-}
+};
 
-function renderBlackKeys(startFrom, endAt, baseKey, number, pitches) {
+const BlackKeys = ({ startFrom, endAt, baseKey, number, pitches }) => {
   let startBlackIndex = 0;
   if (startFrom) {
     switch (startFrom) {
@@ -107,18 +109,31 @@ function renderBlackKeys(startFrom, endAt, baseKey, number, pitches) {
       return null;
     }
   });
-}
+};
 
-export const Octave = ({ baseKey, number, startFrom, endAt, pitches }) => {
-  let textX = baseKey !== undefined ? baseKey * WHITE_WIDTH : number * 7 * WHITE_WIDTH;
+export const Octave = observer(({ baseKey, number, startFrom, endAt }) => {
+  const textProps = {
+    x: baseKey !== undefined ? baseKey * WHITE_WIDTH : number * 7 * WHITE_WIDTH,
+    y: -8
+  };
 
   return (
     <g className="octave" id={'oct' + number}>
-      {renderWhiteKeys(startFrom, pitches, baseKey, endAt, number)}
-      {renderBlackKeys(startFrom, endAt, baseKey, number, pitches)}
-      <text x={textX} y={-8}>
-        {number}
-      </text>
+      <WhiteKeys
+        pitches={store.pitches}
+        baseKey={baseKey}
+        startFrom={startFrom}
+        endAt={endAt}
+        number={number}
+      />
+      <BlackKeys
+        pitches={store.pitches}
+        baseKey={baseKey}
+        startFrom={startFrom}
+        endAt={endAt}
+        number={number}
+      />
+      <text {...textProps}>{number}</text>
     </g>
   );
-};
+});

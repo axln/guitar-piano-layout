@@ -14,5 +14,7 @@ export const BASS_TUNING_5_STRING = 'B0 E1 A1 D2 G2';
 export const UKULELE_TUNING = 'G4 C4 E4 A4';
 export const BALALAIKA_TUNING = 'E4 E4 A4';
 
-export const DEFAULT_NECK_LENGTH  = 1400;
+export const DEFAULT_NECK_LENGTH = 1400;
 export const DEFAULT_NECK_WIDTH = 150;
+
+export const DOT_FRETS = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24];

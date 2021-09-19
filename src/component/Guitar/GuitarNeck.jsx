@@ -3,7 +3,7 @@ import { GuitarString } from '~/component/Guitar/GuitarString';
 import { Fret } from './Fret';
 import { Dot } from './Dot';
 import { seq } from '~/lib/Helper';
-import { DEFAULT_NECK_LENGTH, DEFAULT_NECK_WIDTH } from '~/lib/const';
+import { DEFAULT_NECK_LENGTH, DEFAULT_NECK_WIDTH, DOT_FRETS } from '~/lib/const';
 import { store } from '~/store/store';
 import './GuitarNeck.less';
 
@@ -20,38 +20,31 @@ export const GuitarNeck = observer(
     const stringCount = stringNotes.length;
     const viewBox = `0 0 ${neckLength} ${neckWidth}`;
 
-    function renderStrings() {
-      return stringNotes.map((note, index) => {
-        let number = index + 1;
-        return (
-          <GuitarString
-            key={'s' + number}
-            number={number}
-            openNote={note.toUpperCase().trim()}
-            fretCount={fretCount}
-            neckWidth={neckWidth}
-            pitches={store.pitches}
-            neckLength={neckLength}
-            stringCount={stringCount}
-          />
-        );
-      });
-    }
-
     return (
       <svg className="guitar-neck" viewBox={viewBox} width={neckLength} height={neckWidth}>
         <rect className="neck" x={0.5} y={0.5} width={neckLength} height={neckWidth} />
         <rect className="nut" x={0.5} y={0.5} width={SIDE_MARGIN} height={neckWidth} />
-        {renderFrets(fretCount, neckLength, neckWidth)}
-        {renderDots(stringCount, fretCount, neckLength, neckWidth)}
-        {renderStrings(strings)}
+        <Frets fretCount={fretCount} neckLength={neckLength} neckWidth={neckWidth} />
+        <NeckDots
+          stringCount={stringCount}
+          fretCount={fretCount}
+          neckLength={neckLength}
+          neckWidth={neckWidth}
+        />
+        <Strings
+          stringNotes={stringNotes}
+          pitches={store.pitches}
+          fretCount={fretCount}
+          neckWidth={neckWidth}
+          neckLength={neckLength}
+        />
       </svg>
     );
   }
 );
 
-function renderFrets(fretCount, neckLength, neckWidth) {
-  return seq(1, fretCount).map((fret) => (
+const Frets = ({ fretCount, neckLength, neckWidth }) =>
+  seq(1, fretCount).map((fret) => (
     <Fret
       key={'f' + fret}
       number={fret}
@@ -60,19 +53,32 @@ function renderFrets(fretCount, neckLength, neckWidth) {
       fretCount={fretCount}
     />
   ));
-}
 
-function renderDots(stringCount, fretCount, neckLength, neckWidth) {
-  return [3, 5, 7, 9, 12, 15, 17, 19, 21, 24]
-    .filter((i) => i <= fretCount)
-    .map((fret) => (
+const Strings = ({ stringNotes, pitches, fretCount, neckWidth, neckLength }) =>
+  stringNotes.map((note, index) => (
+    <GuitarString
+      key={'s' + index + 1}
+      number={index + 1}
+      openNote={note.toUpperCase().trim()}
+      fretCount={fretCount}
+      neckWidth={neckWidth}
+      pitches={pitches}
+      neckLength={neckLength}
+      stringCount={stringNotes.length}
+    />
+  ));
+
+const NeckDots = ({ stringCount, fretCount, neckLength, neckWidth }) => (
+  <>
+    {DOT_FRETS.filter((i) => i <= fretCount).map((fretNumber) => (
       <Dot
-        key={`d${fret}`}
-        fret={fret}
+        key={`d${fretNumber}`}
+        fret={fretNumber}
         fretCount={fretCount}
         neckLength={neckLength}
         neckWidth={neckWidth}
         stringCount={stringCount}
       />
-    ));
-}
+    ))}
+  </>
+);

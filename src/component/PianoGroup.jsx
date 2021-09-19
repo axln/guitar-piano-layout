@@ -9,23 +9,22 @@ import {
   SYNTH_44_RANGE,
   SYNTH_37_RANGE
 } from '~/lib/const';
+import { ComboBox } from './ComboBox';
 
 export const PianoGroup = observer(() => {
+  const keyboardTypes = {
+    '88 key piano/grand piano': PIANO_RANGE,
+    '76 key synth': SYNTH_76_RANGE,
+    '61 key synth': SYNTH_61_RANGE,
+    '49 key synth': SYNTH_49_RANGE,
+    '44 key synth': SYNTH_44_RANGE,
+    '37 key synth': SYNTH_37_RANGE
+  };
   return (
     <>
       <h2>
         Piano/Synth&nbsp;
-        <select
-          onChange={(e) => {
-            store.setKeyboardRange(e.target.value);
-          }}>
-          <option value={PIANO_RANGE}>88 key piano/grand piano</option>
-          <option value={SYNTH_76_RANGE}>76 key synth</option>
-          <option value={SYNTH_61_RANGE}>61 key synth</option>
-          <option value={SYNTH_49_RANGE}>49 key synth</option>
-          <option value={SYNTH_44_RANGE}>44 key synth</option>
-          <option value={SYNTH_37_RANGE}>37 key synth</option>
-        </select>
+        <ComboBox values={keyboardTypes} onChange={(value) => store.setKeyboardRange(value)} />
       </h2>
       <p>Numbers at the top are octaves' numbers.</p>
       <div>
