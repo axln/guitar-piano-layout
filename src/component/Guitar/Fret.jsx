@@ -1,7 +1,7 @@
 import React from 'react';
 import { SIDE_MARGIN } from './GuitarNeck';
 
-export const getFretOffset = (number, neckLength, fretCount = 24) => {
+export const getFretOffset = (number, neckLength, fretCount) => {
   if (number === 0) {
     return SIDE_MARGIN;
   } else if (number < 0) {
@@ -12,7 +12,7 @@ export const getFretOffset = (number, neckLength, fretCount = 24) => {
       stringLength = ((neckLength - SIDE_MARGIN) * 4) / 3;
     } else {
       const newNeckLength =
-        ((neckLength - SIDE_MARGIN) / getFretOffset(fretCount, neckLength)) * neckLength;
+        ((neckLength - SIDE_MARGIN) / getFretOffset(fretCount, neckLength, 24)) * neckLength;
       stringLength = ((newNeckLength - SIDE_MARGIN) * 4) / 3;
     }
     return Math.round((1 - 1 / Math.pow(2, number / 12)) * stringLength);

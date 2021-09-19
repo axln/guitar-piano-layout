@@ -31,7 +31,7 @@ export const BassGroup = observer(() => {
         to highlight a note of the corresponding open string.
       </p>
       <div>
-        <GuitarNeck strings={store.bassTuning} neckWidth={130} />
+        <GuitarNeck strings={store.bassTuning} neckWidth={130} fretCount={24} />
       </div>
     </>
   );

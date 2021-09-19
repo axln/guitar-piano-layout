@@ -38,7 +38,7 @@ export const GuitarGroup = observer(() => {
       </p>
 
       <div>
-        <GuitarNeck strings={store.guitarTuning} />
+        <GuitarNeck strings={store.guitarTuning} fretCount={24} />
       </div>
     </>
   );
