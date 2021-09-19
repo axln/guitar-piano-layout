@@ -1,20 +1,4 @@
-export const WHITE_NOTES = 'CDEFGAB';
-export const BLACK_NOTES = 'CDFGA';
-export const BLACK_NOTES_FLAT = 'DEGAB';
-
-const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
-const A4_PITCH_OFFSET = 57;
-
-export const altNoteNames = {
-  C: 'do',
-  D: 're',
-  E: 'mi',
-  F: 'fa',
-  G: 'sol',
-  A: 'la',
-  B: 'si'
-};
+import { WHITE_NOTES, CHROMATIC_SCALE, A4_PITCH_OFFSET, ALT_NOTE_NAMES } from './const';
 
 export function noteToPitch(fullNote) {
   return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;
@@ -175,7 +159,7 @@ export function seq(from, to) {
 
 export function getAltName(pitch) {
   let note = pitchToNote(pitch);
-  return altNoteNames[note[0]];
+  return ALT_NOTE_NAMES[note[0]];
 }
 
 export function getWhiteNoteNumber(keyIndex) {

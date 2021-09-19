@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { getPitchColor, pitchToNote, getWhiteNoteNumber, getAltName } from '~/lib/Helper';
-import { WHITE_HEIGHT, WHITE_WIDTH } from './PianoKeyboard';
+import { WHITE_HEIGHT, WHITE_WIDTH } from '~/lib/const';
 import { stopNote } from '~/lib/SoundGenerator';
 import { playNote } from '~/lib/SoundGenerator';
 import { store } from '~/store/store';

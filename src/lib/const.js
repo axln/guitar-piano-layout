@@ -18,3 +18,26 @@ export const DEFAULT_NECK_LENGTH = 1400;
 export const DEFAULT_NECK_WIDTH = 150;
 
 export const DOT_FRETS = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24];
+
+export const WHITE_WIDTH = 30;
+export const WHITE_HEIGHT = Math.round((145 / 23) * WHITE_WIDTH);
+export const BLACK_WIDTH = (WHITE_WIDTH * 7) / 12;
+export const BLACK_HEIGHT = Math.round(WHITE_HEIGHT * 0.65);
+
+export const WHITE_NOTES = 'CDEFGAB';
+export const BLACK_NOTES = 'CDFGA';
+export const BLACK_NOTES_FLAT = 'DEGAB';
+
+export const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+export const A4_PITCH_OFFSET = 57;
+
+export const ALT_NOTE_NAMES = {
+  C: 'do',
+  D: 're',
+  E: 'mi',
+  F: 'fa',
+  G: 'sol',
+  A: 'la',
+  B: 'si'
+};

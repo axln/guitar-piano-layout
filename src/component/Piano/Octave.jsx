@@ -1,13 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import {
-  WHITE_NOTES,
-  BLACK_NOTES,
-  octNoteToPitch,
-  getWhiteInterval,
-  getBlackInterval
-} from '~/lib/Helper';
-import { WHITE_WIDTH } from './PianoKeyboard';
+import { octNoteToPitch, getWhiteInterval, getBlackInterval } from '~/lib/Helper';
+import { WHITE_WIDTH, WHITE_NOTES, BLACK_NOTES } from '~/lib/const';
 import { WhiteKey } from '~/component/Piano/WhiteKey';
 import { BlackKey } from '~/component/Piano/BlackKey';
 import { store } from '~/store/store';

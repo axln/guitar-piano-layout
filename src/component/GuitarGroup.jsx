@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
-import { GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING } from '~/lib/const';
 import { ComboBox } from './ComboBox';
+import { GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING } from '~/lib/const';
 import { store } from '~/store/store';
 
 export const GuitarGroup = observer(() => {

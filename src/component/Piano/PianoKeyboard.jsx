@@ -2,12 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Octave } from '~/component/Piano/Octave';
 import { parseRange, getOctSize } from '~/lib/Helper';
+import { WHITE_WIDTH, WHITE_HEIGHT } from '~/lib/const';
 import './PianoKeyboard.less';
-
-export const WHITE_WIDTH = 30;
-export const WHITE_HEIGHT = Math.round((145 / 23) * WHITE_WIDTH);
-export const BLACK_WIDTH = (WHITE_WIDTH * 7) / 12;
-export const BLACK_HEIGHT = Math.round(WHITE_HEIGHT * 0.65);
 
 const Octaves = React.memo(({ octaves }) => {
   let nextOffset = 0;

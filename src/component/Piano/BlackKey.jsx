@@ -1,8 +1,7 @@
 import React from 'react';
 import { useCallback } from 'react';
-import { observer } from 'mobx-react-lite';
-import { BLACK_NOTES, BLACK_NOTES_FLAT, getPitchColor, getBlackNoteNumber } from '~/lib/Helper';
-import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from '~/component/Piano/PianoKeyboard';
+import { getPitchColor, getBlackNoteNumber } from '~/lib/Helper';
+import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT, BLACK_NOTES, BLACK_NOTES_FLAT } from '~/lib/const';
 import { playNote, stopNote } from '~/lib/SoundGenerator';
 import { store } from '~/store/store';
 
