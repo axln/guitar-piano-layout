@@ -42,5 +42,5 @@ export const ALT_NOTE_NAMES: Record<string, string> = {
   B: 'si'
 };
 
-const MAJOR_INTERVALS_HALFTONE_ = [2, 2, 1, 2, 2, 2, 1];
-const MINOR_INTERVALS_HALFTONE_ = [2, 1, 2, 2, 1, 2, 2];
+export const MAJOR_INTERVALS_HALFTONE = [2, 2, 1, 2, 2, 2, 1];
+export const MINOR_INTERVALS_HALFTONE = [2, 1, 2, 2, 1, 2, 2];

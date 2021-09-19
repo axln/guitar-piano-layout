@@ -173,3 +173,13 @@ export function getWhiteNoteNumber(keyIndex: number) {
 export function getBlackNoteNumber(keyNumber: number) {
   return getBlackInterval(keyNumber);
 }
+
+export function buildScale(tonicPitch: number, intervals: number[]): number[] {
+  let currentPitch = tonicPitch;
+  const scalePitches = [tonicPitch];
+  for (const intervalSize of intervals) {
+    currentPitch += intervalSize;
+    scalePitches.push(currentPitch);
+  }
+  return scalePitches;
+}

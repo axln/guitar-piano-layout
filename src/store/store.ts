@@ -1,9 +1,24 @@
-import { makeObservable, observable, action } from 'mobx';
-import { GUITAR_TUNING, BASS_TUNING, UKULELE_TUNING, BALALAIKA_TUNING } from '~/lib/const';
+import { makeObservable, observable, action, reaction } from 'mobx';
+import {
+  GUITAR_TUNING,
+  BASS_TUNING,
+  UKULELE_TUNING,
+  BALALAIKA_TUNING,
+  MAJOR_INTERVALS_HALFTONE,
+  MINOR_INTERVALS_HALFTONE
+} from '~/lib/const';
+import { buildScale } from '~/lib/Helper';
+
+export enum ScaleType {
+  Major = 'Major',
+  Minor = 'Minor'
+}
 
 class Store {
   pitches: Array<number> = [];
   playSound: boolean = false;
+  showScales: boolean = true;
+  scale: ScaleType = ScaleType.Major;
 
   keyboardRange = 'A0-C8';
 
@@ -20,6 +35,8 @@ class Store {
     makeObservable(this, {
       pitches: observable.struct,
       playSound: observable,
+      showScales: observable,
+      scale: observable,
       keyboardRange: observable,
 
       guitarTuning: observable.struct,
@@ -40,31 +57,57 @@ class Store {
       setBalalaikaTuning: action.bound,
 
       setBaseGuitarTuning: action,
-      setBaseBassTuning: action
+      setBaseBassTuning: action,
+      setShowScales: action,
+      setScale: action,
+      updatePitches: action
     });
+
+    reaction(
+      () => this.pitches,
+      () => {
+        // console.log('pitches:', this.pitches);
+      }
+    );
   }
 
   togglePitch(pitch: number): void {
-    this.pitches = this.pitches.includes(pitch)
-      ? this.pitches.filter((p) => p !== pitch)
-      : [...this.pitches, pitch];
-    /*
-    // doesn't work, we need to reassign property to trigger mobx
-    const index = this.pitches.indexOf(pitch);
-    if (index >= 0) {
-      this.pitches.splice(index, 1);
+    if (this.showScales) {
+      this.updatePitches(pitch);
     } else {
-      this.pitches.push(pitch);
+      this.pitches = this.pitches.includes(pitch)
+        ? this.pitches.filter((p) => p !== pitch)
+        : [...this.pitches, pitch];
     }
-    */
 
     // const note = pitchToNote(pitch);
     // const freq = pitchToFrequency(pitch);
     // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
   }
 
+  updatePitches(pitch: number): void {
+    console.log('updatePitches:', pitch);
+    if (this.showScales) {
+      const intervals =
+        this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
+      this.pitches = buildScale(pitch, intervals);
+    } else {
+      this.pitches = [pitch];
+    }
+  }
+
   setPlaySound(value: boolean): void {
     this.playSound = value;
+  }
+
+  setShowScales(value: boolean): void {
+    this.showScales = value;
+    this.updatePitches(this.pitches[0]);
+  }
+
+  setScale(scale: ScaleType): void {
+    this.scale = scale;
+    this.updatePitches(this.pitches[0]);
   }
 
   setGuitarTuning(value: string) {

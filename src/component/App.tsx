@@ -4,11 +4,11 @@ import { GuitarGroup } from './GuitarGroup';
 import { BassGroup } from './BassGroup';
 import { UkuleleGroup } from './UkuleleGroup';
 import { BalalaikaGroup } from './BalalaikaGroup';
-import { PlaySoundGroup } from './PlaySoundGroup';
+import { SettingsGroup } from './SettingsGroup';
 
 export const App: React.FC = () => (
   <>
-    <PlaySoundGroup />
+    <SettingsGroup />
     <PianoGroup />
     <GuitarGroup />
     <BassGroup />
