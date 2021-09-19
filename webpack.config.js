@@ -6,8 +6,7 @@ module.exports = (env, argv) => {
     entry: './src/index.jsx',
     output: {
       path: resolve(__dirname, 'build'),
-      filename: 'bundle.js',
-      publicPath: '/'
+      filename: 'bundle.js'
     },
     devtool: argv.mode === 'development' ? 'cheap-module-source-map' : false,
     resolve: {
