@@ -1,4 +1,5 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, makeObservable, observable, action } from 'mobx';
+import { GUITAR_TUNING, BASS_TUNING, UKULELE_TUNING, BALALAIKA_TUNING } from '~/lib/const';
 
 class Store {
   pitches = [];
@@ -6,23 +7,41 @@ class Store {
 
   keyboardRange = 'A0-C8';
 
-  guitarTuning;
-  bassTuning;
-  ukuleleTuning;
-  balalaikaTuning;
+  guitarTuning = GUITAR_TUNING;
+  baseGuitarTuning = GUITAR_TUNING;
 
-  baseGuitarTuning = 'E2 A2 D3 G3 B3 E4';
-  baseBassTuning = 'E1 A1 D2 G2';
-  baseUkuleleTuning = 'G4 C4 E4 A4';
-  baseBalalaikaTuning = 'E4 E4 A4';
+  bassTuning = BASS_TUNING;
+  baseBassTuning = BASS_TUNING;
+
+  ukuleleTuning = UKULELE_TUNING;
+  balalaikaTuning = BALALAIKA_TUNING;
 
   constructor() {
-    this.guitarTuning = this.baseGuitarTuning;
-    this.bassTuning = this.baseBassTuning;
-    this.ukuleleTuning = this.baseUkuleleTuning;
-    this.balalaikaTuning = this.baseBalalaikaTuning;
+    makeObservable(this, {
+      pitches: observable.struct,
+      playSound: observable,
+      keyboardRange: observable,
 
-    makeAutoObservable(this);
+      guitarTuning: observable.struct,
+      bassTuning: observable.struct,
+      ukuleleTuning: observable.struct,
+      balalaikaTuning: observable.struct,
+
+      baseGuitarTuning: observable.struct,
+      baseBassTuning: observable.struct,
+
+      setPlaySound: action,
+      setKeyboardRange: action,
+      togglePitch: action,
+
+      setGuitarTuning: action.bound,
+      setBassTuning: action.bound,
+      setUkuleleTuning: action.bound,
+      setBalalaikaTuning: action.bound,
+
+      setBaseGuitarTuning: action,
+      setBaseBassTuning: action
+    });
   }
 
   togglePitch(pitch) {

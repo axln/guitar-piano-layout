@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
 import { store } from '~/store/store';
+import { UKULELE_TUNING } from '~/lib/const';
 
 export const UkuleleGroup = observer(() => {
   return (
@@ -10,8 +11,8 @@ export const UkuleleGroup = observer(() => {
       <div>
         Tuning:&nbsp;
         <Tuner
-          setTuning={store.setUkuleleTuning.bind(store)}
-          baseTuning={store.baseUkuleleTuning}
+          setTuning={store.setUkuleleTuning}
+          baseTuning={UKULELE_TUNING}
           tuning={store.ukuleleTuning}
         />
       </div>

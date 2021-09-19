@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
+import { BALALAIKA_TUNING } from '~/lib/const';
 import { store } from '~/store/store';
 
 export const BalalaikaGroup = observer(() => {
@@ -10,8 +11,8 @@ export const BalalaikaGroup = observer(() => {
       <div>
         Tuning:&nbsp;
         <Tuner
-          setTuning={store.setBalalaikaTuning.bind(store)}
-          baseTuning={store.baseBalalaikaTuning}
+          setTuning={store.setBalalaikaTuning}
+          baseTuning={BALALAIKA_TUNING}
           tuning={store.balalaikaTuning}
         />
       </div>

@@ -21,7 +21,7 @@ export const BassGroup = observer(() => {
       <div>
         Tuning:&nbsp;
         <Tuner
-          setTuning={store.setBassTuning.bind(store)}
+          setTuning={store.setBassTuning}
           baseTuning={store.baseBassTuning}
           tuning={store.bassTuning}
         />
