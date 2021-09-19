@@ -1,12 +1,12 @@
 import { store } from '~/store/store';
-const oscillators = {};
-let context = null;
+const oscillators: Record<string, OscillatorNode> = {};
+let context: AudioContext = null;
 
-export function pitchToFrequency(pitch) {
+export function pitchToFrequency(pitch: number): number {
   return 440 * Math.pow(2, pitch / 12);
 }
 
-export function playNote(pitch) {
+export function playNote(pitch: number) {
   const freq = pitchToFrequency(pitch);
 
   if (!store.playSound) {
@@ -26,7 +26,7 @@ export function playNote(pitch) {
   oscillators[freq] = oscillator;
 }
 
-export function stopNote(pitch) {
+export function stopNote(pitch: number) {
   const freq = pitchToFrequency(pitch);
   if (oscillators[freq]) {
     oscillators[freq].stop(context.currentTime);
@@ -35,6 +35,6 @@ export function stopNote(pitch) {
   }
 }
 
-function midiNoteToFrequency(note) {
+function midiNoteToFrequency(note: number) {
   return Math.pow(2, (note - 69) / 12) * 440;
 }

@@ -32,7 +32,7 @@ export const CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
 
 export const A4_PITCH_OFFSET = 57;
 
-export const ALT_NOTE_NAMES = {
+export const ALT_NOTE_NAMES: Record<string, string> = {
   C: 'do',
   D: 're',
   E: 'mi',
@@ -41,3 +41,6 @@ export const ALT_NOTE_NAMES = {
   A: 'la',
   B: 'si'
 };
+
+const MAJOR_INTERVALS_HALFTONE_ = [2, 2, 1, 2, 2, 2, 1];
+const MINOR_INTERVALS_HALFTONE_ = [2, 1, 2, 2, 1, 2, 2];

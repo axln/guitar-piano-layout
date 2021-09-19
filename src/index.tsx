@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { App } from '~/component/App';
 
-window.addEventListener('DOMContentLoaded', () => {
+function reactMain() {
   render(<App />, document.getElementById('root'));
-});
+}
+
+window.addEventListener('DOMContentLoaded', reactMain);

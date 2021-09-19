@@ -1,6 +1,11 @@
 import React from 'react';
 
-export const ComboBox = React.memo(({ values, onChange = null }) => {
+type ComboBoxProps = {
+  values: Record<string, string>;
+  onChange: (value: string) => void;
+};
+
+export const ComboBox: React.FC<ComboBoxProps> = React.memo(({ values, onChange = null }) => {
   return (
     <select
       onChange={(e) => {

@@ -1,15 +1,18 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 module.exports = (env, argv) => {
   return {
-    entry: './src/index.jsx',
+    entry: './src/index.tsx',
     output: {
       path: resolve(__dirname, 'build'),
       filename: 'bundle.js'
     },
     devtool: argv.mode === 'development' ? 'cheap-module-source-map' : false,
     resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      plugins: [new TsconfigPathsPlugin()],
       alias: {
         react: 'preact/compat',
         'react-dom': 'preact/compat'
@@ -18,31 +21,16 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
-          resolve: {
-            extensions: ['.js', '.jsx']
-          },
-          loader: 'babel-loader',
-          options: {
-            plugins: [
-              [
-                '@babel/plugin-transform-react-jsx',
-                {
-                  runtime: 'automatic'
-                  /*pragma: 'h',
-                  pragmaFrag: 'Fragment'*/
-                }
-              ],
-              ['@babel/plugin-proposal-class-properties'],
-              [
-                'babel-plugin-root-import',
-                {
-                  rootPathPrefix: '~',
-                  rootPathSuffix: 'src'
-                }
-              ]
-            ]
-          }
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                plugins: [['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]]
+              }
+            },
+            'ts-loader'
+          ]
         },
         {
           test: /\.css$/,

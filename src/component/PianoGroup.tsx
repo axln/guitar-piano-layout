@@ -1,3 +1,4 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { PianoKeyboard } from '~/component/Piano/PianoKeyboard';
 import { ComboBox } from './ComboBox';
@@ -11,7 +12,7 @@ import {
 } from '~/lib/const';
 import { store } from '~/store/store';
 
-export const PianoGroup = observer(() => {
+export const PianoGroup: React.FC = observer(() => {
   const keyboardTypes = {
     '88 key piano/grand piano': PIANO_RANGE,
     '76 key synth': SYNTH_76_RANGE,

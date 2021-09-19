@@ -1,7 +1,8 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { store } from '~/store/store';
 
-export const PlaySoundGroup = observer(() => (
+export const PlaySoundGroup: React.FC = observer(() => (
   <>
     <h2>Settings</h2>
     <p>

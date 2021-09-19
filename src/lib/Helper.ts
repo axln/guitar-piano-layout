@@ -1,10 +1,10 @@
 import { WHITE_NOTES, CHROMATIC_SCALE, A4_PITCH_OFFSET, ALT_NOTE_NAMES } from './const';
 
-export function noteToPitch(fullNote) {
+export function noteToPitch(fullNote: string): number {
   return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;
 }
 
-export function noteToBasePitch(fullNote) {
+export function noteToBasePitch(fullNote: string): number {
   let note, octave;
   if (fullNote.length === 2) {
     [note, octave] = fullNote;
@@ -17,11 +17,11 @@ export function noteToBasePitch(fullNote) {
   return octave * 12 + CHROMATIC_SCALE.indexOf(note);
 }
 
-export function octNoteToPitch(octave, interval) {
-  return octave * 12 + interval - A4_PITCH_OFFSET;
+export function octNoteToPitch(octaveNumber: number, interval: number) {
+  return octaveNumber * 12 + interval - A4_PITCH_OFFSET;
 }
 
-export function getPitchColor(pitch) {
+export function getPitchColor(pitch: number): string {
   let absPitch = pitch + A4_PITCH_OFFSET;
   let [_, offset] = decodePitch(absPitch);
 
@@ -33,7 +33,7 @@ export function getPitchColor(pitch) {
   return HSLtoRGB(hue, 95, l);
 }
 
-function HSLtoRGB(h, s, l) {
+function HSLtoRGB(h: number, s: number, l: number): string {
   s /= 100;
   l /= 100;
 
@@ -70,19 +70,19 @@ function HSLtoRGB(h, s, l) {
     b = x;
   }
   // Having obtained RGB, convert channels to hex
-  r = Math.round((r + m) * 255).toString(16);
-  g = Math.round((g + m) * 255).toString(16);
-  b = Math.round((b + m) * 255).toString(16);
+  let rS = Math.round((r + m) * 255).toString(16);
+  let gS = Math.round((g + m) * 255).toString(16);
+  let bS = Math.round((b + m) * 255).toString(16);
 
   // Prepend 0s, if necessary
-  if (r.length === 1) r = '0' + r;
-  if (g.length === 1) g = '0' + g;
-  if (b.length === 1) b = '0' + b;
+  if (rS.length === 1) rS = '0' + r;
+  if (gS.length === 1) gS = '0' + g;
+  if (bS.length === 1) bS = '0' + b;
 
-  return `#${r}${g}${b}`;
+  return `#${rS}${gS}${bS}`;
 }
 
-export function getWhiteInterval(keyIndex) {
+export function getWhiteInterval(keyIndex: number): number {
   if (keyIndex < 3) {
     return keyIndex * 2;
   } else {
@@ -90,7 +90,7 @@ export function getWhiteInterval(keyIndex) {
   }
 }
 
-export function getBlackInterval(keyIndex) {
+export function getBlackInterval(keyIndex: number): number {
   if (keyIndex < 2) {
     return (keyIndex + 1) * 2 - 1;
   } else {
@@ -98,14 +98,20 @@ export function getBlackInterval(keyIndex) {
   }
 }
 
-export function pitchToNote(pitch) {
+export function pitchToNote(pitch: number): string {
   let absolutePitch = pitch + A4_PITCH_OFFSET;
   let octave = Math.floor(absolutePitch / 12);
   let note = CHROMATIC_SCALE[absolutePitch % 12];
   return note + octave;
 }
 
-export function parseRange(range) {
+export type OctaveInfo = {
+  startFrom?: string;
+  endAt?: string;
+  number: number;
+};
+
+export function parseRange(range: string): OctaveInfo[] {
   let [start, end] = range.split('-');
   let [startPitch, stopPitch] = [
     noteToPitch(start) + A4_PITCH_OFFSET,
@@ -113,14 +119,12 @@ export function parseRange(range) {
   ];
   let [startOctave, startNote] = decodePitch(startPitch);
   let [endOctave, endNote] = decodePitch(stopPitch);
-  let octaves = [];
+  let octaves: Array<OctaveInfo> = [];
   for (let i = startOctave; i <= endOctave; ++i) {
     octaves.push({ number: i });
   }
   if (startNote !== 0) {
-    let note = CHROMATIC_SCALE[startNote];
-    octaves[0].startFrom = note;
-    octaves[0].whiteSize = WHITE_NOTES.length - WHITE_NOTES.indexOf(note);
+    octaves[0].startFrom = CHROMATIC_SCALE[startNote];
   }
 
   if (endNote !== 11) {
@@ -130,7 +134,7 @@ export function parseRange(range) {
   return octaves;
 }
 
-export function getOctSize(octInfo) {
+export function getOctSize(octInfo: OctaveInfo): number {
   let size = 7;
   if (octInfo.startFrom !== undefined) {
     size -= WHITE_NOTES.indexOf(octInfo.startFrom);
@@ -141,31 +145,31 @@ export function getOctSize(octInfo) {
   return size;
 }
 
-function decodePitch(pitch) {
+function decodePitch(pitch: number): [number, number] {
   let octave = Math.floor(pitch / 12);
   let offset = pitch % 12;
   return [octave, offset];
 }
 
-function* segGenerator(from, to) {
+function* segGenerator(from: number, to: number) {
   for (let i = from; to > from ? i <= to : i >= to; i += to > from ? 1 : -1) {
     yield i;
   }
 }
 
-export function seq(from, to) {
+export function seq(from: number, to: number): Array<number> {
   return Array.from(segGenerator(from, to));
 }
 
-export function getAltName(pitch) {
+export function getAltName(pitch: number): string {
   let note = pitchToNote(pitch);
   return ALT_NOTE_NAMES[note[0]];
 }
 
-export function getWhiteNoteNumber(keyIndex) {
+export function getWhiteNoteNumber(keyIndex: number) {
   return getWhiteInterval(keyIndex);
 }
 
-export function getBlackNoteNumber(keyNumber) {
+export function getBlackNoteNumber(keyNumber: number) {
   return getBlackInterval(keyNumber);
 }

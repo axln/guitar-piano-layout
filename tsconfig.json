@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "lib": ["DOM", "ES2019", "ES2019.Object", "DOM.Iterable"],
+    "module": "ES6",
+    "target": "ES6",
+    "jsx": "preserve",
+    "allowJs": false,
+    "baseUrl": "./src",   // all paths are relative to the baseUrl
+    "paths": {
+      "~/*": ["*"]        // resolve any `~/foo/bar` to `<baseUrl>/foo/bar`
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "saved",
+    "build"
+  ]
+}

@@ -2,8 +2,8 @@ import { makeObservable, observable, action } from 'mobx';
 import { GUITAR_TUNING, BASS_TUNING, UKULELE_TUNING, BALALAIKA_TUNING } from '~/lib/const';
 
 class Store {
-  pitches = [];
-  playSound = false;
+  pitches: Array<number> = [];
+  playSound: boolean = false;
 
   keyboardRange = 'A0-C8';
 
@@ -44,7 +44,7 @@ class Store {
     });
   }
 
-  togglePitch(pitch) {
+  togglePitch(pitch: number): void {
     this.pitches = this.pitches.includes(pitch)
       ? this.pitches.filter((p) => p !== pitch)
       : [...this.pitches, pitch];
@@ -63,35 +63,35 @@ class Store {
     // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
   }
 
-  setPlaySound(value) {
+  setPlaySound(value: boolean): void {
     this.playSound = value;
   }
 
-  setGuitarTuning(value) {
+  setGuitarTuning(value: string) {
     this.guitarTuning = value;
   }
 
-  setBaseGuitarTuning(value) {
+  setBaseGuitarTuning(value: string) {
     this.baseGuitarTuning = value;
   }
 
-  setBassTuning(value) {
+  setBassTuning(value: string) {
     this.bassTuning = value;
   }
 
-  setBaseBassTuning(value) {
+  setBaseBassTuning(value: string) {
     this.baseBassTuning = value;
   }
 
-  setKeyboardRange(value) {
+  setKeyboardRange(value: string) {
     this.keyboardRange = value;
   }
 
-  setUkuleleTuning(value) {
+  setUkuleleTuning(value: string) {
     this.ukuleleTuning = value;
   }
 
-  setBalalaikaTuning(value) {
+  setBalalaikaTuning(value: string) {
     this.balalaikaTuning = value;
   }
 }

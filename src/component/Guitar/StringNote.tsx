@@ -6,10 +6,26 @@ import { getStringPos, getBetweenStringPos } from './GuitarString';
 import { stopNote } from '~/lib/SoundGenerator';
 import { store } from '~/store/store';
 
-export const StringNote = React.memo(
+type StringNoteProps = {
+  pitch: number;
+  pushed: boolean;
+  index: number;
+  stringCount: number;
+  number: number;
+  fretCount: number;
+  neckLength: number;
+  neckWidth: number;
+};
+
+export const StringNote: React.FC<StringNoteProps> = React.memo(
   ({ pitch, pushed, index, stringCount, number, fretCount, neckLength, neckWidth }) => {
     function getPadRect() {
-      let fretPad = {};
+      let fretPad: Partial<{
+        x: number;
+        width: number;
+        y: number;
+        height: number;
+      }> = {};
 
       fretPad.x = getFretOffset(index - 1, neckLength, fretCount);
       fretPad.width =
@@ -41,7 +57,7 @@ export const StringNote = React.memo(
 
     let note = pitchToNote(pitch);
     let className = note.length === 2 ? 'note' : 'note black';
-    let style = {};
+    let style: Partial<{ fill: string }> = {};
     if (pushed) {
       className += ' pushed';
       style.fill = getPitchColor(pitch) + 'B0';

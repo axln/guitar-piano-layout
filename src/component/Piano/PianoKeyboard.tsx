@@ -1,20 +1,32 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Octave } from '~/component/Piano/Octave';
-import { parseRange, getOctSize } from '~/lib/Helper';
+import { parseRange, getOctSize, OctaveInfo } from '~/lib/Helper';
 import { WHITE_WIDTH, WHITE_HEIGHT } from '~/lib/const';
 import './PianoKeyboard.less';
 
-const Octaves = React.memo(({ octaves }) => {
+type OctavesProps = {
+  octaves: OctaveInfo[];
+};
+
+const Octaves: React.FC<OctavesProps> = React.memo(({ octaves }) => {
   let nextOffset = 0;
-  return octaves.map((octInfo) => {
-    const octSize = getOctSize(octInfo);
-    nextOffset += octSize;
-    return <Octave key={'oct' + octInfo.number} {...octInfo} baseKey={nextOffset - octSize} />;
-  });
+  return (
+    <>
+      {octaves.map((octInfo: OctaveInfo) => {
+        const octSize = getOctSize(octInfo);
+        nextOffset += octSize;
+        return <Octave key={'oct' + octInfo.number} {...octInfo} baseKey={nextOffset - octSize} />;
+      })}
+    </>
+  );
 });
 
-export const PianoKeyboard = observer(({ range }) => {
+type PianoKeyboardProps = {
+  range: string;
+};
+
+export const PianoKeyboard: React.FC<PianoKeyboardProps> = observer(({ range }) => {
   let parsedOctaves = parseRange(range);
   let whiteKeysCount = parsedOctaves.reduce((acc, value) => acc + getOctSize(value), 0);
   const keyboardWidth = WHITE_WIDTH * whiteKeysCount;

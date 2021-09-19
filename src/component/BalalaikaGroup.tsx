@@ -1,10 +1,11 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
 import { BALALAIKA_TUNING } from '~/lib/const';
 import { store } from '~/store/store';
 
-export const BalalaikaGroup = observer(() => {
+export const BalalaikaGroup: React.FC = observer(() => {
   return (
     <>
       <h2>Russian Balalaika</h2>
