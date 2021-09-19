@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { BLACK_NOTES, BLACK_NOTES_FLAT, getPitchColor, getBlackInterval } from '~/lib/Helper';
 import { WHITE_WIDTH, BLACK_WIDTH, BLACK_HEIGHT } from '~/component/Piano/PianoKeyboard';
 import { playNote, stopNote } from '~/lib/SoundGenerator';
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 
 function getKeyPos(number) {
   if (number < 2) {

@@ -1,4 +1,4 @@
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 const oscillators = {};
 let context = null;
 

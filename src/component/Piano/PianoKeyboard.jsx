@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { parseRange, getOctSize } from '~/lib/Helper';
 import { Octave } from '~/component/Piano/Octave';
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 import './PianoKeyboard.less';
 
 export const WHITE_WIDTH = 30;

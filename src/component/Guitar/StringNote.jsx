@@ -4,7 +4,7 @@ import { pitchToNote, getPitchColor } from '~/lib/Helper';
 import { getFretOffset } from './Fret';
 import { getStringPos, getBetweenStringPos } from './GuitarString';
 import { stopNote } from '~/lib/SoundGenerator';
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 
 export const StringNote = observer(
   ({ pitch, pushed, index, stringCount, number, fretCount, neckLength, neckWidth }) => {

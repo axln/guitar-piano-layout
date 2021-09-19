@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { getPitchColor, pitchToNote, getWhiteInterval } from '~/lib/Helper';
 import { WHITE_HEIGHT, WHITE_WIDTH, altNoteNames } from './PianoKeyboard';
 import { stopNote } from '~/lib/SoundGenerator';
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 
 function getNoteNumber(keyIndex) {
   return getWhiteInterval(keyIndex);

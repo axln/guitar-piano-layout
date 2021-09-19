@@ -4,7 +4,7 @@ import { Fret } from './Fret';
 import { Dot } from './Dot';
 import { seq } from '~/lib/Helper';
 import { DEFAULT_NECK_LENGTH, DEFAULT_NECK_WIDTH } from '~/lib/const';
-import { store } from '~/store/mstore';
+import { store } from '~/store/store';
 import './GuitarNeck.less';
 
 export const SIDE_MARGIN = 10;
