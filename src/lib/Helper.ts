@@ -1,4 +1,5 @@
-import { WHITE_NOTES, CHROMATIC_SCALE, A4_PITCH_OFFSET, ALT_NOTE_NAMES } from './const';
+import { A4_PITCH_OFFSET, ALT_NOTE_NAMES, CHROMATIC_SCALE, WHITE_NOTES } from './const';
+import { ScaleType } from '~/store/store';
 
 export function noteToPitch(fullNote: string): number {
   return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;
@@ -98,12 +99,15 @@ export function getBlackInterval(keyIndex: number): number {
   }
 }
 
-export function pitchToNote(pitch: number): string {
+export function pitchToNote(pitch: number, withOctave: boolean = true): string {
   let absolutePitch = pitch + A4_PITCH_OFFSET;
   let octave = Math.floor(absolutePitch / 12);
   let note = CHROMATIC_SCALE[absolutePitch % 12];
-  return note + octave;
+  return withOctave ? note + octave : note;
 }
+
+// console.log('A0:', noteToPitch('A0'));
+// console.log('C8:', noteToPitch('C8'));
 
 export type OctaveInfo = {
   startFrom?: string;
@@ -174,12 +178,86 @@ export function getBlackNoteNumber(keyNumber: number) {
   return getBlackInterval(keyNumber);
 }
 
-export function buildScale(tonicPitch: number, intervals: number[]): number[] {
+export function buildScale(
+  tonicPitch: number,
+  intervals: number[],
+  allOctaves: boolean = true
+): number[] {
   let currentPitch = tonicPitch;
-  const scalePitches = [tonicPitch];
-  for (const intervalSize of intervals) {
-    currentPitch += intervalSize;
-    scalePitches.push(currentPitch);
+  const octavePitches = [tonicPitch];
+  let intervalsPassed = 0;
+  while (currentPitch < tonicPitch + 12) {
+    currentPitch += intervals[intervalsPassed++ % 7];
+    octavePitches.push(currentPitch);
   }
-  return scalePitches;
+
+  if (allOctaves) {
+    const allPitches: number[] = [];
+    for (const pitch of octavePitches) {
+      const allNotePitches = getSameNotesPitches(pitch);
+      allPitches.push(...allNotePitches);
+    }
+    return allPitches;
+  } else {
+    return octavePitches;
+  }
+}
+
+export function buildChord(pitch: number, scale: ScaleType, onlyUp: boolean = true): number[] {
+  const pitches: number[] = [];
+
+  pitches.push(...getSameNotesPitches(pitch, onlyUp));
+  if (scale === ScaleType.Major) {
+    pitches.push(...getSameNotesPitches(pitch + 4, onlyUp));
+  } else if (scale === ScaleType.Minor) {
+    pitches.push(...getSameNotesPitches(pitch + 3, onlyUp));
+  }
+  pitches.push(...getSameNotesPitches(pitch + 7, onlyUp));
+
+  return pitches;
+}
+
+export function getMajorChordPitches(pitch: number, sept = false): number[] {
+  const pitches: number[] = [];
+  pitches.push(...getSameNotesPitches(pitch));
+  pitches.push(...getSameNotesPitches(pitch + 4));
+  pitches.push(...getSameNotesPitches(pitch + 7));
+  if (sept) {
+    pitches.push(...getSameNotesPitches(pitch + 11));
+  }
+
+  return pitches;
+}
+
+export function getMinorChordPitches(pitch: number, onlyUp = false, sept = false): number[] {
+  const pitches: number[] = [];
+
+  pitches.push(...getSameNotesPitches(pitch, onlyUp));
+  pitches.push(...getSameNotesPitches(pitch + 3, onlyUp));
+  pitches.push(...getSameNotesPitches(pitch + 7, onlyUp));
+  if (sept) {
+    pitches.push(...getSameNotesPitches(pitch + 10));
+  }
+
+  return pitches;
+}
+
+export function getSameNotesPitches(pitch: number, onlyUp = false): number[] {
+  const pitches: number[] = [];
+  let currentPitch = pitch;
+
+  if (!onlyUp) {
+    while (currentPitch >= -48) {
+      pitches.push(currentPitch);
+      currentPitch -= 12;
+    }
+  }
+
+  currentPitch = onlyUp ? pitch : pitch + 12;
+  while (currentPitch <= 39) {
+    pitches.push(currentPitch);
+    currentPitch += 12;
+  }
+
+  return pitches.sort((a, b) => a - b);
 }

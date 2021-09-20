@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
       path: resolve(__dirname, 'build'),
       filename: 'bundle.js'
     },
-    devtool: argv.mode === 'development' ? 'cheap-module-source-map' : false,
+    devtool: argv.mode === 'development' ? 'source-map' : false,
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
       plugins: [new TsconfigPathsPlugin()],

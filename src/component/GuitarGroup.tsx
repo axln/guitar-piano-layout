@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { GuitarNeck } from '~/component/Guitar/GuitarNeck';
 import { Tuner } from '~/component/Guitar/Tuner';
@@ -7,6 +7,7 @@ import { GUITAR_TUNING, GUITAR_TUNING_7_STRING, GUITAR_TUNING_8_STRING } from '~
 import { store } from '~/store/store';
 
 export const GuitarGroup: React.FC = observer(() => {
+  const [visible, setVisible] = useState<boolean>(true);
   const guitarTypes = {
     '6 strings': GUITAR_TUNING,
     '7 strings': GUITAR_TUNING_7_STRING,
@@ -15,7 +16,10 @@ export const GuitarGroup: React.FC = observer(() => {
   return (
     <>
       <h2>
-        Acoustic/Electric Guitar&nbsp;
+        <label>
+          <input type="checkbox" checked={visible} onChange={(e) => setVisible(e.target.checked)} />
+          Acoustic/Electric Guitar
+        </label>{' '}
         <ComboBox
           values={guitarTypes}
           onChange={(value) => {
@@ -24,23 +28,27 @@ export const GuitarGroup: React.FC = observer(() => {
           }}
         />
       </h2>
-      <div>
-        Tuning:&nbsp;
-        <Tuner
-          setTuning={store.setGuitarTuning}
-          baseTuning={store.baseGuitarTuning}
-          tuning={store.guitarTuning}
-        />
-      </div>
+      {visible && (
+        <>
+          <div>
+            Tuning:&nbsp;
+            <Tuner
+              setTuning={store.setGuitarTuning}
+              baseTuning={store.baseGuitarTuning}
+              tuning={store.guitarTuning}
+            />
+          </div>
 
-      <p>
-        Your guitar may have less than 24 frets but this doesn't affect the other notes. Click the
-        nut to highlight a note of the corresponding open string.
-      </p>
+          <p>
+            Your guitar may have less than 24 frets but this doesn't affect the other notes. Click
+            the nut to highlight a note of the corresponding open string.
+          </p>
 
-      <div>
-        <GuitarNeck strings={store.guitarTuning} fretCount={24} />
-      </div>
+          <div>
+            <GuitarNeck strings={store.guitarTuning} fretCount={24} />
+          </div>
+        </>
+      )}
     </>
   );
 });

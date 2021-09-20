@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, reaction } from 'mobx';
+import { makeObservable, observable, action, reaction, computed } from 'mobx';
 import {
   GUITAR_TUNING,
   BASS_TUNING,
@@ -7,18 +7,29 @@ import {
   MAJOR_INTERVALS_HALFTONE,
   MINOR_INTERVALS_HALFTONE
 } from '~/lib/const';
-import { buildScale } from '~/lib/Helper';
+import { buildChord, buildScale, getAltName, pitchToNote } from '~/lib/Helper';
 
 export enum ScaleType {
   Major = 'Major',
   Minor = 'Minor'
 }
 
+export enum PickMode {
+  Random = 'Random',
+  Scale = 'Scale',
+  Chord = 'Chord'
+}
+
 class Store {
   pitches: Array<number> = [];
-  playSound: boolean = false;
-  showScales: boolean = true;
+  lastPitch: number | null = null;
+
+  pickMode: PickMode = PickMode.Random;
   scale: ScaleType = ScaleType.Major;
+  allOctaves: boolean = false;
+  onlyUp: boolean = true;
+
+  playSound: boolean = false;
 
   keyboardRange = 'A0-C8';
 
@@ -34,9 +45,17 @@ class Store {
   constructor() {
     makeObservable(this, {
       pitches: observable.struct,
-      playSound: observable,
-      showScales: observable,
+      lastPitch: observable,
+      pickMode: observable,
       scale: observable,
+      onlyUp: observable,
+      allOctaves: observable,
+      playSound: observable,
+
+      intervals: computed.struct,
+      currentHarmony: computed,
+      tonic: computed,
+
       keyboardRange: observable,
 
       guitarTuning: observable.struct,
@@ -58,41 +77,91 @@ class Store {
 
       setBaseGuitarTuning: action,
       setBaseBassTuning: action,
-      setShowScales: action,
       setScale: action,
-      updatePitches: action
+      updateScalePitches: action,
+      setPickMode: action,
+      setOnlyUp: action,
+      setAllOctaves: action
     });
 
     reaction(
       () => this.pitches,
       () => {
-        // console.log('pitches:', this.pitches);
+        /*console.log(
+          'pitches:',
+          this.pitches.map((pitch) => `${pitchToNote(pitch)}:${pitch}`)
+        );*/
       }
     );
   }
 
   togglePitch(pitch: number): void {
-    if (this.showScales) {
-      this.updatePitches(pitch);
-    } else {
+    this.lastPitch = pitch;
+
+    if (this.pickMode === PickMode.Random) {
       this.pitches = this.pitches.includes(pitch)
         ? this.pitches.filter((p) => p !== pitch)
         : [...this.pitches, pitch];
+    } else {
+      this.updateScalePitches(pitch);
     }
+
+    // const sameNotePitches = getSameNotesPitches(pitch);
+    // console.log(sameNotePitches.map((pitch) => pitchToNote(pitch)));
 
     // const note = pitchToNote(pitch);
     // const freq = pitchToFrequency(pitch);
     // console.log(`Note: ${note}, frequency: ${freq.toFixed(2)} Hz`);
   }
 
-  updatePitches(pitch: number): void {
-    console.log('updatePitches:', pitch);
-    if (this.showScales) {
-      const intervals =
-        this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
-      this.pitches = buildScale(pitch, intervals);
+  get currentHarmony(): string | null {
+    if (this.lastPitch === null || this.pickMode === PickMode.Random) {
+      return null;
     } else {
-      this.pitches = [pitch];
+      return `${pitchToNote(this.lastPitch, false)} (${getAltName(this.lastPitch)}) ${this.scale}`;
+    }
+  }
+
+  get tonic(): string | null {
+    if (this.lastPitch === null || this.pickMode === PickMode.Random) {
+      return null;
+    } else {
+      return `${pitchToNote(this.lastPitch)} (${getAltName(this.lastPitch)})`;
+    }
+  }
+
+  updateScalePitches(pitch: number): void {
+    // console.log('updateScalePitches:', pitch);
+    switch (this.pickMode) {
+      case PickMode.Scale:
+        this.pitches = buildScale(pitch, this.intervals, this.allOctaves);
+        break;
+      case PickMode.Chord:
+        this.pitches = buildChord(pitch, this.scale, this.onlyUp);
+        break;
+      default:
+      //this.pitches = [pitch];
+    }
+  }
+
+  setOnlyUp(value: boolean): void {
+    this.onlyUp = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
+  setAllOctaves(value: boolean): void {
+    this.allOctaves = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
+  setPickMode(value: PickMode): void {
+    this.pickMode = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
     }
   }
 
@@ -100,14 +169,15 @@ class Store {
     this.playSound = value;
   }
 
-  setShowScales(value: boolean): void {
-    this.showScales = value;
-    this.updatePitches(this.pitches[0]);
+  get intervals(): number[] {
+    return this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
   }
 
   setScale(scale: ScaleType): void {
     this.scale = scale;
-    this.updatePitches(this.pitches[0]);
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
   }
 
   setGuitarTuning(value: string) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PianoKeyboard } from '~/component/Piano/PianoKeyboard';
 import { ComboBox } from './ComboBox';
@@ -13,6 +13,7 @@ import {
 import { store } from '~/store/store';
 
 export const PianoGroup: React.FC = observer(() => {
+  const [visible, setVisible] = useState<boolean>(true);
   const keyboardTypes = {
     '88 key piano/grand piano': PIANO_RANGE,
     '76 key synth': SYNTH_76_RANGE,
@@ -24,13 +25,20 @@ export const PianoGroup: React.FC = observer(() => {
   return (
     <>
       <h2>
-        Piano/Synth&nbsp;
+        <label>
+          <input type="checkbox" checked={visible} onChange={(e) => setVisible(e.target.checked)} />
+          Piano/Synth
+        </label>{' '}
         <ComboBox values={keyboardTypes} onChange={(value) => store.setKeyboardRange(value)} />
       </h2>
-      <p>Numbers at the top are octaves' numbers.</p>
-      <div>
-        <PianoKeyboard range={store.keyboardRange} />
-      </div>
+      {visible && (
+        <>
+          <p>Numbers at the top are octaves' numbers.</p>
+          <div>
+            <PianoKeyboard range={store.keyboardRange} />
+          </div>
+        </>
+      )}
     </>
   );
 });
