@@ -2,7 +2,7 @@ import React from 'react';
 
 type ComboBoxProps = {
   values: Record<string, string>;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   value?: string;
   disabled?: boolean;
 };
