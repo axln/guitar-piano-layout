@@ -5,7 +5,9 @@ import {
   UKULELE_TUNING,
   BALALAIKA_TUNING,
   MAJOR_INTERVALS_HALFTONE,
-  MINOR_INTERVALS_HALFTONE
+  MINOR_INTERVALS_HALFTONE,
+  MAJOR_PENTATONIC,
+  MINOR_PENTATONIC
 } from '~/lib/const';
 import { buildChord, buildScale, getAltName, pitchToNote } from '~/lib/Helper';
 
@@ -27,6 +29,7 @@ class Store {
   pickMode: PickMode = PickMode.Random;
   scale: ScaleType = ScaleType.Major;
   allOctaves: boolean = false;
+  pentatonic: boolean = false;
   onlyUp: boolean = true;
 
   playSound: boolean = false;
@@ -49,6 +52,7 @@ class Store {
       pickMode: observable,
       scale: observable,
       onlyUp: observable,
+      pentatonic: observable,
       allOctaves: observable,
       playSound: observable,
 
@@ -81,7 +85,8 @@ class Store {
       updateScalePitches: action,
       setPickMode: action,
       setOnlyUp: action,
-      setAllOctaves: action
+      setAllOctaves: action,
+      setPentatonic: action
     });
 
     reaction(
@@ -130,6 +135,13 @@ class Store {
     }
   }
 
+  setPentatonic(value: boolean): void {
+    this.pentatonic = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
   updateScalePitches(pitch: number): void {
     // console.log('updateScalePitches:', pitch);
     switch (this.pickMode) {
@@ -170,7 +182,11 @@ class Store {
   }
 
   get intervals(): number[] {
-    return this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
+    if (this.pentatonic) {
+      return this.scale === ScaleType.Major ? MAJOR_PENTATONIC : MINOR_PENTATONIC;
+    } else {
+      return this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
+    }
   }
 
   setScale(scale: ScaleType): void {

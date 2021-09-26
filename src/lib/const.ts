@@ -44,3 +44,8 @@ export const ALT_NOTE_NAMES: Record<string, string> = {
 
 export const MAJOR_INTERVALS_HALFTONE = [2, 2, 1, 2, 2, 2, 1];
 export const MINOR_INTERVALS_HALFTONE = [2, 1, 2, 2, 1, 2, 2];
+
+//////////////////////////////// 2  3    4    5  6    7    8
+export const MAJOR_PENTATONIC = [2, 2, /*1,*/ 3, 2, /*2,*/ 3];
+////////////////////////////////   2    3  4  5    6    7  8
+export const MINOR_PENTATONIC = [/*2,*/ 3, 2, 2, /*1,*/ 3, 2];

@@ -48,6 +48,15 @@ export const ControlGroup: React.FC = observer(() => {
                 onChange={(e) => store.setAllOctaves(e.target.checked)}
               />{' '}
               All octaves
+            </label>{' '}
+            <label>
+              <input
+                type="checkbox"
+                disabled={store.pickMode !== PickMode.Scale}
+                checked={store.pentatonic}
+                onChange={(e) => store.setPentatonic(e.target.checked)}
+              />{' '}
+              Pentatonic
             </label>
           </div>
           <div>
