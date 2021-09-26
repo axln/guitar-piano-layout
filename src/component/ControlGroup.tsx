@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { PickMode, ScaleType, store } from '~/store/store';
+import { PickMode, ScaleType, store, AlterType } from '~/store/store';
 import './SettingsGroup.less';
+import { ComboBox } from '~/component/ComboBox';
 
 export const ControlGroup: React.FC = observer(() => {
   const pickModeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +71,30 @@ export const ControlGroup: React.FC = observer(() => {
               />{' '}
               Chord
             </label>{' '}
+            {/*<label>
+              <input
+                type="checkbox"
+                disabled={store.pickMode !== PickMode.Chord}
+                checked={store.seventh}
+                onChange={(e) => store.setSeventh(e.target.checked)}
+              />{' '}
+              Seventh
+            </label>{' '}*/}
+            <label>
+              <input
+                type="checkbox"
+                disabled={store.pickMode !== PickMode.Chord}
+                checked={store.alter}
+                onChange={(e) => store.setAlter(e.target.checked)}
+              />{' '}
+              Alter:
+            </label>{' '}
+            <ComboBox
+              disabled={store.pickMode !== PickMode.Chord || !store.alter}
+              values={{ sus2: 'sus2', sus4: 'sus4' }}
+              value={store.alterType}
+              onChange={(value) => store.setAlterType(value as AlterType)}
+            />{' '}
             <label>
               <input
                 type="checkbox"

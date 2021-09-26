@@ -5,27 +5,6 @@ import { StringNote } from '~/component/Guitar/StringNote';
 import { SIDE_MARGIN } from './GuitarNeck';
 import { store } from '~/store/store';
 
-export function getStringPos(number: number, stringCount: number, neckWidth: number): number {
-  const stringSpace = Math.round((neckWidth - SIDE_MARGIN * 2) / (stringCount - 1));
-  return SIDE_MARGIN + stringSpace * (number - 1);
-}
-
-export function getBetweenStringPos(
-  number1: number,
-  number2: number,
-  stringCount: number,
-  neckWidth: number
-): number {
-  let str1pos = getStringPos(number1, stringCount, neckWidth);
-  let str2pos = getStringPos(number2, stringCount, neckWidth);
-  return (str1pos + str2pos) / 2;
-}
-
-function getStringThickness(pitch: number): number {
-  // just tuned to get corresponding string thickness based on pitch
-  return 0.5 + Math.round((3 - pitch / 20) * 4) / 2;
-}
-
 type GuitarStringProps = {
   openNote: string;
   stringCount: number;
@@ -96,3 +75,24 @@ const Notes: React.FC<NotesProps> = observer(
     );
   }
 );
+
+export function getStringPos(number: number, stringCount: number, neckWidth: number): number {
+  const stringSpace = Math.round((neckWidth - SIDE_MARGIN * 2) / (stringCount - 1));
+  return SIDE_MARGIN + stringSpace * (number - 1);
+}
+
+export function getBetweenStringPos(
+  number1: number,
+  number2: number,
+  stringCount: number,
+  neckWidth: number
+): number {
+  let str1pos = getStringPos(number1, stringCount, neckWidth);
+  let str2pos = getStringPos(number2, stringCount, neckWidth);
+  return (str1pos + str2pos) / 2;
+}
+
+function getStringThickness(pitch: number): number {
+  // just tuned to get corresponding string thickness based on pitch
+  return 0.5 + Math.round((3 - pitch / 20) * 4) / 2;
+}

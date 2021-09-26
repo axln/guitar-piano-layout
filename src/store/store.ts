@@ -4,8 +4,8 @@ import {
   BASS_TUNING,
   UKULELE_TUNING,
   BALALAIKA_TUNING,
-  MAJOR_INTERVALS_HALFTONE,
-  MINOR_INTERVALS_HALFTONE,
+  MAJOR_INTERVALS,
+  MINOR_INTERVALS,
   MAJOR_PENTATONIC,
   MINOR_PENTATONIC
 } from '~/lib/const';
@@ -14,6 +14,16 @@ import { buildChord, buildScale, getAltName, pitchToNote } from '~/lib/Helper';
 export enum ScaleType {
   Major = 'Major',
   Minor = 'Minor'
+}
+
+export enum AlterType {
+  sus2 = 'sus2',
+  sus4 = 'sus4'
+}
+
+export enum SeventhType {
+  MinorSeventh = 'Minor Seventh',
+  MajorSeventh = 'Major Seventh'
 }
 
 export enum PickMode {
@@ -29,8 +39,11 @@ class Store {
   pickMode: PickMode = PickMode.Random;
   scale: ScaleType = ScaleType.Major;
   allOctaves: boolean = false;
+  seventh: boolean = false;
   pentatonic: boolean = false;
   onlyUp: boolean = true;
+  alter: boolean = false;
+  alterType: AlterType = AlterType.sus2;
 
   playSound: boolean = false;
 
@@ -54,7 +67,10 @@ class Store {
       onlyUp: observable,
       pentatonic: observable,
       allOctaves: observable,
+      seventh: observable,
       playSound: observable,
+      alter: observable,
+      alterType: observable,
 
       intervals: computed.struct,
       currentHarmony: computed,
@@ -86,7 +102,10 @@ class Store {
       setPickMode: action,
       setOnlyUp: action,
       setAllOctaves: action,
-      setPentatonic: action
+      setPentatonic: action,
+      setSeventh: action,
+      setAlter: action,
+      setAlterType: action
     });
 
     reaction(
@@ -142,6 +161,20 @@ class Store {
     }
   }
 
+  setAlter(value: boolean): void {
+    this.alter = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
+  setAlterType(value: AlterType): void {
+    this.alterType = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
   updateScalePitches(pitch: number): void {
     // console.log('updateScalePitches:', pitch);
     switch (this.pickMode) {
@@ -149,7 +182,7 @@ class Store {
         this.pitches = buildScale(pitch, this.intervals, this.allOctaves);
         break;
       case PickMode.Chord:
-        this.pitches = buildChord(pitch, this.scale, this.onlyUp);
+        this.pitches = buildChord(pitch, this.scale, this.onlyUp, this.alter && this.alterType);
         break;
       default:
       //this.pitches = [pitch];
@@ -158,6 +191,13 @@ class Store {
 
   setOnlyUp(value: boolean): void {
     this.onlyUp = value;
+    if (this.lastPitch !== null) {
+      this.updateScalePitches(this.lastPitch);
+    }
+  }
+
+  setSeventh(value: boolean): void {
+    this.seventh = value;
     if (this.lastPitch !== null) {
       this.updateScalePitches(this.lastPitch);
     }
@@ -185,7 +225,10 @@ class Store {
     if (this.pentatonic) {
       return this.scale === ScaleType.Major ? MAJOR_PENTATONIC : MINOR_PENTATONIC;
     } else {
-      return this.scale === ScaleType.Major ? MAJOR_INTERVALS_HALFTONE : MINOR_INTERVALS_HALFTONE;
+      if (this.pickMode === PickMode.Chord && this.alter) {
+      } else {
+        return this.scale === ScaleType.Major ? MAJOR_INTERVALS : MINOR_INTERVALS;
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import { A4_PITCH_OFFSET, ALT_NOTE_NAMES, CHROMATIC_SCALE, WHITE_NOTES } from './const';
-import { ScaleType } from '~/store/store';
+import { AlterType, ScaleType } from '~/store/store';
 
 export function noteToPitch(fullNote: string): number {
   return noteToBasePitch(fullNote) - A4_PITCH_OFFSET;
@@ -203,15 +203,44 @@ export function buildScale(
   }
 }
 
-export function buildChord(pitch: number, scale: ScaleType, onlyUp: boolean = true): number[] {
+export function buildChord(
+  pitch: number,
+  scale: ScaleType,
+  onlyUp: boolean = true,
+  alterType: AlterType | null = null
+): number[] {
   const pitches: number[] = [];
 
   pitches.push(...getSameNotesPitches(pitch, onlyUp));
-  if (scale === ScaleType.Major) {
-    pitches.push(...getSameNotesPitches(pitch + 4, onlyUp));
-  } else if (scale === ScaleType.Minor) {
-    pitches.push(...getSameNotesPitches(pitch + 3, onlyUp));
+  if (alterType === AlterType.sus2) {
+    pitches.push(...getSameNotesPitches(pitch + 2, onlyUp));
+  } else if (alterType === AlterType.sus4) {
+    pitches.push(...getSameNotesPitches(pitch + 5, onlyUp));
+  } else {
+    if (scale === ScaleType.Major) {
+      pitches.push(...getSameNotesPitches(pitch + 4, onlyUp));
+    } else {
+      pitches.push(...getSameNotesPitches(pitch + 3, onlyUp));
+    }
   }
+  /*if (scale === ScaleType.Major) {
+    if (alterType === AlterType.sus2) {
+      pitches.push(...getSameNotesPitches(pitch + 2, onlyUp));
+    } else if (alterType === AlterType.sus4) {
+      pitches.push(...getSameNotesPitches(pitch + 5, onlyUp));
+    } else {
+      pitches.push(...getSameNotesPitches(pitch + 4, onlyUp));
+    }
+  } else if (scale === ScaleType.Minor) {
+    if (alterType === AlterType.sus2) {
+      pitches.push(...getSameNotesPitches(pitch + 2, onlyUp));
+    } else if (alterType === AlterType.sus4) {
+      pitches.push(...getSameNotesPitches(pitch + 5, onlyUp));
+    } else {
+      pitches.push(...getSameNotesPitches(pitch + 3, onlyUp));
+    }
+  }*/
+
   pitches.push(...getSameNotesPitches(pitch + 7, onlyUp));
 
   return pitches;
