@@ -41,7 +41,7 @@ export const GuitarGroup: React.FC = observer(() => {
 
           <p>
             Your guitar may have less than 24 frets but this doesn't affect the other notes. Click
-            the nut to highlight a note of the corresponding open string.
+            the nut to highlight the note of the corresponding open string.
           </p>
 
           <div>
