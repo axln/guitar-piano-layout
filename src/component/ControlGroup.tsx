@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PickMode, ScaleType, store, AlterType } from '~/store/store';
-import './SettingsGroup.less';
 import { ComboBox } from '~/component/ComboBox';
+import './SettingsGroup.less';
 
 export const ControlGroup: React.FC = observer(() => {
   const pickModeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
